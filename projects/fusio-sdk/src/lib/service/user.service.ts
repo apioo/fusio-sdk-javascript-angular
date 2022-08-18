@@ -1,15 +1,14 @@
 import {Injectable} from '@angular/core';
 import {FactoryService} from "./factory.service";
-import {ClientAbstract} from "sdkgen-client";
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService<T extends ClientAbstract> {
+export class UserService<T> {
 
   private user?: T;
 
-  constructor(private factory: FactoryService<T>) { }
+  constructor(private factory: FactoryService<any>) { }
 
   public login(user: T): void {
     this.user = user;
