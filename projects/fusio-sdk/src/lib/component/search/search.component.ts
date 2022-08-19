@@ -40,12 +40,8 @@ export class SearchComponent implements OnInit {
     this.newClick.emit();
   }
 
-  showHelp() {
-    if (!this.helpPath) {
-      return;
-    }
-
-    this.help.showDialog(this.helpPath);
+  showHelp(path: string) {
+    this.help.showDialog(path);
   }
 
 }
