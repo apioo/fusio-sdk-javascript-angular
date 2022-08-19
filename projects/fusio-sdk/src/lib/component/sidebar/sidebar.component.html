@@ -2,7 +2,7 @@
 <div class="card">
   <div class="card-header">{{name | titlecase}}</div>
   <div class="card-body">
-    <div class="fusio-sub-navigation">
+    <div class="fusio-sidebar">
       <ul>
         <li *ngFor="let entry of entries">
           <a (click)="doEntrySelect(entry)" class="link-primary" title="{{entry[nameKey]}}">
