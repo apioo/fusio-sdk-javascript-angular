@@ -1,6 +1,8 @@
-import {EventEmitter, Injectable, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
-@Injectable()
+@Component({
+  template: '',
+})
 export abstract class Detail<T> implements OnInit {
 
   @Input()

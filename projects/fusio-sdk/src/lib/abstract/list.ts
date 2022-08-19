@@ -1,4 +1,4 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Collection_Category_Query} from "fusio-sdk/dist/src/generated/backend/Collection_Category_Query";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -9,7 +9,9 @@ import {Collection_Query} from "fusio-sdk/dist/src/generated/backend/Collection_
 import {FactoryService} from "../service/factory.service";
 import {ClientAbstract} from "sdkgen-client";
 
-@Injectable()
+@Component({
+  template: '',
+})
 export abstract class List<C extends ClientAbstract, T extends ModelId> implements OnInit {
 
   public search: string = '';

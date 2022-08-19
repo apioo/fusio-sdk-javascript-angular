@@ -1,4 +1,4 @@
-import {Injectable, Input, OnInit} from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 import {Message} from "fusio-sdk/dist/src/generated/backend/Message";
 import {Mode, ModelId} from "./list";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -6,7 +6,9 @@ import axios, {AxiosResponse} from "axios";
 import {FactoryService} from "../service/factory.service";
 import {ClientAbstract} from "sdkgen-client";
 
-@Injectable()
+@Component({
+  template: '',
+})
 export abstract class Modal<C extends ClientAbstract, T extends ModelId> implements OnInit {
 
   response?: Message;
