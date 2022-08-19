@@ -16,7 +16,7 @@ export class HelpComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.path) {
-      this.url = this.sanitizer.bypassSecurityTrustResourceUrl('https://docs.fusio-project.org/docs/' + this.path);
+      this.url = this.sanitizer.bypassSecurityTrustResourceUrl('https://docs.fusio-project.org/docs/backend/' + this.path);
     }
   }
 
