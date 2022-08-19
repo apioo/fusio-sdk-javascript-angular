@@ -9,14 +9,16 @@ import {SearchComponent} from "./component/search/search.component";
 import {SidebarComponent} from "./component/sidebar/sidebar.component";
 import {HelpComponent} from "./component/help/help.component";
 import {BrowserModule} from "@angular/platform-browser";
+import {ScopesComponent} from "./component/scopes/scopes.component";
 
 @NgModule({
   declarations: [
     EmptyComponent,
+    HelpComponent,
     MessageComponent,
+    ScopesComponent,
     SearchComponent,
     SidebarComponent,
-    HelpComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,10 +29,11 @@ import {BrowserModule} from "@angular/platform-browser";
   ],
   exports: [
     EmptyComponent,
+    HelpComponent,
     MessageComponent,
+    ScopesComponent,
     SearchComponent,
     SidebarComponent,
-    HelpComponent,
   ]
 })
 export class FusioSdkModule { }

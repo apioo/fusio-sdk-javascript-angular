@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {HelpService} from "../../service/help.service";
 
 @Component({
-  selector: 'app-search',
+  selector: 'fusio-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })

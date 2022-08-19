@@ -3,7 +3,7 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 
 @Component({
-  selector: 'app-help',
+  selector: 'fusio-help',
   templateUrl: './help.component.html',
   styleUrls: ['./help.component.css']
 })

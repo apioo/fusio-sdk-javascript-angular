@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Message} from "fusio-sdk/dist/src/generated/backend/Message";
 
 @Component({
-  selector: 'app-message',
+  selector: 'fusio-message',
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.css']
 })

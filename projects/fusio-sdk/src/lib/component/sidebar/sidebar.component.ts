@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ModelId} from "../../abstract/list";
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'fusio-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })

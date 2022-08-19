@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
-  selector: 'app-empty',
+  selector: 'fusio-empty',
   templateUrl: './empty.component.html',
   styleUrls: ['./empty.component.css']
 })
