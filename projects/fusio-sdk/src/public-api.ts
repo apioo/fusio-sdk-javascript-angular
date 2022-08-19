@@ -9,6 +9,7 @@ export * from './lib/abstract/modal';
 export * from './lib/component/empty/empty.component';
 export * from './lib/component/help/help.component';
 export * from './lib/component/message/message.component';
+export * from './lib/component/scopes/scopes.component';
 export * from './lib/component/search/search.component';
 export * from './lib/component/sidebar/sidebar.component';
 
