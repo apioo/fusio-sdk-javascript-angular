@@ -12,7 +12,7 @@ export class SearchComponent implements OnInit {
   searchTerm?: string;
 
   @Input()
-  helpPath!: string;
+  helpPath?: string;
 
   @Input()
   placeholder!: string;
@@ -41,6 +41,10 @@ export class SearchComponent implements OnInit {
   }
 
   showHelp() {
+    if (!this.helpPath) {
+      return;
+    }
+
     this.help.showDialog(this.helpPath);
   }
 
