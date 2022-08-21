@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {Observable} from 'rxjs';
-import {FactoryService} from "../service/factory.service";
+import {FusioService} from "../service/fusio.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationGuard implements CanActivate {
 
-  constructor(private factory: FactoryService<any>, private router: Router) {
+  constructor(private factory: FusioService<any>, private router: Router) {
   }
 
   canActivate(

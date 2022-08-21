@@ -3,7 +3,7 @@ import {Message} from "fusio-sdk/dist/src/generated/backend/Message";
 import {Mode, ModelId} from "./list";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import axios, {AxiosResponse} from "axios";
-import {FactoryService} from "../service/factory.service";
+import {FusioService} from "../service/fusio.service";
 import {ClientAbstract} from "sdkgen-client";
 
 @Component({
@@ -16,7 +16,7 @@ export abstract class Modal<C extends ClientAbstract, T extends ModelId> impleme
   @Input() mode: Mode = Mode.Create;
   @Input() entity: T = this.newEntity();
 
-  constructor(protected factory: FactoryService<C>, protected modalService: NgbModal, public modal: NgbActiveModal) { }
+  constructor(protected fusio: FusioService<C>, protected modalService: NgbModal, public modal: NgbActiveModal) { }
 
   ngOnInit(): void {
   }

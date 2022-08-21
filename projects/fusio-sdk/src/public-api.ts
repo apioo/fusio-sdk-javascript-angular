@@ -15,7 +15,7 @@ export * from './lib/component/sidebar/sidebar.component';
 
 export * from './lib/guard/authentication.guard';
 
-export * from './lib/service/factory.service';
+export * from './lib/service/fusio.service';
 export * from './lib/service/help.service';
 export * from './lib/service/user.service';
 

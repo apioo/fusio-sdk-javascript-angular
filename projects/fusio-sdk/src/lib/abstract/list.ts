@@ -6,7 +6,7 @@ import axios, {AxiosResponse} from "axios";
 import {Collection} from "fusio-sdk/dist/src/generated/backend/Collection";
 import {Message} from "fusio-sdk/dist/src/generated/backend/Message";
 import {Collection_Query} from "fusio-sdk/dist/src/generated/backend/Collection_Query";
-import {FactoryService} from "../service/factory.service";
+import {FusioService} from "../service/fusio.service";
 import {ClientAbstract} from "sdkgen-client";
 
 @Component({
@@ -23,7 +23,7 @@ export abstract class List<C extends ClientAbstract, T extends ModelId> implemen
   public response?: Message;
   public loading: boolean = true;
 
-  constructor(protected factory: FactoryService<C>, protected route: ActivatedRoute, protected router: Router, protected modalService: NgbModal) {
+  constructor(protected fusio: FusioService<C>, protected route: ActivatedRoute, protected router: Router, protected modalService: NgbModal) {
   }
 
   async ngOnInit(): Promise<void> {

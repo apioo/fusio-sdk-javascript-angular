@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {FactoryService} from "./factory.service";
+import {FusioService} from "./fusio.service";
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,7 @@ export class UserService<T> {
 
   private user?: T;
 
-  constructor(private factory: FactoryService<any>) { }
+  constructor(private factory: FusioService<any>) { }
 
   public login(user: T): void {
     this.user = user;

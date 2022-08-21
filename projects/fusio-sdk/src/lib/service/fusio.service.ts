@@ -7,7 +7,7 @@ import {ClientAbstract, CredentialsInterface} from "sdkgen-client";
 @Injectable({
   providedIn: 'root'
 })
-export abstract class FactoryService<T extends ClientAbstract> {
+export abstract class FusioService<T extends ClientAbstract> {
 
   private readonly baseUrl: string;
   private readonly store: TokenStoreInterface;
@@ -17,10 +17,10 @@ export abstract class FactoryService<T extends ClientAbstract> {
     if (typeof FUSIO_URL === 'string') {
       baseUrl = FUSIO_URL;
     } else {
-      baseUrl = FactoryService.guessFusioEndpointUrl(false);
+      baseUrl = FusioService.guessFusioEndpointUrl(false);
     }
 
-    this.baseUrl = FactoryService.normalizeBaseUrl(baseUrl);
+    this.baseUrl = FusioService.normalizeBaseUrl(baseUrl);
     this.store = new SessionTokenStore();
   }
 
