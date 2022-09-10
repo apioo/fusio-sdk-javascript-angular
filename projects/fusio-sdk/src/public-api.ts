@@ -8,7 +8,14 @@ export * from './lib/abstract/modal';
 
 export * from './lib/component/empty/empty.component';
 export * from './lib/component/help/help.component';
+export * from './lib/component/login/login.component';
+export * from './lib/component/login/provider/provider.component';
+export * from './lib/component/logout/logout.component';
 export * from './lib/component/message/message.component';
+export * from './lib/component/password/confirm/confirm.component';
+export * from './lib/component/password/reset/reset.component';
+export * from './lib/component/register/register.component';
+export * from './lib/component/register/activate/activate.component';
 export * from './lib/component/scopes/scopes.component';
 export * from './lib/component/search/search.component';
 export * from './lib/component/sidebar/sidebar.component';

@@ -8,13 +8,13 @@ import {FusioService} from "../service/fusio.service";
 })
 export class AuthenticationGuard implements CanActivate {
 
-  constructor(private factory: FusioService<any>, private router: Router) {
+  constructor(private fusio: FusioService<any>, private router: Router) {
   }
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.factory.hasValidToken()) {
+    if (this.fusio.hasValidToken()) {
       return true;
     } else {
       return this.router.createUrlTree(['login']);
