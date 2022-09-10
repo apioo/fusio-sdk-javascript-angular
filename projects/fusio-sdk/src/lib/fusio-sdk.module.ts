@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
@@ -17,6 +17,8 @@ import {ConfirmComponent} from "./component/password/confirm/confirm.component";
 import {ResetComponent} from "./component/password/reset/reset.component";
 import {RegisterComponent} from "./component/register/register.component";
 import {ActivateComponent} from "./component/register/activate/activate.component";
+import {Config, FUSIO_CONFIG} from "./config/config";
+import {NgxCaptchaModule} from "ngx-captcha";
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import {ActivateComponent} from "./component/register/activate/activate.componen
     FormsModule,
     RouterModule,
     NgbModule,
+    NgxCaptchaModule,
   ],
   exports: [
     EmptyComponent,
@@ -50,4 +53,23 @@ import {ActivateComponent} from "./component/register/activate/activate.componen
     SidebarComponent,
   ]
 })
-export class FusioSdkModule { }
+export class FusioSdkModule {
+
+  constructor(@Optional() @SkipSelf() parentModule?: FusioSdkModule) {
+    if (parentModule) {
+      throw new Error(
+        'FusioSdkModule is already loaded. Import it in the AppModule only');
+    }
+  }
+
+  static forRoot(config?: Config): ModuleWithProviders<FusioSdkModule> {
+    return({
+      ngModule: FusioSdkModule,
+      providers: [{
+        provide: FUSIO_CONFIG,
+        useValue: config
+      }]
+    });
+  }
+
+}

@@ -1,5 +1,6 @@
-import {Injectable} from '@angular/core';
-import {LocationStrategy, PlatformLocation} from "@angular/common";
+import {Inject, Injectable} from '@angular/core';
+import {LocationStrategy} from "@angular/common";
+import {Config, FUSIO_CONFIG, Provider} from "../config/config";
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ export class ProviderService {
 
   providers: Array<Provider> = [];
 
-  constructor(private location: LocationStrategy, private config: ProviderServiceConfig) {
+  constructor(private location: LocationStrategy, @Inject(FUSIO_CONFIG) private config: Config) {
     this.providers = this.getProviders();
   }
 
@@ -66,7 +67,7 @@ export class ProviderService {
   }
 
   public getProviders(): Array<Provider> {
-    return this.config.getProviders();
+    return this.config.providers || [];
   }
 
   private getProviderByName(name: string): Provider|undefined {
@@ -91,25 +92,7 @@ export class ProviderService {
 
 }
 
-export interface Provider {
-  name: string,
-  icon: string,
-  key: string
-  url: string,
-  params: Record<string, string>
-}
-
 export interface Verification {
   clientId: string,
   redirectUri: string,
-}
-
-enum ProviderType {
-  github,
-  google,
-  facebook,
-}
-
-export interface ProviderServiceConfig {
-  getProviders(): Array<Provider>;
 }

@@ -1,8 +1,9 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {TokenStoreInterface} from "sdkgen-client/dist/src/TokenStoreInterface";
 import {SessionTokenStore} from "sdkgen-client/dist/src/TokenStore/SessionTokenStore";
 import {ClientCredentials} from "sdkgen-client/dist/src/Credentials/ClientCredentials";
 import {ClientAbstract, CredentialsInterface} from "sdkgen-client";
+import {Config, FUSIO_CONFIG} from "../config/config";
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +13,8 @@ export abstract class FusioService<T extends ClientAbstract> {
   private readonly baseUrl: string;
   private readonly store: TokenStoreInterface;
 
-  constructor() {
-    let baseUrl;
-    if (typeof FUSIO_URL === 'string') {
-      baseUrl = FUSIO_URL;
-    } else {
-      baseUrl = FusioService.guessFusioEndpointUrl(false);
-    }
+  constructor(@Inject(FUSIO_CONFIG) private config: Config) {
+    let baseUrl = this.config.baseUrl;
 
     this.baseUrl = FusioService.normalizeBaseUrl(baseUrl);
     this.store = new SessionTokenStore();
@@ -90,15 +86,6 @@ export abstract class FusioService<T extends ClientAbstract> {
     } else {
       return baseUrl;
     }
-  }
-
-  private static guessFusioEndpointUrl(urlRewrite: boolean) {
-    let url = window.location.href
-    const pos = url.lastIndexOf('/fusio')
-    if (pos !== -1) {
-      url = url.substring(0, pos)
-    }
-    return url + (urlRewrite ? '/' : '/index.php/')
   }
 
 }

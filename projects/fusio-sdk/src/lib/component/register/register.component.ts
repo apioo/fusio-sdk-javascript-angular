@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
 import axios from "axios";
 import {User_Register} from "fusio-sdk/dist/src/generated/consumer/User_Register";
 import {ConsumerService} from "../../service/consumer.service";
+import {Config, FUSIO_CONFIG} from "../../config/config";
 
 @Component({
   selector: 'fusio-register',
@@ -23,11 +24,11 @@ export class RegisterComponent implements OnInit {
   response?: Message;
   loading = false
 
-  constructor(private consumer: ConsumerService, private config: RecaptchaConfig) {
+  constructor(private consumer: ConsumerService, @Inject(FUSIO_CONFIG) private config: Config) {
   }
 
   ngOnInit(): void {
-    let captchaKey = this.config.getKey()
+    let captchaKey = this.config.recaptcha;
     if (captchaKey) {
       this.captchaKey = captchaKey;
     }
@@ -71,8 +72,4 @@ export class RegisterComponent implements OnInit {
     this.credentials.captcha = token;
   }
 
-}
-
-export interface RecaptchaConfig {
-  getKey(): string|null;
 }

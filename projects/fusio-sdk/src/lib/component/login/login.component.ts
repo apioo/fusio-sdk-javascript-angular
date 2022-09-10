@@ -3,9 +3,10 @@ import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
 import axios from "axios";
 import {Router} from "@angular/router";
 import {User_Account} from "fusio-sdk/dist/src/generated/consumer/User_Account";
-import {Provider, ProviderService} from "../../service/provider.service";
+import {ProviderService} from "../../service/provider.service";
 import {UserService} from "../../service/user.service";
 import {ConsumerService} from "../../service/consumer.service";
+import {Provider} from "../../config/config";
 
 @Component({
   selector: 'fusio-login',
