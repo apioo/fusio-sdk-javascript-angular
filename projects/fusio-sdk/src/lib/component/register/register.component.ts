@@ -4,6 +4,7 @@ import axios from "axios";
 import {User_Register} from "fusio-sdk/dist/src/generated/consumer/User_Register";
 import {ConsumerService} from "../../service/consumer.service";
 import {Config, FUSIO_CONFIG} from "../../config/config";
+import {ErrorConverter} from "../../util/error-converter";
 
 @Component({
   selector: 'fusio-register',
@@ -54,17 +55,7 @@ export class RegisterComponent implements OnInit {
       this.loading = false;
     } catch (error) {
       this.loading = false;
-      if (axios.isAxiosError(error) && error.response)  {
-        this.response = {
-          success: false,
-          message: error.response.data.message || 'An unknown error occurred',
-        };
-      } else {
-        this.response = {
-          success: false,
-          message: String(error),
-        };
-      }
+      this.response = ErrorConverter.convert(error);
     }
   }
 

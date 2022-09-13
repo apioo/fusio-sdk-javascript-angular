@@ -5,6 +5,7 @@ import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import axios, {AxiosResponse} from "axios";
 import {FusioService} from "../service/fusio.service";
 import {ClientAbstract} from "sdkgen-client";
+import {ErrorConverter} from "../util/error-converter";
 
 @Component({
   template: '',
@@ -42,11 +43,7 @@ export abstract class Modal<C extends ClientAbstract, T extends ModelId> impleme
         this.modal.close(response.data);
       }
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response)  {
-        this.response = error.response.data as Message;
-      } else {
-        throw error;
-      }
+      this.response = ErrorConverter.convert(error);
     }
   }
 

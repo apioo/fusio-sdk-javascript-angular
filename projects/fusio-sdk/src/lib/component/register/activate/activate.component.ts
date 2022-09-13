@@ -4,6 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 import axios from "axios";
 import {User_Activate} from "fusio-sdk/dist/src/generated/consumer/User_Activate";
 import {ConsumerService} from "../../../service/consumer.service";
+import {ErrorConverter} from "../../../util/error-converter";
 
 @Component({
   selector: 'fusio-register-activate',
@@ -38,17 +39,7 @@ export class ActivateComponent implements OnInit {
 
       this.response = response.data;
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response)  {
-        this.response = {
-          success: false,
-          message: error.response.data.message || 'An unknown error occurred',
-        };
-      } else {
-        this.response = {
-          success: false,
-          message: String(error),
-        };
-      }
+      this.response = ErrorConverter.convert(error);
     }
   }
 

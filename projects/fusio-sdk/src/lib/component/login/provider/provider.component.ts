@@ -8,6 +8,7 @@ import {User_Account} from "fusio-sdk/dist/src/generated/consumer/User_Account";
 import {ProviderService} from "../../../service/provider.service";
 import {UserService} from "../../../service/user.service";
 import {ConsumerService} from "../../../service/consumer.service";
+import {ErrorConverter} from "../../../util/error-converter";
 
 @Component({
   selector: 'fusio-login-provider',
@@ -63,14 +64,7 @@ export class ProviderComponent implements OnInit {
 
       await this.obtainUserInfo();
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response)  {
-        this.response = error.response.data as Message;
-      } else {
-        this.response = {
-          success: false,
-          message: String(error),
-        };
-      }
+      this.response = ErrorConverter.convert(error);
     }
   }
 

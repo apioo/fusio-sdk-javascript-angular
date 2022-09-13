@@ -8,6 +8,7 @@ import {Message} from "fusio-sdk/dist/src/generated/backend/Message";
 import {Collection_Query} from "fusio-sdk/dist/src/generated/backend/Collection_Query";
 import {FusioService} from "../service/fusio.service";
 import {ClientAbstract} from "sdkgen-client";
+import {ErrorConverter} from "../util/error-converter";
 
 @Component({
   template: '',
@@ -63,11 +64,7 @@ export abstract class List<C extends ClientAbstract, T extends ModelId> implemen
 
       this.onList();
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response)  {
-        this.response = error.response.data as Message;
-      } else {
-        throw error;
-      }
+      this.response = ErrorConverter.convert(error);
     }
 
     // in case we are not at a specific route redirect to the first
@@ -97,11 +94,7 @@ export abstract class List<C extends ClientAbstract, T extends ModelId> implemen
 
       this.onGet();
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response)  {
-        this.response = error.response.data as Message;
-      } else {
-        throw error;
-      }
+      this.response = ErrorConverter.convert(error);
     }
 
     this.finishLoading();
