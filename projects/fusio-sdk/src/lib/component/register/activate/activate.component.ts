@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
 import {ActivatedRoute} from "@angular/router";
 import axios from "axios";
-import {User_Activate} from "fusio-sdk/dist/src/generated/consumer/User_Activate";
+import {UserActivate} from "fusio-sdk/dist/src/generated/consumer/UserActivate";
 import {ConsumerService} from "../../../service/consumer.service";
 import {ErrorConverter} from "../../../util/error-converter";
 
@@ -28,14 +28,14 @@ export class ActivateComponent implements OnInit {
   }
 
   private async activate(token: string) {
-    let activate: User_Activate = {
+    let activate: UserActivate = {
       token: token
     };
 
     try {
       const client = this.consumer.getClientAnonymous();
-      const account = await client.consumerUser();
-      const response = await account.getConsumerActivate().consumerActionUserActivate(activate);
+      const resource = await client.getConsumerActivate();
+      const response = await resource.consumerActionUserActivate(activate);
 
       this.response = response.data;
     } catch (error) {

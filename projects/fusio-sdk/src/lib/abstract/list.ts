@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {Collection_Category_Query} from "fusio-sdk/dist/src/generated/backend/Collection_Category_Query";
+import {CollectionCategoryQuery} from "fusio-sdk/dist/src/generated/backend/CollectionCategoryQuery";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import axios, {AxiosResponse} from "axios";
 import {Collection} from "fusio-sdk/dist/src/generated/backend/Collection";
 import {Message} from "fusio-sdk/dist/src/generated/backend/Message";
-import {Collection_Query} from "fusio-sdk/dist/src/generated/backend/Collection_Query";
+import {CollectionQuery} from "fusio-sdk/dist/src/generated/backend/CollectionQuery";
 import {FusioService} from "../service/fusio.service";
 import {ClientAbstract} from "sdkgen-client";
 import {ErrorConverter} from "../util/error-converter";
@@ -76,8 +76,8 @@ export abstract class List<C extends ClientAbstract, T extends ModelId> implemen
     this.finishLoading();
   }
 
-  protected getCollectionQuery(): Collection_Query {
-    let query: Collection_Query = {};
+  protected getCollectionQuery(): CollectionQuery {
+    let query: CollectionQuery = {};
     query.startIndex = (this.page - 1) * this.pageSize;
     query.count = this.pageSize;
     if (this.search) {
@@ -189,7 +189,7 @@ export abstract class List<C extends ClientAbstract, T extends ModelId> implemen
     }, 100);
   }
 
-  protected abstract getAll(query: Collection_Category_Query): Promise<AxiosResponse<Collection<T>>>;
+  protected abstract getAll(query: CollectionCategoryQuery): Promise<AxiosResponse<Collection<T>>>;
   protected abstract get(id: string): Promise<AxiosResponse<T>>;
   protected abstract getDetailComponent(): any;
   protected abstract getRoute(): string;

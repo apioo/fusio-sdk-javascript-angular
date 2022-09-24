@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
 import {ActivatedRoute} from "@angular/router";
 import axios from "axios";
-import {User_PasswordReset} from "fusio-sdk/dist/src/generated/consumer/User_PasswordReset";
+import {UserPasswordReset} from "fusio-sdk/dist/src/generated/consumer/UserPasswordReset";
 import {ConsumerService} from "../../../service/consumer.service";
 import {ErrorConverter} from "../../../util/error-converter";
 
@@ -13,7 +13,7 @@ import {ErrorConverter} from "../../../util/error-converter";
 })
 export class ConfirmComponent implements OnInit {
 
-  reset: User_PasswordReset = {
+  reset: UserPasswordReset = {
     token: '',
     newPassword: '',
   }
@@ -44,8 +44,8 @@ export class ConfirmComponent implements OnInit {
       }
 
       const client = this.consumer.getClientAnonymous();
-      const account = await client.consumerUser();
-      const response = await account.getConsumerPasswordReset().consumerActionUserResetPasswordExecute(this.reset);
+      const resource = await client.getConsumerPasswordReset();
+      const response = await resource.consumerActionUserResetPasswordExecute(this.reset);
 
       this.response = response.data;
       this.loading = false;

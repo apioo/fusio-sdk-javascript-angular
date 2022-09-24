@@ -4,7 +4,7 @@ import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
 import {SessionTokenStore} from "sdkgen-client";
 import {AccessToken} from "sdkgen-client/dist/src/AccessToken";
 import {ActivatedRoute, Router} from "@angular/router";
-import {User_Account} from "fusio-sdk/dist/src/generated/consumer/User_Account";
+import {UserAccount} from "fusio-sdk/dist/src/generated/consumer/UserAccount";
 import {ProviderService} from "../../../service/provider.service";
 import {UserService} from "../../../service/user.service";
 import {ConsumerService} from "../../../service/consumer.service";
@@ -19,7 +19,7 @@ export class ProviderComponent implements OnInit {
 
   response?: Message;
 
-  constructor(private consumer: ConsumerService, private router: Router, private user: UserService<User_Account>, protected route: ActivatedRoute, private provider: ProviderService) { }
+  constructor(private consumer: ConsumerService, private router: Router, private user: UserService<UserAccount>, protected route: ActivatedRoute, private provider: ProviderService) { }
 
   async ngOnInit(): Promise<void> {
     const provider = this.route.snapshot.paramMap.get('provider');
@@ -40,8 +40,8 @@ export class ProviderComponent implements OnInit {
     try {
       const verification = this.provider.verifyRequest(providerName, state);
 
-      const group = await this.consumer.getClientAnonymous().consumerUser();
-      const response = await group.getConsumerProviderByProvider(providerName).consumerActionUserProvider({
+      const resource = await this.consumer.getClientAnonymous().getConsumerProviderByProvider(providerName);
+      const response = await resource.consumerActionUserProvider({
         code: code,
         clientId: verification.clientId,
         redirectUri: verification.redirectUri,
@@ -69,8 +69,8 @@ export class ProviderComponent implements OnInit {
   }
 
   private async obtainUserInfo() {
-    const account = await this.consumer.getClient().consumerUser();
-    const response = await account.getConsumerAccount().consumerActionUserGet();
+    const resource = await this.consumer.getClient().getConsumerAccount();
+    const response = await resource.consumerActionUserGet();
 
     this.user.login(response.data);
 

@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
 import axios from "axios";
-import {User_Register} from "fusio-sdk/dist/src/generated/consumer/User_Register";
+import {UserRegister} from "fusio-sdk/dist/src/generated/consumer/UserRegister";
 import {ConsumerService} from "../../service/consumer.service";
 import {Config, FUSIO_CONFIG} from "../../config/config";
 import {ErrorConverter} from "../../util/error-converter";
@@ -13,7 +13,7 @@ import {ErrorConverter} from "../../util/error-converter";
 })
 export class RegisterComponent implements OnInit {
 
-  credentials: User_Register = {
+  credentials: UserRegister = {
     name: '',
     email: '',
     password: '',
@@ -48,8 +48,8 @@ export class RegisterComponent implements OnInit {
       }
 
       const client = this.consumer.getClientAnonymous();
-      const account = await client.consumerUser();
-      const response = await account.getConsumerRegister().consumerActionUserRegister(this.credentials);
+      const resource = await client.getConsumerRegister();
+      const response = await resource.consumerActionUserRegister(this.credentials);
 
       this.response = response.data;
       this.loading = false;
