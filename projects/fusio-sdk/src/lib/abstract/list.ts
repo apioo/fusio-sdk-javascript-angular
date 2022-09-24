@@ -208,7 +208,7 @@ export interface QueryParams {
 }
 
 export interface ModelId {
-  id?: number
+  id?: number|string
 }
 
 export enum Mode {
