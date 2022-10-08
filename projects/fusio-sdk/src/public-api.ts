@@ -6,6 +6,7 @@ export * from './lib/abstract/detail';
 export * from './lib/abstract/list';
 export * from './lib/abstract/modal';
 
+export * from './lib/component/account/account.component';
 export * from './lib/component/empty/empty.component';
 export * from './lib/component/help/help.component';
 export * from './lib/component/login/login.component';
@@ -18,6 +19,7 @@ export * from './lib/component/register/register.component';
 export * from './lib/component/register/activate/activate.component';
 export * from './lib/component/scopes/scopes.component';
 export * from './lib/component/search/search.component';
+export * from './lib/component/security/security.component';
 export * from './lib/component/sidebar/sidebar.component';
 
 export * from './lib/guard/authentication.guard';
