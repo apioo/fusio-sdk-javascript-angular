@@ -17,8 +17,11 @@ import {ConfirmComponent} from "./component/password/confirm/confirm.component";
 import {ResetComponent} from "./component/password/reset/reset.component";
 import {RegisterComponent} from "./component/register/register.component";
 import {ActivateComponent} from "./component/register/activate/activate.component";
+import {AccountComponent} from './component/account/account.component';
+import {SecurityComponent} from './component/security/security.component';
 import {Config, FUSIO_CONFIG} from "./config/config";
 import {NgxCaptchaModule} from "ngx-captcha";
+import {GravatarModule} from "ngx-gravatar";
 
 @NgModule({
   declarations: [
@@ -35,6 +38,8 @@ import {NgxCaptchaModule} from "ngx-captcha";
     ScopesComponent,
     SearchComponent,
     SidebarComponent,
+    AccountComponent,
+    SecurityComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +48,7 @@ import {NgxCaptchaModule} from "ngx-captcha";
     RouterModule,
     NgbModule,
     NgxCaptchaModule,
+    GravatarModule,
   ],
   exports: [
     EmptyComponent,
