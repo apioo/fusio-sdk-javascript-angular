@@ -7,6 +7,9 @@ import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
 import {AppCreate} from "fusio-sdk/dist/src/generated/consumer/AppCreate";
 import {AppUpdate} from "fusio-sdk/dist/src/generated/consumer/AppUpdate";
 import {Scope} from "fusio-sdk/dist/src/generated/consumer/Scope";
+import {FusioService} from "../../../service/fusio.service";
+import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ConsumerService} from "../../../service/consumer.service";
 
 @Component({
   selector: 'fusio-app-modal',
@@ -16,6 +19,10 @@ import {Scope} from "fusio-sdk/dist/src/generated/consumer/Scope";
 export class ModalComponent extends Modal<Client, App> {
 
   scopes?: Array<Scope>;
+
+  constructor(protected fusio: ConsumerService, protected modalService: NgbModal, public modal: NgbActiveModal) {
+    super(fusio, modalService, modal);
+  }
 
   override async ngOnInit(): Promise<void> {
     const scope = await this.fusio.getClient().getConsumerScope();

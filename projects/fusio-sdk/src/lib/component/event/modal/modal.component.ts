@@ -7,6 +7,8 @@ import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
 import {Event} from "fusio-sdk/dist/src/generated/consumer/Event";
 import {EventSubscriptionCreate} from "fusio-sdk/dist/src/generated/consumer/EventSubscriptionCreate";
 import {EventSubscriptionUpdate} from "fusio-sdk/dist/src/generated/consumer/EventSubscriptionUpdate";
+import {ConsumerService} from "../../../service/consumer.service";
+import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'fusio-event-modal',
@@ -16,6 +18,10 @@ import {EventSubscriptionUpdate} from "fusio-sdk/dist/src/generated/consumer/Eve
 export class ModalComponent extends Modal<Client, EventSubscription> {
 
   events?: Array<Event>;
+
+  constructor(protected fusio: ConsumerService, protected modalService: NgbModal, public modal: NgbActiveModal) {
+    super(fusio, modalService, modal);
+  }
 
   override async ngOnInit(): Promise<void> {
     const event = await this.fusio.getClient().getConsumerEvent();
