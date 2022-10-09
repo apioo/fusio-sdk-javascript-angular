@@ -23,12 +23,12 @@ export * from './lib/component/security/security.component';
 export * from './lib/component/sidebar/sidebar.component';
 export * from './lib/component/subscription/subscription.component';
 
-export {DetailComponent as AppDetail} from './lib/component/app/detail/detail.component';
-export {ListComponent as AppList} from './lib/component/app/list/list.component';
-export {ModalComponent as AppModal} from './lib/component/app/modal/modal.component';
-export {DetailComponent as EventDetail} from './lib/component/event/detail/detail.component';
-export {ListComponent as EventList} from './lib/component/event/list/list.component';
-export {ModalComponent as EventModal} from './lib/component/event/modal/modal.component';
+export {DetailComponent as AppDetailComponent} from './lib/component/app/detail/detail.component';
+export {ListComponent as AppListComponent} from './lib/component/app/list/list.component';
+export {ModalComponent as AppModalComponent} from './lib/component/app/modal/modal.component';
+export {DetailComponent as EventDetailComponent} from './lib/component/event/detail/detail.component';
+export {ListComponent as EventListComponent} from './lib/component/event/list/list.component';
+export {ModalComponent as EventModalComponent} from './lib/component/event/modal/modal.component';
 
 export * from './lib/guard/authentication.guard';
 
