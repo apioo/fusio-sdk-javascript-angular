@@ -21,6 +21,7 @@ export * from './lib/component/scopes/scopes.component';
 export * from './lib/component/search/search.component';
 export * from './lib/component/security/security.component';
 export * from './lib/component/sidebar/sidebar.component';
+export * from './lib/component/subscription/subscription.component';
 
 export * from './lib/guard/authentication.guard';
 

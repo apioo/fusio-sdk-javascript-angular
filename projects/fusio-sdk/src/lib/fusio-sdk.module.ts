@@ -22,6 +22,7 @@ import {SecurityComponent} from './component/security/security.component';
 import {Config, FUSIO_CONFIG} from "./config/config";
 import {NgxCaptchaModule} from "ngx-captcha";
 import {GravatarModule} from "ngx-gravatar";
+import {SubscriptionComponent} from './component/subscription/subscription.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import {GravatarModule} from "ngx-gravatar";
     SidebarComponent,
     AccountComponent,
     SecurityComponent,
+    SubscriptionComponent,
   ],
   imports: [
     BrowserModule,
