@@ -23,6 +23,12 @@ import {Config, FUSIO_CONFIG} from "./config/config";
 import {NgxCaptchaModule} from "ngx-captcha";
 import {GravatarModule} from "ngx-gravatar";
 import {SubscriptionComponent} from './component/subscription/subscription.component';
+import {DetailComponent as AppDetail} from './component/app/detail/detail.component';
+import {ListComponent as AppList} from './component/app/list/list.component';
+import {ModalComponent as AppModal} from './component/app/modal/modal.component';
+import {DetailComponent as EventDetail} from './component/event/detail/detail.component';
+import {ListComponent as EventList} from './component/event/list/list.component';
+import {ModalComponent as EventModal} from './component/event/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +48,12 @@ import {SubscriptionComponent} from './component/subscription/subscription.compo
     SecurityComponent,
     SidebarComponent,
     SubscriptionComponent,
+    AppDetail,
+    AppList,
+    AppModal,
+    EventDetail,
+    EventList,
+    EventModal,
   ],
   imports: [
     BrowserModule,
@@ -69,6 +81,12 @@ import {SubscriptionComponent} from './component/subscription/subscription.compo
     SecurityComponent,
     SidebarComponent,
     SubscriptionComponent,
+    AppDetail,
+    AppList,
+    AppModal,
+    EventDetail,
+    EventList,
+    EventModal,
   ]
 })
 export class FusioSdkModule {
