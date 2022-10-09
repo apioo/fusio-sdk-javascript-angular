@@ -26,6 +26,7 @@ import {SubscriptionComponent} from './component/subscription/subscription.compo
 
 @NgModule({
   declarations: [
+    AccountComponent,
     EmptyComponent,
     HelpComponent,
     LoginComponent,
@@ -38,9 +39,8 @@ import {SubscriptionComponent} from './component/subscription/subscription.compo
     ActivateComponent,
     ScopesComponent,
     SearchComponent,
-    SidebarComponent,
-    AccountComponent,
     SecurityComponent,
+    SidebarComponent,
     SubscriptionComponent,
   ],
   imports: [
@@ -53,12 +53,22 @@ import {SubscriptionComponent} from './component/subscription/subscription.compo
     GravatarModule,
   ],
   exports: [
+    AccountComponent,
     EmptyComponent,
     HelpComponent,
+    LoginComponent,
+    ProviderComponent,
+    LogoutComponent,
     MessageComponent,
+    ConfirmComponent,
+    ResetComponent,
+    RegisterComponent,
+    ActivateComponent,
     ScopesComponent,
     SearchComponent,
+    SecurityComponent,
     SidebarComponent,
+    SubscriptionComponent,
   ]
 })
 export class FusioSdkModule {
