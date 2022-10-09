@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CollectionCategoryQuery} from "fusio-sdk/dist/src/generated/backend/CollectionCategoryQuery";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import axios, {AxiosResponse} from "axios";
+import {AxiosResponse} from "axios";
 import {Collection} from "fusio-sdk/dist/src/generated/backend/Collection";
 import {Message} from "fusio-sdk/dist/src/generated/backend/Message";
 import {CollectionQuery} from "fusio-sdk/dist/src/generated/backend/CollectionQuery";

@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from "@angular/core";
 import {Message} from "fusio-sdk/dist/src/generated/backend/Message";
 import {Mode, ModelId} from "./list";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import axios, {AxiosResponse} from "axios";
+import {AxiosResponse} from "axios";
 import {FusioService} from "../service/fusio.service";
 import {ClientAbstract} from "sdkgen-client";
 import {ErrorConverter} from "../util/error-converter";
