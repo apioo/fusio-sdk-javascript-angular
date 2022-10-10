@@ -41,5 +41,6 @@ export * from './lib/service/provider.service';
 export * from './lib/service/user.service';
 
 export * from './lib/util/error-converter';
+export * from './lib/util/route-builder';
 
 export * from './lib/fusio-sdk.module';
