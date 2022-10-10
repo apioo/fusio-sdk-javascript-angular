@@ -7,6 +7,7 @@ export * from './lib/abstract/list';
 export * from './lib/abstract/modal';
 
 export * from './lib/component/account/account.component';
+export * from './lib/component/account-container/account-container.component';
 export * from './lib/component/empty/empty.component';
 export * from './lib/component/help/help.component';
 export * from './lib/component/login/login.component';

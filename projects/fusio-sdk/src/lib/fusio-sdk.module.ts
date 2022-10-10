@@ -29,10 +29,12 @@ import {ModalComponent as AppModal} from './component/app/modal/modal.component'
 import {DetailComponent as EventDetail} from './component/event/detail/detail.component';
 import {ListComponent as EventList} from './component/event/list/list.component';
 import {ModalComponent as EventModal} from './component/event/modal/modal.component';
+import {AccountContainerComponent} from "./component/account-container/account-container.component";
 
 @NgModule({
   declarations: [
     AccountComponent,
+    AccountContainerComponent,
     EmptyComponent,
     HelpComponent,
     LoginComponent,
@@ -66,6 +68,7 @@ import {ModalComponent as EventModal} from './component/event/modal/modal.compon
   ],
   exports: [
     AccountComponent,
+    AccountContainerComponent,
     EmptyComponent,
     HelpComponent,
     LoginComponent,
