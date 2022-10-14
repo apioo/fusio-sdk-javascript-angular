@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import axios from "axios";
 import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
 import {SessionTokenStore} from "sdkgen-client";
@@ -9,6 +9,7 @@ import {ProviderService} from "../../../service/provider.service";
 import {UserService} from "../../../service/user.service";
 import {ConsumerService} from "../../../service/consumer.service";
 import {ErrorConverter} from "../../../util/error-converter";
+import {Config, FUSIO_CONFIG} from "../../../config/config";
 
 @Component({
   selector: 'fusio-login-provider',
@@ -19,7 +20,7 @@ export class ProviderComponent implements OnInit {
 
   response?: Message;
 
-  constructor(private consumer: ConsumerService, private router: Router, private user: UserService<UserAccount>, protected route: ActivatedRoute, private provider: ProviderService) { }
+  constructor(private consumer: ConsumerService, private router: Router, private user: UserService<UserAccount>, protected route: ActivatedRoute, private provider: ProviderService, @Inject(FUSIO_CONFIG) private config: Config) { }
 
   async ngOnInit(): Promise<void> {
     const provider = this.route.snapshot.paramMap.get('provider');
@@ -74,7 +75,12 @@ export class ProviderComponent implements OnInit {
 
     this.user.login(response.data);
 
-    this.router.navigate(['/account']).then(() => {
+    let homePath = '/account';
+    if (this.config.homePath) {
+      homePath = this.config.homePath;
+    }
+
+    this.router.navigate([homePath]).then(() => {
       location.reload();
     });
   }

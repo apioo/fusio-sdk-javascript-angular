@@ -2,6 +2,9 @@ import {InjectionToken} from "@angular/core";
 
 export interface Config {
   baseUrl: string,
+  homePath: string,
+  paymentProvider: string,
+  paymentCurrency: string,
   providers?: Array<Provider>,
   recaptcha?: string,
 }

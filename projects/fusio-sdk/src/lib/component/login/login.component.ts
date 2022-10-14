@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
 import axios from "axios";
 import {Router} from "@angular/router";
@@ -6,7 +6,7 @@ import {UserAccount} from "fusio-sdk/dist/src/generated/consumer/UserAccount";
 import {ProviderService} from "../../service/provider.service";
 import {UserService} from "../../service/user.service";
 import {ConsumerService} from "../../service/consumer.service";
-import {Provider} from "../../config/config";
+import {Config, FUSIO_CONFIG, Provider} from "../../config/config";
 
 @Component({
   selector: 'fusio-login',
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
 
   providers: Array<Provider> = [];
 
-  constructor(private consumer: ConsumerService, private router: Router, private user: UserService<UserAccount>, private provider: ProviderService) {
+  constructor(private consumer: ConsumerService, private router: Router, private user: UserService<UserAccount>, private provider: ProviderService, @Inject(FUSIO_CONFIG) private config: Config) {
   }
 
   ngOnInit(): void {
@@ -42,7 +42,12 @@ export class LoginComponent implements OnInit {
 
       this.user.login(response.data);
 
-      this.router.navigate(['/account']).then(() => {
+      let homePath = '/account';
+      if (this.config.homePath) {
+        homePath = this.config.homePath;
+      }
+
+      this.router.navigate([homePath]).then(() => {
         location.reload();
       });
     } catch (error) {
