@@ -10,6 +10,7 @@ import {Scope} from "fusio-sdk/dist/src/generated/consumer/Scope";
 import {FusioService} from "../../../service/fusio.service";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ConsumerService} from "../../../service/consumer.service";
+import {ErrorService} from "../../../service/error.service";
 
 @Component({
   selector: 'fusio-app-modal',
@@ -20,8 +21,8 @@ export class ModalComponent extends Modal<Client, App> {
 
   scopes?: Array<Scope>;
 
-  constructor(protected fusio: ConsumerService, protected modalService: NgbModal, public modal: NgbActiveModal) {
-    super(fusio, modalService, modal);
+  constructor(fusio: ConsumerService, error: ErrorService, modalService: NgbModal, modal: NgbActiveModal) {
+    super(fusio, error, modalService, modal);
   }
 
   override async ngOnInit(): Promise<void> {

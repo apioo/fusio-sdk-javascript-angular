@@ -1,6 +1,7 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {LocationStrategy} from "@angular/common";
-import {Config, FUSIO_CONFIG, Provider} from "../config/config";
+import {Provider} from "../config/config";
+import {ConfigService} from "./config.service";
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +10,8 @@ export class ProviderService {
 
   providers: Array<Provider> = [];
 
-  constructor(private location: LocationStrategy, @Inject(FUSIO_CONFIG) private config: Config) {
-    this.providers = this.getProviders();
+  constructor(private location: LocationStrategy, private config: ConfigService) {
+    this.providers = this.config.getProviders();
   }
 
   public generateUrl(name: string): string {
@@ -64,10 +65,6 @@ export class ProviderService {
       clientId: provider.key,
       redirectUri: session.redirectUri,
     };
-  }
-
-  public getProviders(): Array<Provider> {
-    return this.config.providers || [];
   }
 
   private getProviderByName(name: string): Provider|undefined {

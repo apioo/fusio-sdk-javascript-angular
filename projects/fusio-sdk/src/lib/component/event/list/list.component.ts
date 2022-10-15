@@ -9,6 +9,8 @@ import {ModalComponent} from "../modal/modal.component";
 import {ConsumerService} from "../../../service/consumer.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {EventService} from "../../../service/event.service";
+import {ErrorService} from "../../../service/error.service";
 
 @Component({
   selector: 'fusio-event-list',
@@ -17,8 +19,8 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 })
 export class ListComponent extends List<Client, EventSubscription> {
 
-  constructor(protected fusio: ConsumerService, protected route: ActivatedRoute, protected router: Router, protected modalService: NgbModal) {
-    super(fusio, route, router, modalService);
+  constructor(fusio: ConsumerService, route: ActivatedRoute, router: Router, modalService: NgbModal, event: EventService, error: ErrorService) {
+    super(fusio, route, router, modalService, event, error);
   }
 
   protected async getAll(query: CollectionQuery): Promise<AxiosResponse<Collection<EventSubscription>>> {

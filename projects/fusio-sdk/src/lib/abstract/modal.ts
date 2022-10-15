@@ -5,7 +5,7 @@ import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AxiosResponse} from "axios";
 import {FusioService} from "../service/fusio.service";
 import {ClientAbstract} from "sdkgen-client";
-import {ErrorConverter} from "../util/error-converter";
+import {ErrorService} from "../service/error.service";
 
 @Component({
   template: '',
@@ -17,7 +17,7 @@ export abstract class Modal<C extends ClientAbstract, T extends ModelId> impleme
   @Input() mode: Mode = Mode.Create;
   @Input() entity: T = this.newEntity();
 
-  constructor(protected fusio: FusioService<C>, protected modalService: NgbModal, public modal: NgbActiveModal) { }
+  constructor(protected fusio: FusioService<C>, protected error: ErrorService, protected modalService: NgbModal, public modal: NgbActiveModal) { }
 
   ngOnInit(): void {
   }
@@ -40,10 +40,13 @@ export abstract class Modal<C extends ClientAbstract, T extends ModelId> impleme
       }
 
       if (response) {
-        this.modal.close(response.data);
+        this.modal.close({
+          entity: data,
+          response: response.data,
+        });
       }
     } catch (error) {
-      this.response = ErrorConverter.convert(error);
+      this.response = this.error.convert(error);
     }
   }
 
@@ -52,4 +55,9 @@ export abstract class Modal<C extends ClientAbstract, T extends ModelId> impleme
   protected abstract delete(entity: T): Promise<AxiosResponse<Message>|void>;
   protected abstract newEntity(): T;
 
+}
+
+export interface Result<T> {
+  entity: T,
+  response: Message,
 }

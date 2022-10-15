@@ -1,10 +1,11 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Plan} from "fusio-sdk/dist/src/generated/consumer/Plan";
 import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
 import {ConsumerService} from "../../service/consumer.service";
 import {LocationStrategy} from "@angular/common";
-import {ErrorConverter} from "../../util/error-converter";
-import {Config, FUSIO_CONFIG} from "../../config/config";
+import {EventService} from "../../service/event.service";
+import {ConfigService} from "../../service/config.service";
+import {ErrorService} from "../../service/error.service";
 
 @Component({
   selector: 'fusio-subscription',
@@ -17,24 +18,21 @@ export class SubscriptionComponent implements OnInit {
   plans?: Array<Plan>
   response?: Message;
 
-  constructor(private consumer: ConsumerService, private location: LocationStrategy, @Inject(FUSIO_CONFIG) private config: Config) { }
+  constructor(private consumer: ConsumerService, private location: LocationStrategy, private event: EventService, private error: ErrorService, private config: ConfigService) { }
 
   async ngOnInit(): Promise<void> {
     const plan = await this.consumer.getClient().getConsumerPlan();
     const response = await plan.consumerActionPlanGetAll({count: 1024});
     this.plans = response.data.entry;
-
-    if (this.config.paymentCurrency) {
-      this.currencyCode = this.config.paymentCurrency;
-    }
+    this.currencyCode = this.config.getPaymentCurrency();
   }
 
   async doBillingPortal() {
     try {
-      const path = this.location.prepareExternalUrl(this.getHomePath());
+      const path = this.location.prepareExternalUrl(this.config.getHomePath());
       const redirectUrl = location.origin + path;
 
-      const portal = await this.consumer.getClient().getConsumerPaymentByProviderPortal(this.getPaymentProvider());
+      const portal = await this.consumer.getClient().getConsumerPaymentByProviderPortal(this.config.getPaymentProvider());
       const response = await portal.consumerActionPaymentPortal({
         returnUrl: redirectUrl
       });
@@ -45,42 +43,28 @@ export class SubscriptionComponent implements OnInit {
         throw new Error('You can only visit the billing portal once you have successfully purchased a subscription');
       }
     } catch (error) {
-      this.response = ErrorConverter.convert(error);
+      this.response = this.error.convert(error);
     }
   }
 
   async doPurchase(plan: Plan) {
     try {
-      const path = this.location.prepareExternalUrl(this.getHomePath());
+      const path = this.location.prepareExternalUrl(this.config.getHomePath());
       const redirectUrl = location.origin + path;
 
-      const checkout = await this.consumer.getClient().getConsumerPaymentByProviderCheckout(this.getPaymentProvider());
+      const checkout = await this.consumer.getClient().getConsumerPaymentByProviderCheckout(this.config.getPaymentProvider());
       const response = await checkout.consumerActionPaymentCheckout({
         planId: plan.id,
         returnUrl: redirectUrl,
       });
 
       if (response.data.approvalUrl) {
+        this.event.dispatchPurchase(plan);
+
         location.href = response.data.approvalUrl;
       }
     } catch (error) {
-      this.response = ErrorConverter.convert(error);
-    }
-  }
-
-  private getHomePath(): string {
-    if (this.config.homePath) {
-      return this.config.homePath;
-    } else {
-      return '/account';
-    }
-  }
-
-  private getPaymentProvider(): string {
-    if (this.config.paymentProvider) {
-      return this.config.paymentProvider;
-    } else {
-      return 'stripe';
+      this.response = this.error.convert(error);
     }
   }
 

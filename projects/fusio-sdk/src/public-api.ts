@@ -34,13 +34,15 @@ export {ModalComponent as EventModalComponent} from './lib/component/event/modal
 export * from './lib/guard/authentication.guard';
 
 export * from './lib/service/backend.service';
+export * from './lib/service/config.service';
 export * from './lib/service/consumer.service';
+export * from './lib/service/error.service';
+export * from './lib/service/event.service';
 export * from './lib/service/fusio.service';
 export * from './lib/service/help.service';
 export * from './lib/service/provider.service';
 export * from './lib/service/user.service';
 
-export * from './lib/util/error-converter';
 export * from './lib/util/route-builder';
 
 export * from './lib/fusio-sdk.module';

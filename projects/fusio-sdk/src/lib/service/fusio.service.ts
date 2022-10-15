@@ -1,9 +1,9 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {TokenStoreInterface} from "sdkgen-client/dist/src/TokenStoreInterface";
 import {SessionTokenStore} from "sdkgen-client/dist/src/TokenStore/SessionTokenStore";
 import {ClientCredentials} from "sdkgen-client/dist/src/Credentials/ClientCredentials";
 import {ClientAbstract, CredentialsInterface} from "sdkgen-client";
-import {Config, FUSIO_CONFIG} from "../config/config";
+import {ConfigService} from "./config.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +13,8 @@ export abstract class FusioService<T extends ClientAbstract> {
   private readonly baseUrl: string;
   private readonly store: TokenStoreInterface;
 
-  constructor(@Inject(FUSIO_CONFIG) private config: Config) {
-    let baseUrl = this.config.baseUrl;
+  constructor(private config: ConfigService) {
+    let baseUrl = this.config.getBaseUrl();
 
     this.baseUrl = FusioService.normalizeBaseUrl(baseUrl);
     this.store = new SessionTokenStore();

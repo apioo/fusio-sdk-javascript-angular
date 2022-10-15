@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ConsumerService} from "../../service/consumer.service";
 import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
 import {UserAccount} from "fusio-sdk/dist/src/generated/consumer/UserAccount";
-import {ErrorConverter} from "../../util/error-converter";
+import {ErrorService} from "../../service/error.service";
 
 @Component({
   selector: 'fusio-account',
@@ -15,7 +15,7 @@ export class AccountComponent implements OnInit {
   response?: Message;
   email: string = '';
 
-  constructor(private consumer: ConsumerService) { }
+  constructor(private consumer: ConsumerService, private error: ErrorService) { }
 
   async ngOnInit(): Promise<void> {
     try {
@@ -26,7 +26,7 @@ export class AccountComponent implements OnInit {
       this.email = this.user.email || '';
       this.response = undefined;
     } catch (error) {
-      this.response = ErrorConverter.convert(error);
+      this.response = this.error.convert(error);
     }
   }
 
@@ -41,7 +41,7 @@ export class AccountComponent implements OnInit {
 
       this.response = response.data;
     } catch (error) {
-      this.response = ErrorConverter.convert(error);
+      this.response = this.error.convert(error);
     }
   }
 

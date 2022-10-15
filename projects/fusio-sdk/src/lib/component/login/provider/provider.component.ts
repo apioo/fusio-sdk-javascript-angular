@@ -1,15 +1,13 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import axios from "axios";
+import {Component, OnInit} from '@angular/core';
 import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
 import {SessionTokenStore} from "sdkgen-client";
 import {AccessToken} from "sdkgen-client/dist/src/AccessToken";
 import {ActivatedRoute, Router} from "@angular/router";
-import {UserAccount} from "fusio-sdk/dist/src/generated/consumer/UserAccount";
 import {ProviderService} from "../../../service/provider.service";
 import {UserService} from "../../../service/user.service";
 import {ConsumerService} from "../../../service/consumer.service";
-import {ErrorConverter} from "../../../util/error-converter";
-import {Config, FUSIO_CONFIG} from "../../../config/config";
+import {ErrorService} from "../../../service/error.service";
+import {ConfigService} from "../../../service/config.service";
 
 @Component({
   selector: 'fusio-login-provider',
@@ -20,7 +18,7 @@ export class ProviderComponent implements OnInit {
 
   response?: Message;
 
-  constructor(private consumer: ConsumerService, private router: Router, private user: UserService<UserAccount>, protected route: ActivatedRoute, private provider: ProviderService, @Inject(FUSIO_CONFIG) private config: Config) { }
+  constructor(private consumer: ConsumerService, private router: Router, private user: UserService, protected route: ActivatedRoute, private provider: ProviderService, private error: ErrorService, private config: ConfigService) { }
 
   async ngOnInit(): Promise<void> {
     const provider = this.route.snapshot.paramMap.get('provider');
@@ -65,7 +63,7 @@ export class ProviderComponent implements OnInit {
 
       await this.obtainUserInfo();
     } catch (error) {
-      this.response = ErrorConverter.convert(error);
+      this.response = this.error.convert(error);
     }
   }
 
@@ -75,12 +73,7 @@ export class ProviderComponent implements OnInit {
 
     this.user.login(response.data);
 
-    let homePath = '/account';
-    if (this.config.homePath) {
-      homePath = this.config.homePath;
-    }
-
-    this.router.navigate([homePath]).then(() => {
+    this.router.navigate([this.config.getHomePath()]).then(() => {
       location.reload();
     });
   }

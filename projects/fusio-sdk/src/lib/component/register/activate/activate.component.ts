@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
 import {ActivatedRoute} from "@angular/router";
-import axios from "axios";
 import {UserActivate} from "fusio-sdk/dist/src/generated/consumer/UserActivate";
 import {ConsumerService} from "../../../service/consumer.service";
-import {ErrorConverter} from "../../../util/error-converter";
+import {EventService} from "../../../service/event.service";
+import {ErrorService} from "../../../service/error.service";
 
 @Component({
   selector: 'fusio-register-activate',
@@ -15,7 +15,7 @@ export class ActivateComponent implements OnInit {
 
   response?: Message;
 
-  constructor(private consumer: ConsumerService, protected route: ActivatedRoute) {
+  constructor(private consumer: ConsumerService, private event: EventService, private error: ErrorService, protected route: ActivatedRoute) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -38,8 +38,10 @@ export class ActivateComponent implements OnInit {
       const response = await resource.consumerActionUserActivate(activate);
 
       this.response = response.data;
+
+      this.event.dispatchRegisterActivate();
     } catch (error) {
-      this.response = ErrorConverter.convert(error);
+      this.response = this.error.convert(error);
     }
   }
 

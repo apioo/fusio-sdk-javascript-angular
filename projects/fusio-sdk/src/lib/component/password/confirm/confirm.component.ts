@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
 import {ActivatedRoute} from "@angular/router";
-import axios from "axios";
 import {UserPasswordReset} from "fusio-sdk/dist/src/generated/consumer/UserPasswordReset";
 import {ConsumerService} from "../../../service/consumer.service";
-import {ErrorConverter} from "../../../util/error-converter";
+import {ErrorService} from "../../../service/error.service";
 
 @Component({
   selector: 'fusio-password-confirm',
@@ -23,7 +22,7 @@ export class ConfirmComponent implements OnInit {
   response?: Message;
   loading = false
 
-  constructor(private consumer: ConsumerService, protected route: ActivatedRoute) {
+  constructor(private consumer: ConsumerService, private error: ErrorService, protected route: ActivatedRoute) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -51,7 +50,7 @@ export class ConfirmComponent implements OnInit {
       this.loading = false;
     } catch (error) {
       this.loading = false;
-      this.response = ErrorConverter.convert(error);
+      this.response = this.error.convert(error);
     }
   }
 

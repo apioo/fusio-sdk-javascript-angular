@@ -8,7 +8,9 @@ import {Message} from "fusio-sdk/dist/src/generated/backend/Message";
 import {CollectionQuery} from "fusio-sdk/dist/src/generated/backend/CollectionQuery";
 import {FusioService} from "../service/fusio.service";
 import {ClientAbstract} from "sdkgen-client";
-import {ErrorConverter} from "../util/error-converter";
+import {ErrorService} from "../service/error.service";
+import {EventService} from "../service/event.service";
+import {Result} from "./modal";
 
 @Component({
   template: '',
@@ -24,7 +26,7 @@ export abstract class List<C extends ClientAbstract, T extends ModelId> implemen
   public response?: Message;
   public loading: boolean = true;
 
-  constructor(protected fusio: FusioService<C>, protected route: ActivatedRoute, protected router: Router, protected modalService: NgbModal) {
+  constructor(protected fusio: FusioService<C>, protected route: ActivatedRoute, protected router: Router, protected modalService: NgbModal, protected event: EventService, protected error: ErrorService) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -64,7 +66,7 @@ export abstract class List<C extends ClientAbstract, T extends ModelId> implemen
 
       this.onList();
     } catch (error) {
-      this.response = ErrorConverter.convert(error);
+      this.response = this.error.convert(error);
     }
 
     // in case we are not at a specific route redirect to the first
@@ -94,7 +96,7 @@ export abstract class List<C extends ClientAbstract, T extends ModelId> implemen
 
       this.onGet();
     } catch (error) {
-      this.response = ErrorConverter.convert(error);
+      this.response = this.error.convert(error);
     }
 
     this.finishLoading();
@@ -127,9 +129,11 @@ export abstract class List<C extends ClientAbstract, T extends ModelId> implemen
       size: 'lg'
     });
     modalRef.componentInstance.mode = Mode.Create;
-    modalRef.closed.subscribe(async (response) => {
-      this.response = response;
-      if (response.success) {
+    modalRef.closed.subscribe(async (result: Result<T>) => {
+      this.response = result.response;
+      if (result.response.success) {
+        this.event.dispatchModelCreated(result.entity, this.getRoute());
+
         await this.doList();
       }
     })
@@ -141,9 +145,11 @@ export abstract class List<C extends ClientAbstract, T extends ModelId> implemen
     });
     modalRef.componentInstance.mode = Mode.Update;
     modalRef.componentInstance.entity = entity;
-    modalRef.closed.subscribe(async (response) => {
-      this.response = response;
-      if (response.success) {
+    modalRef.closed.subscribe(async (result: Result<T>) => {
+      this.response = result.response;
+      if (result.response.success) {
+        this.event.dispatchModelUpdated(result.entity, this.getRoute());
+
         await this.doList();
       }
     })
@@ -156,9 +162,11 @@ export abstract class List<C extends ClientAbstract, T extends ModelId> implemen
     });
     modalRef.componentInstance.mode = Mode.Delete;
     modalRef.componentInstance.entity = entity;
-    modalRef.closed.subscribe(async (response) => {
-      this.response = response;
-      if (response.success) {
+    modalRef.closed.subscribe(async (result: Result<T>) => {
+      this.response = result.response;
+      if (result.response.success) {
+        this.event.dispatchModelDeleted(result.entity, this.getRoute());
+
         await this.doList();
       }
     })
@@ -193,11 +201,15 @@ export abstract class List<C extends ClientAbstract, T extends ModelId> implemen
   protected abstract get(id: string): Promise<AxiosResponse<T>>;
   protected abstract getDetailComponent(): any;
   protected abstract getRoute(): string;
+
   protected onList(): void
   {
+    this.event.dispatchModelList(this.getRoute());
   }
+
   protected onGet(): void
   {
+    this.event.dispatchModelDetail(this.selected, this.getRoute());
   }
 
 }

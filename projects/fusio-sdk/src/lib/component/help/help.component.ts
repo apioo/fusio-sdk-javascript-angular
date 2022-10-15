@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {ConfigService} from "../../service/config.service";
 
 @Component({
   selector: 'fusio-help',
@@ -12,11 +13,12 @@ export class HelpComponent implements OnInit {
   path?: string;
   url?: SafeUrl;
 
-  constructor(public modal: NgbActiveModal, protected sanitizer: DomSanitizer) { }
+  constructor(public modal: NgbActiveModal, private config: ConfigService, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     if (this.path) {
-      this.url = this.sanitizer.bypassSecurityTrustResourceUrl('https://docs.fusio-project.org/docs/backend/' + this.path);
+      const baseUrl = this.config.getHelpUrl();
+      this.url = this.sanitizer.bypassSecurityTrustResourceUrl(baseUrl + this.path);
     }
   }
 

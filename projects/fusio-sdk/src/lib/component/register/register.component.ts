@@ -1,10 +1,10 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
-import axios from "axios";
 import {UserRegister} from "fusio-sdk/dist/src/generated/consumer/UserRegister";
 import {ConsumerService} from "../../service/consumer.service";
-import {Config, FUSIO_CONFIG} from "../../config/config";
-import {ErrorConverter} from "../../util/error-converter";
+import {EventService} from "../../service/event.service";
+import {ConfigService} from "../../service/config.service";
+import {ErrorService} from "../../service/error.service";
 
 @Component({
   selector: 'fusio-register',
@@ -25,11 +25,11 @@ export class RegisterComponent implements OnInit {
   response?: Message;
   loading = false
 
-  constructor(private consumer: ConsumerService, @Inject(FUSIO_CONFIG) private config: Config) {
+  constructor(private consumer: ConsumerService, private event: EventService, private error: ErrorService, private config: ConfigService) {
   }
 
   ngOnInit(): void {
-    let captchaKey = this.config.recaptcha;
+    let captchaKey = this.config.getRecpatcha();
     if (captchaKey) {
       this.captchaKey = captchaKey;
     }
@@ -53,9 +53,11 @@ export class RegisterComponent implements OnInit {
 
       this.response = response.data;
       this.loading = false;
+
+      this.event.dispatchRegister(this.credentials.name, this.credentials.email);
     } catch (error) {
       this.loading = false;
-      this.response = ErrorConverter.convert(error);
+      this.response = this.error.convert(error);
     }
   }
 

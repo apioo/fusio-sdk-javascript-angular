@@ -1,22 +1,26 @@
 import {Injectable} from '@angular/core';
-import {FusioService} from "./fusio.service";
+import {UserAccount} from "fusio-sdk/dist/src/generated/consumer/UserAccount";
+import {ConsumerService} from "./consumer.service";
+import {EventService} from "./event.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService<T> {
+export class UserService {
 
-  private user?: T;
+  private user?: UserAccount;
 
-  constructor(private factory: FusioService<any>) { }
+  constructor(private consumer: ConsumerService, private event: EventService) { }
 
-  public login(user: T): void {
+  public login(user: UserAccount): void {
     this.user = user;
     sessionStorage.setItem('fusio_user', JSON.stringify(user));
+
+    this.event.dispatchLogin(user);
   }
 
-  public get(): T|undefined {
-    if (!this.factory.hasValidToken()) {
+  public get(): UserAccount|undefined {
+    if (!this.consumer.hasValidToken()) {
       return undefined;
     }
 
@@ -35,7 +39,9 @@ export class UserService<T> {
   public logout(): void {
     this.user = undefined;
     sessionStorage.removeItem('fusio_user');
-    this.factory.logout();
+    this.consumer.logout();
+
+    this.event.dispatchLogout();
   }
 
 }

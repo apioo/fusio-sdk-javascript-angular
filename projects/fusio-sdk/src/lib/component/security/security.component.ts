@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ConsumerService} from "../../service/consumer.service";
 import {AccountChangePassword} from "fusio-sdk/dist/src/generated/consumer/AccountChangePassword";
 import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
-import {ErrorConverter} from "../../util/error-converter";
+import {ErrorService} from "../../service/error.service";
 
 @Component({
   selector: 'fusio-security',
@@ -18,7 +18,7 @@ export class SecurityComponent implements OnInit {
   };
   response?: Message;
 
-  constructor(private consumer: ConsumerService) { }
+  constructor(private consumer: ConsumerService, private error: ErrorService) { }
 
   ngOnInit(): void {
   }
@@ -34,7 +34,7 @@ export class SecurityComponent implements OnInit {
 
       this.response = response.data;
     } catch (error) {
-      this.response = ErrorConverter.convert(error);
+      this.response = this.error.convert(error);
     }
   }
 

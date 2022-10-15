@@ -1,11 +1,10 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
 import {ActivatedRoute} from "@angular/router";
-import axios from "axios";
 import {UserEmail} from "fusio-sdk/dist/src/generated/consumer/UserEmail";
 import {ConsumerService} from "../../../service/consumer.service";
-import {Config, FUSIO_CONFIG} from "../../../config/config";
-import {ErrorConverter} from "../../../util/error-converter";
+import {ErrorService} from "../../../service/error.service";
+import {ConfigService} from "../../../service/config.service";
 
 @Component({
   selector: 'fusio-password-reset',
@@ -23,11 +22,11 @@ export class ResetComponent implements OnInit {
   response?: Message;
   loading = false
 
-  constructor(private consumer: ConsumerService, protected route: ActivatedRoute, @Inject(FUSIO_CONFIG) private config: Config) {
+  constructor(private consumer: ConsumerService, private error: ErrorService, private config: ConfigService, protected route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    let captchaKey = this.config.recaptcha;
+    let captchaKey = this.config.getRecpatcha();
     if (captchaKey) {
       this.captchaKey = captchaKey;
     }
@@ -49,7 +48,7 @@ export class ResetComponent implements OnInit {
       this.loading = false;
     } catch (error) {
       this.loading = false;
-      this.response = ErrorConverter.convert(error);
+      this.response = this.error.convert(error);
     }
   }
 
