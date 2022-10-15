@@ -11,6 +11,7 @@ import {RegisterComponent} from "../component/register/register.component";
 import {ActivateComponent} from "../component/register/activate/activate.component";
 import {ResetComponent} from "../component/password/reset/reset.component";
 import {ConfirmComponent} from "../component/password/confirm/confirm.component";
+import {CallbackComponent} from "../component/subscription/callback/callback.component";
 import {ListComponent as AppListComponent} from '../component/app/list/list.component';
 import {ListComponent as EventListComponent} from '../component/event/list/list.component';
 
@@ -26,6 +27,7 @@ export class RouteBuilder {
         {path: 'event', component: EventListComponent, canActivate: [AuthenticationGuard]},
         {path: 'event/:id', component: EventListComponent, canActivate: [AuthenticationGuard]},
         {path: 'subscription', component: SubscriptionComponent, canActivate: [AuthenticationGuard]},
+        {path: 'subscription/callback/:plan_id', component: CallbackComponent, canActivate: [AuthenticationGuard]},
       ]},
       {path: 'login', component: LoginComponent},
       {path: 'login/:provider', component: ProviderComponent},

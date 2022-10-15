@@ -53,6 +53,12 @@ export class EventService {
     }
   }
 
+  public dispatchCheckout(plan: Plan): void {
+    if (this.eventListener.checkout) {
+      this.eventListener.checkout.call(this, plan);
+    }
+  }
+
   public dispatchPurchase(plan: Plan): void {
     if (this.eventListener.purchase) {
       this.eventListener.purchase.call(this, plan);

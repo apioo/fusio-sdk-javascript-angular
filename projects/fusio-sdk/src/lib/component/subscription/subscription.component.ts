@@ -49,7 +49,7 @@ export class SubscriptionComponent implements OnInit {
 
   async doPurchase(plan: Plan) {
     try {
-      const path = this.location.prepareExternalUrl(this.config.getHomePath());
+      const path = this.location.prepareExternalUrl('/account/subscription/callback/' + plan.id);
       const redirectUrl = location.origin + path;
 
       const checkout = await this.consumer.getClient().getConsumerPaymentByProviderCheckout(this.config.getPaymentProvider());
@@ -59,7 +59,7 @@ export class SubscriptionComponent implements OnInit {
       });
 
       if (response.data.approvalUrl) {
-        this.event.dispatchPurchase(plan);
+        this.event.dispatchCheckout(plan);
 
         location.href = response.data.approvalUrl;
       }

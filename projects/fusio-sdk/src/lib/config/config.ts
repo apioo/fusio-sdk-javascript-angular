@@ -46,7 +46,12 @@ export interface EventListener {
   password_reset?: () => void,
 
   /**
-   * Invoked in case a user purchases a specific plan
+   * Invoked in case a user starts a checkout of a plan
+   */
+  checkout?: (plan: Plan) => void,
+
+  /**
+   * Invoked in case a user has purchased a plan
    */
   purchase?: (plan: Plan) => void,
 

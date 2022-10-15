@@ -3,6 +3,9 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {RouterModule} from '@angular/router';
+import {NgxCaptchaModule} from "ngx-captcha";
+import {GravatarModule} from "ngx-gravatar";
+import {Config, FUSIO_CONFIG} from "./config/config";
 import {EmptyComponent} from "./component/empty/empty.component";
 import {MessageComponent} from "./component/message/message.component";
 import {SearchComponent} from "./component/search/search.component";
@@ -19,10 +22,8 @@ import {RegisterComponent} from "./component/register/register.component";
 import {ActivateComponent} from "./component/register/activate/activate.component";
 import {AccountComponent} from './component/account/account.component';
 import {SecurityComponent} from './component/security/security.component';
-import {Config, FUSIO_CONFIG} from "./config/config";
-import {NgxCaptchaModule} from "ngx-captcha";
-import {GravatarModule} from "ngx-gravatar";
 import {SubscriptionComponent} from './component/subscription/subscription.component';
+import {CallbackComponent} from './component/subscription/callback/callback.component';
 import {DetailComponent as AppDetail} from './component/app/detail/detail.component';
 import {ListComponent as AppList} from './component/app/list/list.component';
 import {ModalComponent as AppModal} from './component/app/modal/modal.component';
@@ -50,6 +51,7 @@ import {AccountContainerComponent} from "./component/account-container/account-c
     SecurityComponent,
     SidebarComponent,
     SubscriptionComponent,
+    CallbackComponent,
     AppDetail,
     AppList,
     AppModal,
@@ -102,7 +104,7 @@ export class FusioSdkModule {
   }
 
   static forRoot(config?: Config): ModuleWithProviders<FusioSdkModule> {
-    return({
+    return ({
       ngModule: FusioSdkModule,
       providers: [{
         provide: FUSIO_CONFIG,

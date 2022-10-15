@@ -23,6 +23,7 @@ export * from './lib/component/search/search.component';
 export * from './lib/component/security/security.component';
 export * from './lib/component/sidebar/sidebar.component';
 export * from './lib/component/subscription/subscription.component';
+export * from './lib/component/subscription/callback/callback.component';
 
 export {DetailComponent as AppDetailComponent} from './lib/component/app/detail/detail.component';
 export {ListComponent as AppListComponent} from './lib/component/app/list/list.component';
