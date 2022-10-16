@@ -31,11 +31,11 @@ import {DetailComponent as EventDetail} from './component/event/detail/detail.co
 import {ListComponent as EventList} from './component/event/list/list.component';
 import {ModalComponent as EventModal} from './component/event/modal/modal.component';
 import {AccountContainerComponent} from "./component/account-container/account-container.component";
-import { HomeComponent } from './component/home/home.component';
-import { FaqComponent } from './component/faq/faq.component';
-import { NavigationComponent } from './component/navigation/navigation.component';
-import { PricingComponent } from './component/pricing/pricing.component';
-import { BackendContainerComponent } from './component/backend-container/backend-container.component';
+import {HomeComponent} from './component/home/home.component';
+import {FaqComponent} from './component/faq/faq.component';
+import {NavigationComponent} from './component/navigation/navigation.component';
+import {PricingComponent} from './component/pricing/pricing.component';
+import {BackendContainerComponent} from './component/backend-container/backend-container.component';
 
 @NgModule({
   declarations: [
