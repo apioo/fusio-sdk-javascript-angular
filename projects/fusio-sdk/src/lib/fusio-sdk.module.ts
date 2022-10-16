@@ -37,6 +37,7 @@ import {NavigationComponent} from './component/navigation/navigation.component';
 import {PricingComponent} from './component/pricing/pricing.component';
 import {BackendContainerComponent} from './component/backend-container/backend-container.component';
 import {ImprintComponent} from './component/imprint/imprint.component';
+import {FooterComponent} from './component/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import {ImprintComponent} from './component/imprint/imprint.component';
     BackendContainerComponent,
     EmptyComponent,
     FaqComponent,
+    FooterComponent,
     HelpComponent,
     HomeComponent,
     ImprintComponent,
@@ -86,6 +88,7 @@ import {ImprintComponent} from './component/imprint/imprint.component';
     BackendContainerComponent,
     EmptyComponent,
     FaqComponent,
+    FooterComponent,
     HelpComponent,
     HomeComponent,
     ImprintComponent,

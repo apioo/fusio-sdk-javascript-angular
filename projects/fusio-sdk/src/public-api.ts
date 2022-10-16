@@ -11,6 +11,7 @@ export * from './lib/component/account-container/account-container.component';
 export * from './lib/component/backend-container/backend-container.component';
 export * from './lib/component/empty/empty.component';
 export * from './lib/component/faq/faq.component';
+export * from './lib/component/footer/footer.component';
 export * from './lib/component/help/help.component';
 export * from './lib/component/home/home.component';
 export * from './lib/component/imprint/imprint.component';
