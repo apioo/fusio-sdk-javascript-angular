@@ -29,7 +29,7 @@ export class ConfigService {
     if (this.config.homePath) {
       return this.config.homePath;
     } else {
-      return '/account';
+      return '/backend';
     }
   }
 
