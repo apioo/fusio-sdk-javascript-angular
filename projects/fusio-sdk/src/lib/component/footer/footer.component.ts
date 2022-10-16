@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ConfigService} from "../../service/config.service";
 
 @Component({
-  selector: 'lib-footer',
+  selector: 'fusio-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.css']
 })
