@@ -61,6 +61,10 @@ export class ConfigService {
     return this.config.recaptcha;
   }
 
+  public getApiUrl(): string|undefined {
+    return this.config.apiUrl;
+  }
+
   public getHelpUrl(): string|undefined {
     return this.config.helpUrl;
   }

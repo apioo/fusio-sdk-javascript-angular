@@ -22,7 +22,7 @@ export class NavigationComponent implements OnInit {
   ngOnInit(): void {
     this.isAuthenticated = this.consumer.hasValidToken();
     this.account = this.user.get();
-    this.apiUrl = this.consumer.getBaseUrl();
+    this.apiUrl = this.config.getApiUrl();
     this.logo = this.config.getLogo();
   }
 

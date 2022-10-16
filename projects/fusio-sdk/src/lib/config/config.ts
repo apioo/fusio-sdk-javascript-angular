@@ -11,6 +11,7 @@ export interface Config {
   paymentCurrency?: string,
   providers?: Array<Provider>,
   recaptcha?: string,
+  apiUrl?: string,
   helpUrl?: string,
   imprintUrl?: string,
   home?: HomeConfig
