@@ -2,7 +2,7 @@
 <div class="fusio-page">
   <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
     <h1 class="display-4 fw-normal">Pricing</h1>
-    <p class="fs-5 text-muted">{{description}}</p>
+    <p class="fs-5 text-muted" [innerHtml]="description"></p>
     <div *ngIf="isAuthenticated" class="mt-4">
       <button class="btn btn-primary" (click)="doBillingPortal()">Billing Portal</button>
     </div>
@@ -15,7 +15,7 @@
           <h4 class="my-0 fw-normal">{{product.title}}</h4>
         </div>
         <div class="card-body">
-          <h1 class="card-title pricing-card-title">{{product.price|currency:paymentCurrency:'symbol'}} <small class="text-muted fw-light">/mo</small></h1>
+          <h1 class="card-title pricing-card-title">{{product.price|currency:paymentCurrency:'symbol':'1.0'}} <small class="text-muted fw-light">/mo</small></h1>
           <ul class="list-unstyled mt-3 mb-4">
             <li *ngFor="let feature of product.features">{{feature}}</li>
           </ul>

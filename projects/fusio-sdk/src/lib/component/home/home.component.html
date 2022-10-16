@@ -4,7 +4,7 @@
     <br>
     <h1 class="display-4 fw-normal">{{headline}}</h1>
     <br>
-    <p class="lead fw-normal">{{description}}</p>
+    <p class="lead fw-normal" [innerHtml]="description"></p>
     <br>
   </div>
 
@@ -18,17 +18,17 @@
         <i class="bi {{feature.icon}} p-4"></i>
       </div>
       <h3 class="fs-2">{{feature.title}}</h3>
-      <p>{{feature.description}}</p>
+      <p [innerHtml]="feature.description"></p>
     </div>
   </div>
 
-  <ng-container *ngIf="youtube">
+  <ng-container *ngIf="youtubeUrl">
     <br>
     <h2 class="fs-2 text-center pt-4">Introduction</h2>
     <br>
 
     <div style="text-align: center">
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/{{youtube}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe width="560" height="315" [src]="youtubeUrl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
   </ng-container>
 
