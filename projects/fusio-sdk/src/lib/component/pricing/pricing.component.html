@@ -20,7 +20,7 @@
             <li *ngFor="let feature of product.features">{{feature}}</li>
           </ul>
           <button *ngIf="!isAuthenticated" type="button" routerLink="/register" class="w-100 btn btn-lg btn-primary">Register</button>
-          <button *ngIf="isAuthenticated" type="button" (click)="doPurchase(1)" class="w-100 btn btn-lg btn-primary">Purchase</button>
+          <button *ngIf="isAuthenticated" type="button" (click)="doPurchase(product.planId)" class="w-100 btn btn-lg btn-primary">Purchase</button>
         </div>
       </div>
     </div>

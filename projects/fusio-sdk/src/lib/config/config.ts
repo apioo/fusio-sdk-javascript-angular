@@ -123,6 +123,7 @@ export interface PricingConfig {
 }
 
 export interface Product {
+  planId: number,
   title: string,
   price: number,
   features: Array<string>,
