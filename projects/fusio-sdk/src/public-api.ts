@@ -13,6 +13,7 @@ export * from './lib/component/empty/empty.component';
 export * from './lib/component/faq/faq.component';
 export * from './lib/component/help/help.component';
 export * from './lib/component/home/home.component';
+export * from './lib/component/imprint/imprint.component';
 export * from './lib/component/login/login.component';
 export * from './lib/component/login/provider/provider.component';
 export * from './lib/component/logout/logout.component';
