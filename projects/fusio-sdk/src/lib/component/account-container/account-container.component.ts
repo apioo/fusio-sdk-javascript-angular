@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
@@ -8,12 +8,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class AccountContainerComponent implements OnInit {
 
-  @Input()
-  options: Array<string> = ['account', 'security', 'app', 'event', 'subscription'];
-
-  @Input()
   active: string = 'account';
-
   items: Array<Item> = this.getItems();
 
   constructor(private router: Router, private route: ActivatedRoute) { }
@@ -30,8 +25,8 @@ export class AccountContainerComponent implements OnInit {
     this.items = this.getItems();
   }
 
-  protected getItems(): Array<Item> {
-    const items = [{
+  private getItems(): Array<Item> {
+    return [{
       id: 'account',
       link: '/account',
       name: 'Account',
@@ -52,10 +47,6 @@ export class AccountContainerComponent implements OnInit {
       link: '/account/subscription',
       name: 'Subscriptions',
     }];
-
-    return items.filter((item) => {
-      return this.options.includes(item.id);
-    });
   }
 
 }

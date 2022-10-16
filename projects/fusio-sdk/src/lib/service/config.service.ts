@@ -1,5 +1,14 @@
 import {Inject, Injectable} from '@angular/core';
-import {Config, EventListener, FUSIO_CONFIG, Provider} from "../config/config";
+import {
+  BackendConfig,
+  Config,
+  EventListener,
+  FaqConfig,
+  FUSIO_CONFIG,
+  HomeConfig,
+  PricingConfig,
+  Provider
+} from "../config/config";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +19,10 @@ export class ConfigService {
 
   public getBaseUrl(): string {
     return this.config.baseUrl;
+  }
+
+  public getLogo(): string|undefined {
+    return this.config.logo;
   }
 
   public getHomePath(): string {
@@ -62,6 +75,22 @@ export class ConfigService {
     } else {
       return {};
     }
+  }
+
+  public getHomeConfig(): HomeConfig|undefined {
+    return this.config.home;
+  }
+
+  public getPricingConfig(): PricingConfig|undefined {
+    return this.config.pricing;
+  }
+
+  public getFaqConfig(): FaqConfig|undefined {
+    return this.config.faq;
+  }
+
+  public getBackendConfig(): BackendConfig|undefined {
+    return this.config.backend;
   }
 
 }

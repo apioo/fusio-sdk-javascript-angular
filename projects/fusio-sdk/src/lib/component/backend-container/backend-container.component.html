@@ -1,0 +1,17 @@
+
+<div class="row">
+  <div class="col-2 text-bg-dark">
+    <hr>
+    <ul ngbNav [(activeId)]="active" class="nav nav-pills flex-column mb-auto">
+      <li *ngFor="let item of items" [ngbNavItem]="item.id">
+        <a ngbNavLink routerLink="/backend{{item.link}}" class="text-white">
+          <i class="bi {{item.icon}}"></i>
+          {{item.name}}
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-10">
+    <router-outlet></router-outlet>
+  </div>
+</div>
