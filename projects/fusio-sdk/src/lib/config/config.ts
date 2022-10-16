@@ -12,6 +12,7 @@ export interface Config {
   providers?: Array<Provider>,
   recaptcha?: string,
   helpUrl?: string,
+  imprintUrl?: string,
   home?: HomeConfig
   pricing?: PricingConfig
   faq?: FaqConfig

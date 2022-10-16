@@ -62,11 +62,11 @@ export class ConfigService {
   }
 
   public getHelpUrl(): string|undefined {
-    if (this.config.helpUrl) {
-      return this.config.helpUrl;
-    } else {
-      return 'https://docs.fusio-project.org/docs/backend/';
-    }
+    return this.config.helpUrl;
+  }
+
+  public getImprintUrl(): string|undefined {
+    return this.config.imprintUrl;
   }
 
   public getEventListener(): EventListener {
