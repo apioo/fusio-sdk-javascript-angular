@@ -36,6 +36,7 @@ import {FaqComponent} from './component/faq/faq.component';
 import {NavigationComponent} from './component/navigation/navigation.component';
 import {PricingComponent} from './component/pricing/pricing.component';
 import {BackendContainerComponent} from './component/backend-container/backend-container.component';
+import {ImprintComponent} from './component/imprint/imprint.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import {BackendContainerComponent} from './component/backend-container/backend-c
     FaqComponent,
     HelpComponent,
     HomeComponent,
+    ImprintComponent,
     LoginComponent,
     ProviderComponent,
     LogoutComponent,
@@ -86,6 +88,7 @@ import {BackendContainerComponent} from './component/backend-container/backend-c
     FaqComponent,
     HelpComponent,
     HomeComponent,
+    ImprintComponent,
     LoginComponent,
     ProviderComponent,
     LogoutComponent,
