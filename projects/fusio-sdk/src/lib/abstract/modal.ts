@@ -13,6 +13,7 @@ import {ErrorService} from "../service/error.service";
 export abstract class Modal<C extends ClientAbstract, T extends ModelId> implements OnInit {
 
   response?: Message;
+  loading: boolean = false;
 
   @Input() mode: Mode = Mode.Create;
   @Input() entity: T = this.newEntity();
@@ -27,6 +28,8 @@ export abstract class Modal<C extends ClientAbstract, T extends ModelId> impleme
       return;
     }
 
+    this.loading = true;
+
     const data = this.entity;
 
     try {
@@ -39,6 +42,8 @@ export abstract class Modal<C extends ClientAbstract, T extends ModelId> impleme
         response = await this.delete(data);
       }
 
+      this.loading = false;
+
       if (response) {
         this.modal.close({
           entity: data,
@@ -46,6 +51,7 @@ export abstract class Modal<C extends ClientAbstract, T extends ModelId> impleme
         });
       }
     } catch (error) {
+      this.loading = false;
       this.response = this.error.convert(error);
     }
   }
