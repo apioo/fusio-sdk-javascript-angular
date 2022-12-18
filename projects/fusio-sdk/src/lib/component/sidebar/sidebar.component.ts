@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ModelId} from "../../abstract/list";
+import {ModelId} from "../../abstract/query";
 
 @Component({
   selector: 'fusio-sidebar',

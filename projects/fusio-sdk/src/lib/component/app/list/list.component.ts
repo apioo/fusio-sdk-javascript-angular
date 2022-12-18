@@ -19,8 +19,8 @@ import {ErrorService} from "../../../service/error.service";
 })
 export class ListComponent extends List<Client, App> {
 
-  constructor(fusio: ConsumerService, route: ActivatedRoute, router: Router, modalService: NgbModal, event: EventService, error: ErrorService) {
-    super(fusio, route, router, modalService, event, error);
+  constructor(fusio: ConsumerService, route: ActivatedRoute, router: Router, event: EventService, error: ErrorService, modalService: NgbModal) {
+    super(fusio, route, router, event, error, modalService);
   }
 
   protected async getAll(query: CollectionQuery): Promise<AxiosResponse<Collection<App>>> {
