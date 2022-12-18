@@ -20,7 +20,6 @@ export class EventService {
     if (this.eventListener.login) {
       this.eventListener.login.call(this, user);
     }
-
   }
 
   public dispatchLogout(): void {
