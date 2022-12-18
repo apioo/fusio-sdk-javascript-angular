@@ -1,5 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
+/**
+ * This component is only a basic view component which renders a provided entity. It should only render the provided
+ * JSON data it should not contain any additional logic to request data from an endpoint
+ */
 @Component({
   template: '',
 })
