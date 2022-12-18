@@ -71,6 +71,8 @@ export abstract class List<C extends ClientAbstract, T extends ModelId> extends 
     });
   }
 
+  protected abstract getDetailComponent(): any;
+
 }
 
 export enum Mode {

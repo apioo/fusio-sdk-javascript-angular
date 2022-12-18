@@ -172,7 +172,6 @@ export abstract class Query<C extends ClientAbstract, T extends ModelId> impleme
 
   protected abstract getAll(query: CollectionCategoryQuery): Promise<AxiosResponse<Collection<T>>>;
   protected abstract get(id: string): Promise<AxiosResponse<T>>;
-  protected abstract getDetailComponent(): any;
   protected abstract getRoute(): string;
 
   protected onList(): void
