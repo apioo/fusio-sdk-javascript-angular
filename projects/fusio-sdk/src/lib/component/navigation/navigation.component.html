@@ -10,13 +10,13 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/">Home</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="pricingConfig">
           <a class="nav-link" routerLink="/pricing">Pricing</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="faqConfig">
           <a class="nav-link" routerLink="/faq">FAQ</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="apiUrl">
           <a class="nav-link" href="{{apiUrl}}">API</a>
         </li>
       </ul>

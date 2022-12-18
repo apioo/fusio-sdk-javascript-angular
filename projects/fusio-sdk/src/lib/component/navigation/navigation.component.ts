@@ -3,6 +3,7 @@ import {ConsumerService} from "../../service/consumer.service";
 import {UserAccount} from "fusio-sdk/dist/src/generated/consumer/UserAccount";
 import {UserService} from "../../service/user.service";
 import {ConfigService} from "../../service/config.service";
+import {FaqConfig, PricingConfig} from "../../config/config";
 
 @Component({
   selector: 'fusio-navigation',
@@ -15,6 +16,8 @@ export class NavigationComponent implements OnInit {
   isMenuCollapsed = true;
   account?: UserAccount;
   apiUrl?: string;
+  pricingConfig?: PricingConfig;
+  faqConfig?: FaqConfig;
   logo?: string;
 
   constructor(private consumer: ConsumerService, private user: UserService, private config: ConfigService) { }
@@ -23,6 +26,8 @@ export class NavigationComponent implements OnInit {
     this.isAuthenticated = this.consumer.hasValidToken();
     this.account = this.user.get();
     this.apiUrl = this.config.getApiUrl();
+    this.pricingConfig = this.config.getPricingConfig();
+    this.faqConfig = this.config.getFaqConfig();
     this.logo = this.config.getLogo();
   }
 
