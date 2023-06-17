@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {TokenStoreInterface} from "sdkgen-client/dist/src/TokenStoreInterface";
 import {SessionTokenStore} from "sdkgen-client/dist/src/TokenStore/SessionTokenStore";
-import {ClientCredentials} from "sdkgen-client/dist/src/Credentials/ClientCredentials";
+import {OAuth2} from "sdkgen-client/dist/src/Credentials/OAuth2";
 import {ClientAbstract, CredentialsInterface} from "sdkgen-client";
 import {ConfigService} from "./config.service";
 
@@ -21,18 +21,19 @@ export abstract class FusioService<T extends ClientAbstract> {
   }
 
   public getClientWithCredentials(clientId: string, clientSecret: string): T {
-    const credentials = new ClientCredentials(
+    const credentials = new OAuth2(
       clientId,
       clientSecret,
       this.baseUrl + '/authorization/token',
-      ''
+      '',
+      this.store
     );
 
-    return this.newClient(this.baseUrl, credentials, this.store);
+    return this.newClient(this.baseUrl, credentials);
   }
 
   public getClientAnonymous(): T {
-    return this.newClient(this.baseUrl, null, this.store);
+    return this.newClient(this.baseUrl, null);
   }
 
   /**
@@ -41,14 +42,15 @@ export abstract class FusioService<T extends ClientAbstract> {
    * an exception
    */
   public getClient(): T {
-    const credentials = new ClientCredentials(
+    const credentials = new OAuth2(
       '',
       '',
       this.baseUrl + '/authorization/token',
-      ''
+      '',
+      this.store
     );
 
-    return this.newClient(this.baseUrl, credentials, this.store);
+    return this.newClient(this.baseUrl, credentials);
   }
 
   public getBaseUrl(): string {
@@ -78,7 +80,7 @@ export abstract class FusioService<T extends ClientAbstract> {
     return token.scope.split(',').includes(scope);
   }
 
-  protected abstract newClient(baseUrl: string, credentials?: CredentialsInterface | null, tokenStore?: TokenStoreInterface): T;
+  protected abstract newClient(baseUrl: string, credentials?: CredentialsInterface | null): T;
 
   private static normalizeBaseUrl(baseUrl: string): string {
     if (baseUrl.endsWith('/')) {

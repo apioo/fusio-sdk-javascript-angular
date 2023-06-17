@@ -19,7 +19,7 @@
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
     "@ng-bootstrap/ng-bootstrap": "^12.1.2",
-    "fusio-sdk": "^3.0.3",
+    "fusio-sdk": "^3.0.4",
     "ngx-captcha": "^11.0.0",
     "ngx-gravatar": "^13.0.0",
     "ng-packagr": "~13.3.0",
