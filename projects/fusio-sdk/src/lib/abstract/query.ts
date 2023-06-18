@@ -1,11 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {CollectionCategoryQuery} from "fusio-sdk/dist/src/generated/backend/CollectionCategoryQuery";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AxiosResponse} from "axios";
 import {ClientAbstract} from "sdkgen-client";
 import {Collection} from "fusio-sdk/dist/src/generated/backend/Collection";
 import {Message} from "fusio-sdk/dist/src/generated/backend/Message";
-import {CollectionQuery} from "fusio-sdk/dist/src/generated/backend/CollectionQuery";
 import {FusioService} from "../service/fusio.service";
 import {ErrorService} from "../service/error.service";
 import {EventService} from "../service/event.service";
@@ -76,8 +73,8 @@ export abstract class Query<C extends ClientAbstract, T extends ModelId> impleme
     try {
       const response = await this.getAll(this.getCollectionQuery());
 
-      this.totalResults = response.data.totalResults || 0;
-      this.entries = response.data.entry || [];
+      this.totalResults = response.totalResults || 0;
+      this.entries = response.entry || [];
 
       this.onList();
     } catch (error) {
@@ -93,22 +90,19 @@ export abstract class Query<C extends ClientAbstract, T extends ModelId> impleme
     this.finishLoading();
   }
 
-  protected getCollectionQuery(): CollectionQuery {
-    let query: CollectionQuery = {};
-    query.startIndex = (this.page - 1) * this.pageSize;
-    query.count = this.pageSize;
+  protected getCollectionQuery(): Array<any> {
+    let query: Array<any> = [];
+    query.push((this.page - 1) * this.pageSize);
+    query.push(this.pageSize);
     if (this.search) {
-      query.search = this.search;
+      query.push(this.search);
     }
     return query;
   }
 
   async doGet(id: string) {
     try {
-      const response = await this.get(id);
-
-      this.selected = response.data;
-
+      this.selected = await this.get(id);
       this.onGet();
     } catch (error) {
       this.response = this.error.convert(error);
@@ -170,8 +164,8 @@ export abstract class Query<C extends ClientAbstract, T extends ModelId> impleme
     }, 100);
   }
 
-  protected abstract getAll(query: CollectionCategoryQuery): Promise<AxiosResponse<Collection<T>>>;
-  protected abstract get(id: string): Promise<AxiosResponse<T>>;
+  protected abstract getAll(parameters: Array<any>): Promise<Collection<T>>;
+  protected abstract get(id: string): Promise<T>;
   protected abstract getRoute(): string;
 
   protected onList(): void

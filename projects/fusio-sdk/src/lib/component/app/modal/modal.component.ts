@@ -1,13 +1,11 @@
 import {Component} from '@angular/core';
 import {Modal} from "../../../abstract/modal";
-import Client from "fusio-sdk/dist/src/generated/consumer/Client";
+import {Client} from "fusio-sdk/dist/src/generated/consumer/Client";
 import {App} from "fusio-sdk/dist/src/generated/consumer/App";
-import {AxiosResponse} from "axios";
 import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
 import {AppCreate} from "fusio-sdk/dist/src/generated/consumer/AppCreate";
 import {AppUpdate} from "fusio-sdk/dist/src/generated/consumer/AppUpdate";
 import {Scope} from "fusio-sdk/dist/src/generated/consumer/Scope";
-import {FusioService} from "../../../service/fusio.service";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ConsumerService} from "../../../service/consumer.service";
 import {ErrorService} from "../../../service/error.service";
@@ -26,24 +24,20 @@ export class ModalComponent extends Modal<Client, App> {
   }
 
   override async ngOnInit(): Promise<void> {
-    const scope = await this.fusio.getClient().getConsumerScope();
-    const response = await scope.consumerActionScopeGetAll({count: 1024});
-    this.scopes = response.data.entry;
+    const response = await this.fusio.getClient().scope().getAll(0, 1024);
+    this.scopes = response.entry;
   }
 
-  protected async create(entity: App): Promise<AxiosResponse<Message>> {
-    const app = await this.fusio.getClient().getConsumerApp();
-    return await app.consumerActionAppCreate(<AppCreate> entity);
+  protected async create(entity: App): Promise<Message> {
+    return this.fusio.getClient().app().create(<AppCreate> entity);
   }
 
-  protected async update(entity: App): Promise<AxiosResponse<Message>> {
-    const app = await this.fusio.getClient().getConsumerAppByAppId('' + entity.id);
-    return await app.consumerActionAppUpdate(<AppUpdate> entity);
+  protected async update(entity: App): Promise<Message> {
+    return this.fusio.getClient().app().update('' + entity.id, <AppUpdate> entity);
   }
 
-  protected async delete(entity: App): Promise<AxiosResponse<Message>> {
-    const app = await this.fusio.getClient().getConsumerAppByAppId('' + entity.id);
-    return await app.consumerActionAppDelete();
+  protected async delete(entity: App): Promise<Message> {
+    return this.fusio.getClient().app().delete('' + entity.id);
   }
 
   protected newEntity(): App {

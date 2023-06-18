@@ -1,9 +1,7 @@
 import {Component} from '@angular/core';
 import {EventSubscription} from "fusio-sdk/dist/src/generated/consumer/EventSubscription";
-import Client from "fusio-sdk/dist/src/generated/consumer/Client";
+import {Client} from "fusio-sdk/dist/src/generated/consumer/Client";
 import {List} from "../../../abstract/list";
-import {CollectionQuery} from "fusio-sdk/dist/src/generated/consumer/CollectionQuery";
-import {AxiosResponse} from "axios";
 import {Collection} from "fusio-sdk/dist/src/generated/consumer/Collection";
 import {ModalComponent} from "../modal/modal.component";
 import {ConsumerService} from "../../../service/consumer.service";
@@ -23,14 +21,12 @@ export class ListComponent extends List<Client, EventSubscription> {
     super(fusio, route, router, event, error, modalService);
   }
 
-  protected async getAll(query: CollectionQuery): Promise<AxiosResponse<Collection<EventSubscription>>> {
-    const subscription = await this.fusio.getClient().getConsumerSubscription();
-    return await subscription.consumerActionEventSubscriptionGetAll(query);
+  protected async getAll(parameters: Array<any>): Promise<Collection<EventSubscription>> {
+    return this.fusio.getClient().subscription().getAll(...parameters);
   }
 
-  protected async get(id: string): Promise<AxiosResponse<EventSubscription>> {
-    const subscription = await this.fusio.getClient().getConsumerSubscriptionBySubscriptionId(id);
-    return await subscription.consumerActionEventSubscriptionGet();
+  protected async get(id: string): Promise<EventSubscription> {
+    return this.fusio.getClient().subscription().get('' + id);
   }
 
   protected getDetailComponent(): any {

@@ -1,10 +1,8 @@
 import {Component} from '@angular/core';
 import {App} from "fusio-sdk/dist/src/generated/consumer/App";
-import Client from "fusio-sdk/dist/src/generated/consumer/Client";
-import {CollectionQuery} from "fusio-sdk/dist/src/generated/consumer/CollectionQuery";
+import {Client} from "fusio-sdk/dist/src/generated/consumer/Client";
 import {Collection} from "fusio-sdk/dist/src/generated/consumer/Collection";
 import {List} from "../../../abstract/list";
-import {AxiosResponse} from "axios";
 import {ModalComponent} from "../modal/modal.component";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -23,14 +21,12 @@ export class ListComponent extends List<Client, App> {
     super(fusio, route, router, event, error, modalService);
   }
 
-  protected async getAll(query: CollectionQuery): Promise<AxiosResponse<Collection<App>>> {
-    const app = await this.fusio.getClient().getConsumerApp();
-    return await app.consumerActionAppGetAll(query);
+  protected async getAll(parameters: Array<any>): Promise<Collection<App>> {
+    return this.fusio.getClient().app().getAll(...parameters);
   }
 
-  protected async get(id: string): Promise<AxiosResponse<App>> {
-    const app = await this.fusio.getClient().getConsumerAppByAppId(id);
-    return await app.consumerActionAppGet();
+  protected async get(id: string): Promise<App> {
+    return this.fusio.getClient().app().get(id);
   }
 
   protected getDetailComponent(): any {

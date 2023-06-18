@@ -29,10 +29,7 @@ export class SecurityComponent implements OnInit {
         return;
       }
 
-      const password = await this.consumer.getClient().getConsumerAccountChangePassword();
-      const response = await password.consumerActionUserChangePassword(this.credentials);
-
-      this.response = response.data;
+      this.response = await this.consumer.getClient().account().changePassword(this.credentials);
     } catch (error) {
       this.response = this.error.convert(error);
     }

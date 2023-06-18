@@ -33,9 +33,7 @@ export class CallbackComponent implements OnInit {
 
   async loadPlan(id: string) {
     try {
-      const plan = await this.consumer.getClient().getConsumerPlanByPlanId(id);
-      const response = await plan.consumerActionPlanGet();
-      this.plan = response.data;
+      this.plan = await this.consumer.getClient().plan().get(id);
 
       this.event.dispatchPurchase(this.plan);
     } catch (error) {

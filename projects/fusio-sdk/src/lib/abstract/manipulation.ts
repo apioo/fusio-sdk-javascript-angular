@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {Message} from "fusio-sdk/dist/src/generated/backend/Message";
 import {Mode} from "./list";
-import {AxiosResponse} from "axios";
 import {ClientAbstract} from "sdkgen-client";
 import {FusioService} from "../service/fusio.service";
 import {ErrorService} from "../service/error.service";
@@ -64,12 +63,12 @@ export abstract class Manipulation<C extends ClientAbstract, T extends ModelId> 
     }
   }
 
-  protected onResponse(response: AxiosResponse<Message>, entity: T): void {
+  protected onResponse(response: Message, entity: T): void {
   }
 
-  protected abstract create(entity: T): Promise<AxiosResponse<Message>|void>;
-  protected abstract update(entity: T): Promise<AxiosResponse<Message>|void>;
-  protected abstract delete(entity: T): Promise<AxiosResponse<Message>|void>;
+  protected abstract create(entity: T): Promise<Message|void>;
+  protected abstract update(entity: T): Promise<Message|void>;
+  protected abstract delete(entity: T): Promise<Message|void>;
   protected abstract newEntity(): T;
 
 }

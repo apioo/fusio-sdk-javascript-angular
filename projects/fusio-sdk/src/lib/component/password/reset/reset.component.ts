@@ -40,11 +40,7 @@ export class ResetComponent implements OnInit {
         throw new Error('No captcha provided');
       }
 
-      const client = this.consumer.getClientAnonymous();
-      const resource = await client.getConsumerPasswordReset();
-      const response = await resource.consumerActionUserResetPasswordRequest(this.data);
-
-      this.response = response.data;
+      this.response = await this.consumer.getClientAnonymous().account().requestPasswordReset(this.data);
       this.loading = false;
     } catch (error) {
       this.loading = false;

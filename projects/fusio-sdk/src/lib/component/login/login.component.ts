@@ -36,11 +36,9 @@ export class LoginComponent implements OnInit {
     this.loading = true;
 
     try {
-      const client = this.consumer.getClientWithCredentials(this.credentials.username, this.credentials.password);
-      const resource = await client.getConsumerAccount();
-      const response = await resource.consumerActionUserGet();
+      const response = await this.consumer.getClientWithCredentials(this.credentials.username, this.credentials.password).account().get();
 
-      this.user.login(response.data);
+      this.user.login(response);
 
       this.router.navigate([this.config.getHomePath()]).then(() => {
         location.reload();

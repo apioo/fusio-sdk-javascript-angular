@@ -47,11 +47,7 @@ export class RegisterComponent implements OnInit {
         throw new Error('No captcha provided');
       }
 
-      const client = this.consumer.getClientAnonymous();
-      const resource = await client.getConsumerRegister();
-      const response = await resource.consumerActionUserRegister(this.credentials);
-
-      this.response = response.data;
+      this.response = await this.consumer.getClientAnonymous().account().register(this.credentials);
       this.loading = false;
 
       this.event.dispatchRegister(this.credentials.name, this.credentials.email);

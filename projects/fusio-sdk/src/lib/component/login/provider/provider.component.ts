@@ -39,23 +39,22 @@ export class ProviderComponent implements OnInit {
     try {
       const verification = this.provider.verifyRequest(providerName, state);
 
-      const resource = await this.consumer.getClientAnonymous().getConsumerProviderByProvider(providerName);
-      const response = await resource.consumerActionUserProvider({
+      const response = await this.consumer.getClientAnonymous().account().provider(providerName, {
         code: code,
         clientId: verification.clientId,
         redirectUri: verification.redirectUri,
       });
 
-      if (!response.data.token) {
+      if (!response.token) {
         throw new Error('Could not obtain access token');
       }
 
       const token: AccessToken = {
         token_type: 'bearer',
-        access_token: response.data.token,
-        expires_in: response.data.expires_in || 0,
-        refresh_token: response.data.refresh_token || '',
-        scope: response.data.scope || '',
+        access_token: response.token,
+        expires_in: response.expires_in || 0,
+        refresh_token: response.refresh_token || '',
+        scope: response.scope || '',
       };
 
       const store = new SessionTokenStore();
@@ -68,10 +67,9 @@ export class ProviderComponent implements OnInit {
   }
 
   private async obtainUserInfo() {
-    const resource = await this.consumer.getClient().getConsumerAccount();
-    const response = await resource.consumerActionUserGet();
+    const response = await this.consumer.getClient().account().get();
 
-    this.user.login(response.data);
+    this.user.login(response);
 
     this.router.navigate([this.config.getHomePath()]).then(() => {
       location.reload();

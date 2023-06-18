@@ -21,9 +21,8 @@ export class SubscriptionComponent implements OnInit {
   constructor(private consumer: ConsumerService, private location: LocationStrategy, private event: EventService, private error: ErrorService, private config: ConfigService) { }
 
   async ngOnInit(): Promise<void> {
-    const plan = await this.consumer.getClient().getConsumerPlan();
-    const response = await plan.consumerActionPlanGetAll({count: 1024});
-    this.plans = response.data.entry;
+    const response = await this.consumer.getClient().plan().getAll(0, 1024);
+    this.plans = response.entry;
     this.currencyCode = this.config.getPaymentCurrency();
   }
 
@@ -32,13 +31,12 @@ export class SubscriptionComponent implements OnInit {
       const path = this.location.prepareExternalUrl(this.config.getHomePath());
       const redirectUrl = location.origin + path;
 
-      const portal = await this.consumer.getClient().getConsumerPaymentByProviderPortal(this.config.getPaymentProvider());
-      const response = await portal.consumerActionPaymentPortal({
+      const response = await this.consumer.getClient().payment().portal(this.config.getPaymentProvider(), {
         returnUrl: redirectUrl
       });
 
-      if (response.data.redirectUrl) {
-        location.href = response.data.redirectUrl;
+      if (response.redirectUrl) {
+        location.href = response.redirectUrl;
       } else {
         throw new Error('You can only visit the billing portal once you have successfully purchased a subscription');
       }
@@ -52,16 +50,15 @@ export class SubscriptionComponent implements OnInit {
       const path = this.location.prepareExternalUrl('/account/subscription/callback/' + plan.id);
       const redirectUrl = location.origin + path;
 
-      const checkout = await this.consumer.getClient().getConsumerPaymentByProviderCheckout(this.config.getPaymentProvider());
-      const response = await checkout.consumerActionPaymentCheckout({
+      const response = await this.consumer.getClient().payment().checkout(this.config.getPaymentProvider(), {
         planId: plan.id,
         returnUrl: redirectUrl,
       });
 
-      if (response.data.approvalUrl) {
+      if (response.approvalUrl) {
         this.event.dispatchCheckout(plan);
 
-        location.href = response.data.approvalUrl;
+        location.href = response.approvalUrl;
       }
     } catch (error) {
       this.response = this.error.convert(error);

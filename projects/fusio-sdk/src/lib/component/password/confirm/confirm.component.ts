@@ -42,11 +42,7 @@ export class ConfirmComponent implements OnInit {
         throw new Error('The provided password does not match with the confirmation password');
       }
 
-      const client = this.consumer.getClientAnonymous();
-      const resource = await client.getConsumerPasswordReset();
-      const response = await resource.consumerActionUserResetPasswordExecute(this.reset);
-
-      this.response = response.data;
+      this.response = await this.consumer.getClientAnonymous().account().executePasswordReset(this.reset);
       this.loading = false;
     } catch (error) {
       this.loading = false;

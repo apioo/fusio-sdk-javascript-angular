@@ -33,11 +33,7 @@ export class ActivateComponent implements OnInit {
     };
 
     try {
-      const client = this.consumer.getClientAnonymous();
-      const resource = await client.getConsumerActivate();
-      const response = await resource.consumerActionUserActivate(activate);
-
-      this.response = response.data;
+      this.response = await this.consumer.getClientAnonymous().account().activate(activate);
 
       this.event.dispatchRegisterActivate();
     } catch (error) {

@@ -35,13 +35,12 @@ export class PricingComponent implements OnInit {
       const path = this.location.prepareExternalUrl(this.config.getHomePath());
       const redirectUrl = location.origin + path;
 
-      const resource = await this.consumer.getClient().getConsumerPaymentByProviderPortal(this.config.getPaymentProvider());
-      const response = await resource.consumerActionPaymentPortal({
+      const response = await this.consumer.getClient().payment().portal(this.config.getPaymentProvider(), {
         returnUrl: redirectUrl
       });
 
-      if (response.data.redirectUrl) {
-        location.href = response.data.redirectUrl;
+      if (response.redirectUrl) {
+        location.href = response.redirectUrl;
       } else {
         throw new Error('You can only visit the billing portal once you have successfully purchased a subscription');
       }
@@ -57,16 +56,15 @@ export class PricingComponent implements OnInit {
       const path = this.location.prepareExternalUrl('/account/subscription/callback/' + planId);
       const redirectUrl = location.origin + path;
 
-      const resource = await this.consumer.getClient().getConsumerPaymentByProviderCheckout(this.config.getPaymentProvider());
-      const response = await resource.consumerActionPaymentCheckout({
+      const response = await this.consumer.getClient().payment().checkout(this.config.getPaymentProvider(), {
         planId: plan.id,
         returnUrl: redirectUrl,
       });
 
-      if (response.data.approvalUrl) {
+      if (response.approvalUrl) {
         this.event.dispatchCheckout(plan);
 
-        location.href = response.data.approvalUrl;
+        location.href = response.approvalUrl;
       }
     } catch (error) {
       this.response = this.error.convert(error)
@@ -74,9 +72,7 @@ export class PricingComponent implements OnInit {
   }
 
   private async getPlanById(planId: number): Promise<Plan> {
-    const resource = await this.consumer.getClient().getConsumerPlanByPlanId('' + planId);
-    const response = await resource.consumerActionPlanGet();
-    return response.data;
+    return this.consumer.getClient().plan().get('' + planId);
   }
 
 }

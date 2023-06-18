@@ -1,7 +1,6 @@
 import {Component} from "@angular/core";
 import {Message} from "fusio-sdk/dist/src/generated/backend/Message";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {AxiosResponse} from "axios";
 import {ClientAbstract} from "sdkgen-client";
 import {FusioService} from "../service/fusio.service";
 import {ErrorService} from "../service/error.service";
@@ -26,10 +25,10 @@ export abstract class Modal<C extends ClientAbstract, T extends ModelId> extends
     this.modal = modal;
   }
 
-  protected onResponse(response: AxiosResponse<Message>, entity: T) {
+  protected override onResponse(response: Message, entity: T) {
     this.modal.close({
       entity: entity,
-      response: response.data,
+      response: response,
     });
   }
 

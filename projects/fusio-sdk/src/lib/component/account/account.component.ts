@@ -19,10 +19,7 @@ export class AccountComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
-      const account = await this.consumer.getClient().getConsumerAccount();
-      const response = await account.consumerActionUserGet();
-
-      this.user = response.data;
+      this.user = await this.consumer.getClient().account().get();
       this.email = this.user.email || '';
       this.response = undefined;
     } catch (error) {
@@ -36,10 +33,7 @@ export class AccountComponent implements OnInit {
         return;
       }
 
-      const account = await this.consumer.getClient().getConsumerAccount();
-      const response = await account.consumerActionUserUpdate(this.user);
-
-      this.response = response.data;
+      this.response = await this.consumer.getClient().account().update(this.user);
     } catch (error) {
       this.response = this.error.convert(error);
     }
