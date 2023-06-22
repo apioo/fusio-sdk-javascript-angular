@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
-import axios from "axios";
 import {EventService} from "./event.service";
+import {MessageException as BackendException} from "fusio-sdk/dist/src/generated/backend/MessageException";
+import {MessageException as ConsumerException} from "fusio-sdk/dist/src/generated/consumer/MessageException";
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,8 @@ export class ErrorService {
 
   public convert(error: any): Message {
     let message: Message;
-    if (axios.isAxiosError(error) && error.response)  {
-      message = {
-        success: false,
-        message: error.response.data.message || 'An unknown error occurred',
-      };
+    if (error instanceof BackendException || error instanceof ConsumerException) {
+      message = error.getPayload();
     } else {
       message = {
         success: false,
