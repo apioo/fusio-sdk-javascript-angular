@@ -12,8 +12,8 @@ jobs:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
-      - run: ng build fusio-sdk
-      - run: ng build fusio-product
+      - run: npm run build-sdk
+      - run: npm run build-product
       - run: cd dist/fusio-sdk && npm publish
       - run: cd dist/fusio-product && npm publish
         env:

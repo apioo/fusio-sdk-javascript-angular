@@ -8,5 +8,5 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: npm ci
-      - run: ng build fusio-sdk
-      - run: ng build fusio-product
+      - run: npm run build-sdk
+      - run: npm run build-product
