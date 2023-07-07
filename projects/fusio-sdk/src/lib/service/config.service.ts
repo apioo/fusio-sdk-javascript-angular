@@ -1,12 +1,8 @@
 import {Inject, Injectable} from '@angular/core';
 import {
-  BackendConfig,
   Config,
   EventListener,
-  FaqConfig,
   FUSIO_CONFIG,
-  HomeConfig,
-  PricingConfig,
   Provider
 } from "../config/config";
 
@@ -19,10 +15,6 @@ export class ConfigService {
 
   public getBaseUrl(): string {
     return this.config.baseUrl;
-  }
-
-  public getLogo(): string|undefined {
-    return this.config.logo;
   }
 
   public getHomePath(): string {
@@ -61,16 +53,8 @@ export class ConfigService {
     return this.config.recaptcha;
   }
 
-  public getApiUrl(): string|undefined {
-    return this.config.apiUrl;
-  }
-
   public getHelpUrl(): string|undefined {
     return this.config.helpUrl;
-  }
-
-  public getImprintUrl(): string|undefined {
-    return this.config.imprintUrl;
   }
 
   public getEventListener(): EventListener {
@@ -79,22 +63,6 @@ export class ConfigService {
     } else {
       return {};
     }
-  }
-
-  public getHomeConfig(): HomeConfig|undefined {
-    return this.config.home;
-  }
-
-  public getPricingConfig(): PricingConfig|undefined {
-    return this.config.pricing;
-  }
-
-  public getFaqConfig(): FaqConfig|undefined {
-    return this.config.faq;
-  }
-
-  public getBackendConfig(): BackendConfig|undefined {
-    return this.config.backend;
   }
 
 }

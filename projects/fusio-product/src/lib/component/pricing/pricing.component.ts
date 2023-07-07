@@ -1,11 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ConsumerService} from "../../service/consumer.service";
-import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
-import {EventService} from "../../service/event.service";
+import {Plan} from "fusio-sdk/dist/src/generated/backend/Plan";
+import {Message} from "fusio-sdk/dist/src/generated/backend/Message";
+import {ConsumerService, EventService, ErrorService, ConfigService} from "ngx-fusio-sdk";
 import {LocationStrategy} from "@angular/common";
-import {ErrorService} from "../../service/error.service";
-import {ConfigService} from "../../service/config.service";
-import {Plan} from "fusio-sdk/dist/src/generated/consumer/Plan";
 import {Product} from "../../config/config";
 
 @Component({

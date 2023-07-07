@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {ConsumerService} from "../../service/consumer.service";
 import {UserAccount} from "fusio-sdk/dist/src/generated/consumer/UserAccount";
-import {UserService} from "../../service/user.service";
+import {ConsumerService, UserService} from "ngx-fusio-sdk";
 import {ConfigService} from "../../service/config.service";
 import {FaqConfig, PricingConfig} from "../../config/config";
 

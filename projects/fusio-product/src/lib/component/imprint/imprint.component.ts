@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ConfigService} from "../../service/config.service";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {ConfigService} from "../../service/config.service";
 
 @Component({
   selector: 'fusio-imprint',

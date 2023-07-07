@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {ConfigService} from "../../service/config.service";
 import {Feature} from "../../config/config";
-import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 
 @Component({
   selector: 'fusio-home',

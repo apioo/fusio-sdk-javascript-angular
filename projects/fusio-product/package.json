@@ -1,0 +1,22 @@
+{
+  "name": "ngx-fusio-product",
+  "version": "2.0.4",
+  "description": "SDK to build product websites based on Fusio",
+  "keywords": [
+    "Fusio",
+    "SDK",
+    "API",
+    "Angular"
+  ],
+  "author": "Christoph Kappestein",
+  "license": "MIT",
+  "homepage": "https://www.fusio-project.org/",
+  "peerDependencies": {
+    "@angular/common": "^16.1.0",
+    "@angular/core": "^16.1.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}
