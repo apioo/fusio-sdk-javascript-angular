@@ -6,13 +6,11 @@ import {ListComponent as AppListComponent} from '../component/app/list/list.comp
 import {ListComponent as EventListComponent} from '../component/event/list/list.component';
 import {SubscriptionComponent} from "../component/subscription/subscription.component";
 import {CallbackComponent} from "../component/subscription/callback/callback.component";
-import {AuthenticationGuard} from "../guard/authentication.guard";
+import {isAuthenticated} from "../guard/authentication.guard";
 
 export class AccountRoute {
 
   public static getAll(): Routes {
-    const isAuthenticated = inject(AuthenticationGuard).isAuthenticated;
-
     return [
       {path: '', component: AccountComponent, canActivate: [isAuthenticated] },
       {path: 'security', component: SecurityComponent, canActivate: [isAuthenticated] },
