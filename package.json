@@ -23,7 +23,7 @@
     "zone.js": "~0.13.0",
     "@ng-bootstrap/ng-bootstrap": "^15.0.0",
     "fusio-sdk": "^3.0.8",
-    "ngx-fusio-sdk": "^2.0.3",
+    "ngx-fusio-sdk": "^2.0.7",
     "ngx-captcha": "^13.0.0",
     "ngx-gravatar": "^13.0.0",
     "ng-packagr": "^16.1.0"
