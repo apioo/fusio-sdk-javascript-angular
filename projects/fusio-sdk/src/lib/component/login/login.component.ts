@@ -7,6 +7,7 @@ import {UserService} from "../../service/user.service";
 import {ConsumerService} from "../../service/consumer.service";
 import {Provider} from "../../config/config";
 import {ConfigService} from "../../service/config.service";
+import {ClientException} from "sdkgen-client";
 
 @Component({
   selector: 'fusio-login',
@@ -45,16 +46,18 @@ export class LoginComponent implements OnInit {
       });
     } catch (error) {
       this.loading = false;
-      if (axios.isAxiosError(error) && error.response)  {
+      if (error instanceof ClientException) {
+        this.response = {
+          success: false,
+          message: 'Could not authenticate',
+        };
+      } else if (axios.isAxiosError(error) && error.response)  {
         this.response = {
           success: false,
           message: error.response.data.error_description || 'An unknown error occurred',
         };
       } else {
-        this.response = {
-          success: false,
-          message: String(error),
-        };
+        throw error;
       }
     }
   }
