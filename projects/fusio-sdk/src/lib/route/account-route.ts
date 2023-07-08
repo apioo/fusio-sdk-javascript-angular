@@ -1,5 +1,4 @@
 import {Routes} from "@angular/router";
-import {inject} from "@angular/core";
 import {AccountComponent} from "../component/account/account.component";
 import {SecurityComponent} from "../component/security/security.component";
 import {ListComponent as AppListComponent} from '../component/app/list/list.component';

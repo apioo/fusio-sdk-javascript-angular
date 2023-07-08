@@ -47,5 +47,6 @@ export * from './lib/service/provider.service';
 export * from './lib/service/user.service';
 
 export * from './lib/route/account-route';
+export * from './lib/route/authorization-route';
 
 export * from './lib/fusio-sdk.module';
