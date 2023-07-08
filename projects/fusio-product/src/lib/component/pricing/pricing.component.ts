@@ -4,6 +4,7 @@ import {Message} from "fusio-sdk/dist/src/generated/backend/Message";
 import {ConsumerService, EventService, ErrorService, ConfigService} from "ngx-fusio-sdk";
 import {LocationStrategy} from "@angular/common";
 import {Product} from "../../config/config";
+import {ConfigService as ProductConfigService} from "../../service/config.service";
 
 @Component({
   selector: 'fusio-pricing',
@@ -18,13 +19,13 @@ export class PricingComponent implements OnInit {
   products?: Array<Product>;
   response?: Message;
 
-  constructor(private consumer: ConsumerService, private event: EventService, private location: LocationStrategy, private error: ErrorService, private config: ConfigService) { }
+  constructor(private consumer: ConsumerService, private event: EventService, private location: LocationStrategy, private error: ErrorService, private config: ConfigService, private productConfig: ProductConfigService) { }
 
   ngOnInit(): void {
     this.isAuthenticated = this.consumer.hasValidToken();
     this.paymentCurrency = this.config.getPaymentCurrency();
-    this.description = this.config.getPricingConfig()?.description;
-    this.products = this.config.getPricingConfig()?.products;
+    this.description = this.productConfig.getPricingConfig()?.description;
+    this.products = this.productConfig.getPricingConfig()?.products;
   }
 
   async doBillingPortal() {
