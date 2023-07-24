@@ -5,10 +5,11 @@ import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
 
 export interface Config {
   baseUrl: string,
+  logo?: string,
   homePath?: string,
+  loginPath?: string,
   paymentProvider?: string,
   paymentCurrency?: string,
-  providers?: Array<Provider>,
   recaptcha?: string,
   helpUrl?: string,
   on?: EventListener
@@ -87,14 +88,6 @@ export interface EventListener {
    * which you can then use to understand the model which gets passed
    */
   model_deleted?: (model: any, route: string) => void,
-}
-
-export interface Provider {
-  name: string,
-  icon: string,
-  key: string
-  url: string,
-  params: Record<string, string>
 }
 
 export const FUSIO_CONFIG = new InjectionToken<Config>('FUSIO_SDK_CONFIG');

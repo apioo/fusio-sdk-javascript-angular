@@ -2,12 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
 import axios from "axios";
 import {Router} from "@angular/router";
-import {ProviderService} from "../../service/provider.service";
 import {UserService} from "../../service/user.service";
 import {ConsumerService} from "../../service/consumer.service";
-import {Provider} from "../../config/config";
 import {ConfigService} from "../../service/config.service";
 import {ClientException} from "sdkgen-client";
+import {IdentityCollection} from "fusio-sdk/dist/src/generated/consumer/IdentityCollection";
+import {LocationStrategy} from "@angular/common";
+import {Identity} from "fusio-sdk/dist/src/generated/consumer/Identity";
 
 @Component({
   selector: 'fusio-login',
@@ -24,13 +25,15 @@ export class LoginComponent implements OnInit {
   response?: Message;
   loading = false;
 
-  providers: Array<Provider> = [];
+  identity?: IdentityCollection;
+  logo?: string;
 
-  constructor(private consumer: ConsumerService, private router: Router, private user: UserService, private provider: ProviderService, private config: ConfigService) {
+  constructor(private consumer: ConsumerService, private router: Router, private location: LocationStrategy, private user: UserService, private config: ConfigService) {
   }
 
-  ngOnInit(): void {
-    this.providers = this.config.getProviders();
+  async ngOnInit(): Promise<void> {
+    this.identity = await this.consumer.getClientAnonymous().identity().getAll();
+    this.logo = this.config.getLogo();
   }
 
   async login() {
@@ -62,15 +65,18 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  doProviderLogin(name: string) {
-    try {
-      location.href = this.provider.generateUrl(name);
-    } catch (error) {
-      this.response = {
-        success: false,
-        message: String(error),
-      };
+  public buildUrl(identity?: Identity): string {
+    if (!identity || !identity.redirect) {
+      return '';
     }
+
+    const path = this.location.prepareExternalUrl(this.config.getLoginPath() + '/' + identity.id);
+    const redirectUrl = location.origin + path;
+
+    const url = new URL(identity.redirect);
+    url.searchParams.append('redirect_uri', redirectUrl);
+
+    return url.toString();
   }
 
 }

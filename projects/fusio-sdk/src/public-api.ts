@@ -43,7 +43,6 @@ export * from './lib/service/error.service';
 export * from './lib/service/event.service';
 export * from './lib/service/fusio.service';
 export * from './lib/service/help.service';
-export * from './lib/service/provider.service';
 export * from './lib/service/user.service';
 
 export * from './lib/route/account-route';

@@ -3,7 +3,6 @@ import {
   Config,
   EventListener,
   FUSIO_CONFIG,
-  Provider
 } from "../config/config";
 
 @Injectable({
@@ -17,11 +16,23 @@ export class ConfigService {
     return this.config.baseUrl;
   }
 
+  public getLogo(): string|undefined {
+    return this.config.logo;
+  }
+
   public getHomePath(): string {
     if (this.config.homePath) {
       return this.config.homePath;
     } else {
       return '/backend';
+    }
+  }
+
+  public getLoginPath(): string {
+    if (this.config.loginPath) {
+      return this.config.loginPath;
+    } else {
+      return '/login';
     }
   }
 
@@ -38,14 +49,6 @@ export class ConfigService {
       return this.config.paymentCurrency;
     } else {
       return 'EUR';
-    }
-  }
-
-  public getProviders(): Array<Provider> {
-    if (this.config.providers) {
-      return this.config.providers;
-    } else {
-      return [];
     }
   }
 
