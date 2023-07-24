@@ -22,7 +22,7 @@
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0",
     "@ng-bootstrap/ng-bootstrap": "^15.0.0",
-    "fusio-sdk": "^3.0.8",
+    "fusio-sdk": "^3.1.2",
     "ngx-fusio-sdk": "^2.0.7",
     "ngx-captcha": "^13.0.0",
     "ngx-gravatar": "^13.0.0",
