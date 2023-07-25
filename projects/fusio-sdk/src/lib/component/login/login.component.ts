@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
 
   identity?: IdentityCollection;
   logo?: string;
+  title: boolean = false;
 
   constructor(private consumer: ConsumerService, private router: Router, private location: LocationStrategy, private user: UserService, private config: ConfigService) {
   }
@@ -34,6 +35,7 @@ export class LoginComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.identity = await this.consumer.getClientAnonymous().identity().getAll();
     this.logo = this.config.getLogo();
+    this.title = this.logo === undefined;
   }
 
   async login() {

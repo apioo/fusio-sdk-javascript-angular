@@ -2,8 +2,8 @@
 <div class="fusio-login">
   <div class="fusio-login-panel">
     <header class="text-center bg-light border-bottom">
-      <h1 *ngIf="!logo">Login</h1>
       <img *ngIf="logo" [src]="'assets/' + logo" class="m-3">
+      <h1 *ngIf="title" class="p-3 m-0 lead">Login</h1>
     </header>
     <div class="fusio-login-panel-body">
       <fusio-message [response]="response"></fusio-message>
