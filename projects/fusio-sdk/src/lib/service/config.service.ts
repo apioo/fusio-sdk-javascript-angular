@@ -20,6 +20,10 @@ export class ConfigService {
     return this.config.logo;
   }
 
+  public getAppId(): number|undefined {
+    return this.config.appId;
+  }
+
   public getHomePath(): string {
     if (this.config.homePath) {
       return this.config.homePath;

@@ -6,6 +6,7 @@ import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
 export interface Config {
   baseUrl: string,
   logo?: string,
+  appId?: number,
   homePath?: string,
   loginPath?: string,
   paymentProvider?: string,

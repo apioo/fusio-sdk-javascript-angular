@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.identity = await this.consumer.getClientAnonymous().identity().getAll();
+    this.identity = await this.consumer.getClientAnonymous().identity().getAll(this.config.getAppId());
     this.logo = this.config.getLogo();
     this.title = this.logo === undefined;
   }
