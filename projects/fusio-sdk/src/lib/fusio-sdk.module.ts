@@ -32,13 +32,13 @@ import {AccountContainerComponent} from "./component/account-container/account-c
 import {SubscriptionComponent} from './component/subscription/subscription.component';
 import {CallbackComponent} from './component/subscription/callback/callback.component';
 import {NavigationComponent} from "./component/navigation/navigation.component";
-import {FusioComponent} from "./component/fusio/fusio.component";
+import {BootstrapComponent} from "./component/bootstrap/bootstrap.component";
 
 @NgModule({
   declarations: [
-    FusioComponent,
     AccountComponent,
     AccountContainerComponent,
+    BootstrapComponent,
     EmptyComponent,
     HelpComponent,
     LoginComponent,
@@ -75,6 +75,7 @@ import {FusioComponent} from "./component/fusio/fusio.component";
   exports: [
     AccountComponent,
     AccountContainerComponent,
+    BootstrapComponent,
     EmptyComponent,
     HelpComponent,
     LoginComponent,

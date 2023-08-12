@@ -4,11 +4,11 @@ import {UserService} from "../../service/user.service";
 import {Item, NavigationService} from "../../service/navigation.service";
 
 @Component({
-  selector: 'fusio',
-  templateUrl: './fusio.component.html',
-  styleUrls: ['./fusio.component.css']
+  selector: 'fusio-bootstrap',
+  templateUrl: './bootstrap.component.html',
+  styleUrls: ['./bootstrap.component.css']
 })
-export class FusioComponent implements OnInit {
+export class BootstrapComponent implements OnInit {
   user?: User;
   menu: Array<Item> = [];
 

@@ -10,8 +10,8 @@ export * from './lib/abstract/query';
 
 export * from './lib/component/account/account.component';
 export * from './lib/component/account-container/account-container.component';
+export * from './lib/component/bootstrap/bootstrap.component';
 export * from './lib/component/empty/empty.component';
-export * from './lib/component/fusio/fusio.component';
 export * from './lib/component/help/help.component';
 export * from './lib/component/login/login.component';
 export * from './lib/component/login/provider/provider.component';
