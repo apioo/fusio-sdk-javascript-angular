@@ -51,6 +51,8 @@ export class RegisterComponent implements OnInit {
       this.loading = false;
 
       this.event.dispatchRegister(this.credentials.name, this.credentials.email);
+
+      this.resetForm();
     } catch (error) {
       this.loading = false;
       this.response = this.error.convert(error);
@@ -59,6 +61,15 @@ export class RegisterComponent implements OnInit {
 
   setCaptcha(token: string) {
     this.credentials.captcha = token;
+  }
+
+  resetForm() {
+    this.credentials = {
+      name: '',
+      email: '',
+      password: '',
+    };
+    this.passwordConfirm = '';
   }
 
 }
