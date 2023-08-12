@@ -4,6 +4,7 @@ import {
   EventListener,
   FUSIO_CONFIG,
 } from "../config/config";
+import {GroupItem, Item} from "./navigation.service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,14 @@ export class ConfigService {
 
   public getBaseUrl(): string {
     return this.config.baseUrl;
+  }
+
+  public getTitle(): string|undefined {
+    return this.config.title;
+  }
+
+  public getVersion(): string|undefined {
+    return this.config.version;
   }
 
   public getLogo(): string|undefined {
@@ -38,6 +47,44 @@ export class ConfigService {
     } else {
       return '/login';
     }
+  }
+
+  public getNavigation(): Array<GroupItem> {
+    return this.config.navigation || [];
+  }
+
+  public getUserNavigation(): Array<Item> {
+    return this.config.userNavigation || [{
+      title: 'Account',
+      path: '/account'
+    }, {
+      title: 'Logout',
+      path: '/logout',
+    }];
+  }
+
+  public getAccountNavigation(): Array<Item> {
+    return this.config.accountNavigation || [{
+      title: 'Account',
+      path: '/account',
+      scope: 'consumer.account',
+    }, {
+      title: 'Security',
+      path: '/account/security',
+      scope: 'consumer.account',
+    }, {
+      title: 'Apps',
+      path: '/account/app',
+      scope: 'consumer.app',
+    }, {
+      title: 'Events',
+      path: '/account/event',
+      scope: 'consumer.subscription',
+    }, {
+      title: 'Subscriptions',
+      path: '/account/subscription',
+      scope: 'consumer.payment',
+    }];
   }
 
   public getPaymentProvider(): string {
