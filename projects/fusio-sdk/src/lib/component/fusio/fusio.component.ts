@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {User} from "fusio-sdk/dist/src/generated/backend/User";
 import {UserService} from "../../service/user.service";
 import {Item, NavigationService} from "../../service/navigation.service";
-import {ConfigService} from "../../service/config.service";
 
 @Component({
   selector: 'fusio',
