@@ -31,9 +31,12 @@ import {ModalComponent as EventModal} from './component/event/modal/modal.compon
 import {AccountContainerComponent} from "./component/account-container/account-container.component";
 import {SubscriptionComponent} from './component/subscription/subscription.component';
 import {CallbackComponent} from './component/subscription/callback/callback.component';
+import {NavigationComponent} from "./component/navigation/navigation.component";
+import {FusioComponent} from "./component/fusio/fusio.component";
 
 @NgModule({
   declarations: [
+    FusioComponent,
     AccountComponent,
     AccountContainerComponent,
     EmptyComponent,
@@ -42,6 +45,7 @@ import {CallbackComponent} from './component/subscription/callback/callback.comp
     ProviderComponent,
     LogoutComponent,
     MessageComponent,
+    NavigationComponent,
     ConfirmComponent,
     ResetComponent,
     RegisterComponent,
