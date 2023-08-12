@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
+import {Item, NavigationService} from "../../service/navigation.service";
 
 @Component({
   selector: 'fusio-account-container',
@@ -8,51 +9,22 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class AccountContainerComponent implements OnInit {
 
-  active: string = 'account';
-  items: Array<Item> = this.getItems();
+  active?: string;
+  items: Array<Item> = [];
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  constructor(private router: Router, private route: ActivatedRoute, private navigation: NavigationService) { }
 
   ngOnInit(): void {
+    this.items = this.navigation.getAccountNavigation();
+    this.active = this.items[0].title;
+
     this.route.url.subscribe(() => {
       this.items.forEach((item) => {
-        if (this.router.url.startsWith(item.link)) {
-          this.active = item.id;
+        if (this.router.url.startsWith(item.path)) {
+          this.active = item.title;
         }
       });
     })
-
-    this.items = this.getItems();
   }
 
-  private getItems(): Array<Item> {
-    return [{
-      id: 'account',
-      link: '/account',
-      name: 'Account',
-    }, {
-      id: 'security',
-      link: '/account/security',
-      name: 'Security',
-    }, {
-      id: 'app',
-      link: '/account/app',
-      name: 'Apps',
-    }, {
-      id: 'event',
-      link: '/account/event',
-      name: 'Events',
-    }, {
-      id: 'subscription',
-      link: '/account/subscription',
-      name: 'Subscriptions',
-    }];
-  }
-
-}
-
-export interface Item {
-  id: string
-  link: string
-  name: string
 }
