@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {BackendService} from "ngx-fusio-sdk";
 import {ConfigService} from "./config.service";
+import {BackendService} from "./backend.service";
 
 @Injectable({
   providedIn: 'root'
