@@ -10,26 +10,26 @@ export class NavigationService {
   constructor(private backend: BackendService, private config: ConfigService) {
   }
 
-  getMainNavigation(): Array<GroupItem> {
+  async getMainNavigation(): Promise<Array<GroupItem>> {
     return this.checkPermissions(this.config.getNavigation());
   }
 
-  getUserNavigation(): Array<Item> {
+  async getUserNavigation(): Promise<Array<Item>> {
     return this.checkPermissionItems(this.config.getUserNavigation());
   }
 
-  getAnonymousNavigation(): Array<Item> {
+  async getAnonymousNavigation(): Promise<Array<Item>> {
     return this.checkPermissionItems(this.config.getAnonymousNavigation());
   }
 
-  getAccountNavigation(): Array<Item> {
+  async getAccountNavigation(): Promise<Array<Item>> {
     return this.checkPermissionItems(this.config.getAccountNavigation());
   }
 
-  private checkPermissions(navigation: Array<GroupItem>): Array<GroupItem> {
+  private async checkPermissions(navigation: Array<GroupItem>): Promise<Array<GroupItem>> {
     let result = [];
     for (let i = 0; i < navigation.length; i++) {
-      const children = this.checkPermissionItems(navigation[i].children);
+      const children = await this.checkPermissionItems(navigation[i].children);
       if (children.length > 0) {
         let menu = navigation[i];
         menu.children = children;
@@ -40,9 +40,9 @@ export class NavigationService {
     return result;
   }
 
-  private checkPermissionItems(items: Items): Array<Item> {
+  private async checkPermissionItems(items: Items): Promise<Array<Item>> {
     if (items instanceof Function) {
-      items = items.apply(this);
+      items = await items.apply(this);
     }
 
     if (!Array.isArray(items)) {
@@ -70,7 +70,7 @@ export interface GroupItem {
   children: Items
 }
 
-export type ItemResolver = () => Array<Item>;
+export type ItemResolver = () => Promise<Array<Item>>;
 
 export type Items = Array<Item>|ItemResolver;
 

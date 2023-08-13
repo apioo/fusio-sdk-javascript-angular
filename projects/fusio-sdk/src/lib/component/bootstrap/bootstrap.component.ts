@@ -15,10 +15,10 @@ export class BootstrapComponent implements OnInit {
 
   constructor(private userMeta: UserService, private navigation: NavigationService) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.user = this.userMeta.get();
-    this.userMenu = this.navigation.getUserNavigation();
-    this.anonymousMenu = this.navigation.getAnonymousNavigation();
+    this.userMenu = await this.navigation.getUserNavigation();
+    this.anonymousMenu = await this.navigation.getAnonymousNavigation();
   }
 
 }

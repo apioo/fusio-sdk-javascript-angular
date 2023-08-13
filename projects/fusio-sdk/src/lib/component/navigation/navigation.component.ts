@@ -16,10 +16,10 @@ export class NavigationComponent implements OnInit {
   constructor(private navigation: NavigationService, private config: ConfigService) {
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.title = this.config.getTitle() || 'Fusio';
     this.version = this.config.getVersion();
-    this.items = this.navigation.getMainNavigation();
+    this.items = await this.navigation.getMainNavigation();
   }
 
   changeNavHeading(item: GroupItem): void {
