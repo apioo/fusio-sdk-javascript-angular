@@ -15,21 +15,21 @@ export class NavigationService {
   }
 
   getUserNavigation(): Array<Item> {
-    return this.checkPermissionsItems(this.config.getUserNavigation());
+    return this.checkPermissionItems(this.config.getUserNavigation());
   }
 
   getAnonymousNavigation(): Array<Item> {
-    return this.config.getAnonymousNavigation();
+    return this.checkPermissionItems(this.config.getAnonymousNavigation());
   }
 
   getAccountNavigation(): Array<Item> {
-    return this.checkPermissionsItems(this.config.getAccountNavigation());
+    return this.checkPermissionItems(this.config.getAccountNavigation());
   }
 
   private checkPermissions(navigation: Array<GroupItem>): Array<GroupItem> {
     let result = [];
     for (let i = 0; i < navigation.length; i++) {
-      const children = this.checkPermissionsItems(navigation[i].children);
+      const children = this.checkPermissionItems(navigation[i].children);
       if (children.length > 0) {
         let menu = navigation[i];
         menu.children = children;
@@ -40,7 +40,15 @@ export class NavigationService {
     return result;
   }
 
-  private checkPermissionsItems(items: Array<Item>): Array<Item> {
+  private checkPermissionItems(items: Items): Array<Item> {
+    if (items instanceof Function) {
+      items = items.apply(this);
+    }
+
+    if (!Array.isArray(items)) {
+      return [];
+    }
+
     let result = [];
     for (let i = 0; i < items.length; i++) {
       const scope = items[i].scope;
@@ -59,8 +67,12 @@ export class NavigationService {
 export interface GroupItem {
   title: string
   visible: boolean
-  children: Array<Item>
+  children: Items
 }
+
+export type ItemResolver = () => Array<Item>;
+
+export type Items = Array<Item>|ItemResolver;
 
 export interface Item {
   title: string

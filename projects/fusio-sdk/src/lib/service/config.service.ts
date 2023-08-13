@@ -4,7 +4,7 @@ import {
   EventListener,
   FUSIO_CONFIG,
 } from "../config/config";
-import {GroupItem, Item} from "./navigation.service";
+import {GroupItem, Items} from "./navigation.service";
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +37,7 @@ export class ConfigService {
     if (this.config.homePath) {
       return this.config.homePath;
     } else {
-      return '/backend';
+      return '/';
     }
   }
 
@@ -53,7 +53,7 @@ export class ConfigService {
     return this.config.navigation || [];
   }
 
-  public getUserNavigation(): Array<Item> {
+  public getUserNavigation(): Items {
     return this.config.userNavigation || [{
       title: 'Account',
       path: '/account'
@@ -63,7 +63,7 @@ export class ConfigService {
     }];
   }
 
-  public getAnonymousNavigation(): Array<Item> {
+  public getAnonymousNavigation(): Items {
     return this.config.anonymousNavigation || [{
       title: 'Login',
       path: '/login'
@@ -73,7 +73,7 @@ export class ConfigService {
     }];
   }
 
-  public getAccountNavigation(): Array<Item> {
+  public getAccountNavigation(): Items {
     return this.config.accountNavigation || [{
       title: 'Account',
       path: '/account',

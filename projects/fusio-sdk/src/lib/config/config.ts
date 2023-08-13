@@ -2,7 +2,7 @@ import {InjectionToken} from "@angular/core";
 import {UserAccount} from "fusio-sdk/dist/src/generated/consumer/UserAccount";
 import {Plan} from "fusio-sdk/dist/src/generated/consumer/Plan";
 import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
-import {GroupItem, Item} from "../service/navigation.service";
+import {GroupItem, Items} from "../service/navigation.service";
 
 export interface Config {
   baseUrl: string,
@@ -13,9 +13,9 @@ export interface Config {
   homePath?: string,
   loginPath?: string,
   navigation?: Array<GroupItem>,
-  userNavigation?: Array<Item>,
-  anonymousNavigation?: Array<Item>,
-  accountNavigation?: Array<Item>,
+  userNavigation?: Items,
+  anonymousNavigation?: Items,
+  accountNavigation?: Items,
   paymentProvider?: string,
   paymentCurrency?: string,
   recaptcha?: string,
