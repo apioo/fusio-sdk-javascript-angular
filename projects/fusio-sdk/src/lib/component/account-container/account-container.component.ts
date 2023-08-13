@@ -14,8 +14,8 @@ export class AccountContainerComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute, private navigation: NavigationService) { }
 
-  ngOnInit(): void {
-    this.items = this.navigation.getAccountNavigation();
+  async ngOnInit(): Promise<void> {
+    this.items = await this.navigation.getAccountNavigation();
     this.active = this.items[0].title;
 
     this.route.url.subscribe(() => {
