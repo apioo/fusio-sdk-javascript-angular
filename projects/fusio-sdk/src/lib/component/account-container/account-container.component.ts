@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EnvironmentInjector, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Item, NavigationService} from "../../service/navigation.service";
 
@@ -12,10 +12,10 @@ export class AccountContainerComponent implements OnInit {
   active?: string;
   items: Array<Item> = [];
 
-  constructor(private router: Router, private route: ActivatedRoute, private navigation: NavigationService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private navigation: NavigationService, private injector: EnvironmentInjector) { }
 
   async ngOnInit(): Promise<void> {
-    this.items = await this.navigation.getAccountNavigation(this);
+    this.items = await this.navigation.getAccountNavigation(this.injector);
     this.active = this.items[0].title;
 
     this.route.url.subscribe(() => {

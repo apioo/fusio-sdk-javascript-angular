@@ -1,4 +1,4 @@
-import {Injectable, OnInit} from '@angular/core';
+import {EnvironmentInjector, Injectable, runInInjectionContext} from '@angular/core';
 import {ConfigService} from "./config.service";
 import {BackendService} from "./backend.service";
 
@@ -10,26 +10,26 @@ export class NavigationService {
   constructor(private backend: BackendService, private config: ConfigService) {
   }
 
-  async getMainNavigation(context: OnInit): Promise<Array<GroupItem>> {
-    return this.checkPermissions(this.config.getNavigation(), context);
+  async getMainNavigation(injector: EnvironmentInjector): Promise<Array<GroupItem>> {
+    return this.checkPermissions(this.config.getNavigation(), injector);
   }
 
-  async getUserNavigation(context: OnInit): Promise<Array<Item>> {
-    return this.checkPermissionItems(this.config.getUserNavigation(), context);
+  async getUserNavigation(injector: EnvironmentInjector): Promise<Array<Item>> {
+    return this.checkPermissionItems(this.config.getUserNavigation(), injector);
   }
 
-  async getAnonymousNavigation(context: OnInit): Promise<Array<Item>> {
-    return this.checkPermissionItems(this.config.getAnonymousNavigation(), context);
+  async getAnonymousNavigation(injector: EnvironmentInjector): Promise<Array<Item>> {
+    return this.checkPermissionItems(this.config.getAnonymousNavigation(), injector);
   }
 
-  async getAccountNavigation(context: OnInit): Promise<Array<Item>> {
-    return this.checkPermissionItems(this.config.getAccountNavigation(), context);
+  async getAccountNavigation(injector: EnvironmentInjector): Promise<Array<Item>> {
+    return this.checkPermissionItems(this.config.getAccountNavigation(), injector);
   }
 
-  private async checkPermissions(navigation: Array<GroupItem>, context: OnInit): Promise<Array<GroupItem>> {
+  private async checkPermissions(navigation: Array<GroupItem>, injector: EnvironmentInjector): Promise<Array<GroupItem>> {
     let result = [];
     for (let i = 0; i < navigation.length; i++) {
-      const children = await this.checkPermissionItems(navigation[i].children, context);
+      const children = await this.checkPermissionItems(navigation[i].children, injector);
       if (children.length > 0) {
         let menu = navigation[i];
         menu.children = children;
@@ -40,9 +40,9 @@ export class NavigationService {
     return result;
   }
 
-  private async checkPermissionItems(items: Items, context: OnInit): Promise<Array<Item>> {
+  private async checkPermissionItems(items: Items, injector: EnvironmentInjector): Promise<Array<Item>> {
     if (items instanceof Function) {
-      items = await items.apply(context);
+      items = await runInInjectionContext(injector, items);
     }
 
     if (!Array.isArray(items)) {

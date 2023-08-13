@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EnvironmentInjector, OnInit} from '@angular/core';
 import {GroupItem, NavigationService} from "../../service/navigation.service";
 import {ConfigService} from "../../service/config.service";
 
@@ -13,13 +13,13 @@ export class NavigationComponent implements OnInit {
   version?: string;
   items: Array<GroupItem> = [];
 
-  constructor(private navigation: NavigationService, private config: ConfigService) {
+  constructor(private navigation: NavigationService, private config: ConfigService, private injector: EnvironmentInjector) {
   }
 
   async ngOnInit(): Promise<void> {
     this.title = this.config.getTitle() || 'Fusio';
     this.version = this.config.getVersion();
-    this.items = await this.navigation.getMainNavigation(this);
+    this.items = await this.navigation.getMainNavigation(this.injector);
   }
 
   changeNavHeading(item: GroupItem): void {

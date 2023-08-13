@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EnvironmentInjector, OnInit} from '@angular/core';
 import {User} from "fusio-sdk/dist/src/generated/backend/User";
 import {UserService} from "../../service/user.service";
 import {Item, NavigationService} from "../../service/navigation.service";
@@ -13,12 +13,12 @@ export class BootstrapComponent implements OnInit {
   userMenu: Array<Item> = [];
   anonymousMenu: Array<Item> = [];
 
-  constructor(private userMeta: UserService, private navigation: NavigationService) { }
+  constructor(private userMeta: UserService, private navigation: NavigationService, private injector: EnvironmentInjector) { }
 
   async ngOnInit(): Promise<void> {
     this.user = this.userMeta.get();
-    this.userMenu = await this.navigation.getUserNavigation(this);
-    this.anonymousMenu = await this.navigation.getAnonymousNavigation(this);
+    this.userMenu = await this.navigation.getUserNavigation(this.injector);
+    this.anonymousMenu = await this.navigation.getAnonymousNavigation(this.injector);
   }
 
 }
