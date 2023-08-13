@@ -17,8 +17,8 @@ export class BootstrapComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.user = this.userMeta.get();
-    this.userMenu = await this.navigation.getUserNavigation();
-    this.anonymousMenu = await this.navigation.getAnonymousNavigation();
+    this.userMenu = await this.navigation.getUserNavigation(this);
+    this.anonymousMenu = await this.navigation.getAnonymousNavigation(this);
   }
 
 }

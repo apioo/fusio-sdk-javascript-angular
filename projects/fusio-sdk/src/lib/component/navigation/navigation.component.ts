@@ -19,7 +19,7 @@ export class NavigationComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.title = this.config.getTitle() || 'Fusio';
     this.version = this.config.getVersion();
-    this.items = await this.navigation.getMainNavigation();
+    this.items = await this.navigation.getMainNavigation(this);
   }
 
   changeNavHeading(item: GroupItem): void {
