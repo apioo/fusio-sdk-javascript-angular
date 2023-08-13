@@ -10,13 +10,15 @@ import {Item, NavigationService} from "../../service/navigation.service";
 })
 export class BootstrapComponent implements OnInit {
   user?: User;
-  menu: Array<Item> = [];
+  userMenu: Array<Item> = [];
+  anonymousMenu: Array<Item> = [];
 
   constructor(private userMeta: UserService, private navigation: NavigationService) { }
 
   ngOnInit(): void {
     this.user = this.userMeta.get();
-    this.menu = this.navigation.getUserNavigation();
+    this.userMenu = this.navigation.getUserNavigation();
+    this.anonymousMenu = this.navigation.getAnonymousNavigation();
   }
 
 }

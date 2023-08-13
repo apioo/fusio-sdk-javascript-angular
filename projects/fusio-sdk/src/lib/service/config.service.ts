@@ -63,6 +63,16 @@ export class ConfigService {
     }];
   }
 
+  public getAnonymousNavigation(): Array<Item> {
+    return this.config.anonymousNavigation || [{
+      title: 'Login',
+      path: '/login'
+    }, {
+      title: 'Register',
+      path: '/register',
+    }];
+  }
+
   public getAccountNavigation(): Array<Item> {
     return this.config.accountNavigation || [{
       title: 'Account',

@@ -18,6 +18,10 @@ export class NavigationService {
     return this.checkPermissionsItems(this.config.getUserNavigation());
   }
 
+  getAnonymousNavigation(): Array<Item> {
+    return this.config.getAnonymousNavigation();
+  }
+
   getAccountNavigation(): Array<Item> {
     return this.checkPermissionsItems(this.config.getAccountNavigation());
   }

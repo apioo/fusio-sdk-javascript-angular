@@ -14,6 +14,7 @@ export interface Config {
   loginPath?: string,
   navigation?: Array<GroupItem>,
   userNavigation?: Array<Item>,
+  anonymousNavigation?: Array<Item>,
   accountNavigation?: Array<Item>,
   paymentProvider?: string,
   paymentCurrency?: string,
