@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
 import {EventService} from "./event.service";
-import {MessageException as BackendException} from "fusio-sdk/dist/src/generated/backend/MessageException";
-import {MessageException as ConsumerException} from "fusio-sdk/dist/src/generated/consumer/MessageException";
+import {KnownStatusCodeException} from "sdkgen-client";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +12,7 @@ export class ErrorService {
 
   public convert(error: any): Message {
     let message: Message;
-    if (error instanceof BackendException || error instanceof ConsumerException) {
+    if (error instanceof KnownStatusCodeException) {
       message = error.getPayload();
     } else {
       message = {
