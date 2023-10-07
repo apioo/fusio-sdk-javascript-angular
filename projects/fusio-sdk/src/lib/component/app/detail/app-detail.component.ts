@@ -7,7 +7,7 @@ import {App} from "fusio-sdk/dist/src/generated/consumer/App";
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.css']
 })
-export class DetailComponent extends Detail<App> {
+export class AppDetailComponent extends Detail<App> {
 
   hideSecret = true;
 

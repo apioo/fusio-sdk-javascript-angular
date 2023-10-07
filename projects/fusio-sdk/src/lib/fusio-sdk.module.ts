@@ -22,12 +22,12 @@ import {RegisterComponent} from "./component/register/register.component";
 import {ActivateComponent} from "./component/register/activate/activate.component";
 import {AccountComponent} from './component/account/account.component';
 import {SecurityComponent} from './component/security/security.component';
-import {DetailComponent as AppDetail} from './component/app/detail/detail.component';
-import {ListComponent as AppList} from './component/app/list/list.component';
-import {ModalComponent as AppModal} from './component/app/modal/modal.component';
-import {DetailComponent as EventDetail} from './component/event/detail/detail.component';
-import {ListComponent as EventList} from './component/event/list/list.component';
-import {ModalComponent as EventModal} from './component/event/modal/modal.component';
+import {AppDetailComponent} from './component/app/detail/app-detail.component';
+import {AppListComponent} from './component/app/list/app-list.component';
+import {AppModalComponent} from './component/app/modal/app-modal.component';
+import {EventDetailComponent} from './component/event/detail/event-detail.component';
+import {EventListComponent} from './component/event/list/event-list.component';
+import {EventModalComponent} from './component/event/modal/event-modal.component';
 import {AccountContainerComponent} from "./component/account-container/account-container.component";
 import {SubscriptionComponent} from './component/subscription/subscription.component';
 import {CallbackComponent} from './component/subscription/callback/callback.component';
@@ -56,12 +56,12 @@ import {BootstrapComponent} from "./component/bootstrap/bootstrap.component";
     SidebarComponent,
     SubscriptionComponent,
     CallbackComponent,
-    AppDetail,
-    AppList,
-    AppModal,
-    EventDetail,
-    EventList,
-    EventModal,
+    AppDetailComponent,
+    AppListComponent,
+    AppModalComponent,
+    EventDetailComponent,
+    EventListComponent,
+    EventModalComponent,
   ],
   imports: [
     BrowserModule,

@@ -15,7 +15,7 @@ import {ErrorService} from "../../../service/error.service";
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css']
 })
-export class ModalComponent extends Modal<Client, App> {
+export class AppModalComponent extends Modal<Client, App> {
 
   scopes?: Array<Scope>;
 

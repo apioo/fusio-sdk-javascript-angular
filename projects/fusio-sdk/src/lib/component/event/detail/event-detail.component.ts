@@ -7,6 +7,6 @@ import {Detail} from "../../../abstract/detail";
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.css']
 })
-export class DetailComponent extends Detail<EventSubscription> {
+export class EventDetailComponent extends Detail<EventSubscription> {
 
 }

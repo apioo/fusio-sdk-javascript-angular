@@ -1,40 +1,40 @@
 import {Component} from '@angular/core';
-import {EventSubscription} from "fusio-sdk/dist/src/generated/consumer/EventSubscription";
+import {App} from "fusio-sdk/dist/src/generated/consumer/App";
 import {Client} from "fusio-sdk/dist/src/generated/consumer/Client";
-import {List} from "../../../abstract/list";
 import {Collection} from "fusio-sdk/dist/src/generated/consumer/Collection";
-import {ModalComponent} from "../modal/modal.component";
-import {ConsumerService} from "../../../service/consumer.service";
+import {List} from "../../../abstract/list";
+import {AppModalComponent} from "../modal/app-modal.component";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ConsumerService} from "../../../service/consumer.service";
 import {EventService} from "../../../service/event.service";
 import {ErrorService} from "../../../service/error.service";
 
 @Component({
-  selector: 'fusio-event-list',
+  selector: 'fusio-app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css']
 })
-export class ListComponent extends List<Client, EventSubscription> {
+export class AppListComponent extends List<Client, App> {
 
   constructor(fusio: ConsumerService, route: ActivatedRoute, router: Router, event: EventService, error: ErrorService, modalService: NgbModal) {
     super(fusio, route, router, event, error, modalService);
   }
 
-  protected async getAll(parameters: Array<any>): Promise<Collection<EventSubscription>> {
-    return this.fusio.getClient().subscription().getAll(...parameters);
+  protected async getAll(parameters: Array<any>): Promise<Collection<App>> {
+    return this.fusio.getClient().app().getAll(...parameters);
   }
 
-  protected async get(id: string): Promise<EventSubscription> {
-    return this.fusio.getClient().subscription().get('' + id);
+  protected async get(id: string): Promise<App> {
+    return this.fusio.getClient().app().get(id);
   }
 
   protected getDetailComponent(): any {
-    return ModalComponent;
+    return AppModalComponent;
   }
 
   protected getRoute(): any {
-    return '/account/event';
+    return '/account/app';
   }
 
 }

@@ -1,8 +1,8 @@
 import {Routes} from "@angular/router";
 import {AccountComponent} from "../component/account/account.component";
 import {SecurityComponent} from "../component/security/security.component";
-import {ListComponent as AppListComponent} from '../component/app/list/list.component';
-import {ListComponent as EventListComponent} from '../component/event/list/list.component';
+import {AppListComponent} from '../component/app/list/app-list.component';
+import {EventListComponent} from '../component/event/list/event-list.component';
 import {SubscriptionComponent} from "../component/subscription/subscription.component";
 import {CallbackComponent} from "../component/subscription/callback/callback.component";
 import {isAuthenticated} from "../guard/authentication.guard";
