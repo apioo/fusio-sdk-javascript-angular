@@ -12,8 +12,8 @@ import {ErrorService} from "../../../service/error.service";
 
 @Component({
   selector: 'fusio-app-modal',
-  templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.css']
+  templateUrl: './app-modal.component.html',
+  styleUrls: ['./app-modal.component.css']
 })
 export class AppModalComponent extends Modal<Client, App> {
 

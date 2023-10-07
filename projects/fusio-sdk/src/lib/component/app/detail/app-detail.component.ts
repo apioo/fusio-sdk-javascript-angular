@@ -4,8 +4,8 @@ import {App} from "fusio-sdk/dist/src/generated/consumer/App";
 
 @Component({
   selector: 'fusio-app-detail',
-  templateUrl: './detail.component.html',
-  styleUrls: ['./detail.component.css']
+  templateUrl: './app-detail.component.html',
+  styleUrls: ['./app-detail.component.css']
 })
 export class AppDetailComponent extends Detail<App> {
 

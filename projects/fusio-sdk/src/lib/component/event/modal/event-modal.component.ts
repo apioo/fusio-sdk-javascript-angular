@@ -12,8 +12,8 @@ import {ErrorService} from "../../../service/error.service";
 
 @Component({
   selector: 'fusio-event-modal',
-  templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.css']
+  templateUrl: './event-modal.component.html',
+  styleUrls: ['./event-modal.component.css']
 })
 export class EventModalComponent extends Modal<Client, EventSubscription> {
 

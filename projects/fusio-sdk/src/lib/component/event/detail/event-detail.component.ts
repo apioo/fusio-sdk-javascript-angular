@@ -4,8 +4,8 @@ import {Detail} from "../../../abstract/detail";
 
 @Component({
   selector: 'fusio-event-detail',
-  templateUrl: './detail.component.html',
-  styleUrls: ['./detail.component.css']
+  templateUrl: './event-detail.component.html',
+  styleUrls: ['./event-detail.component.css']
 })
 export class EventDetailComponent extends Detail<EventSubscription> {
 

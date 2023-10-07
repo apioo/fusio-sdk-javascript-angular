@@ -12,8 +12,8 @@ import {ErrorService} from "../../../service/error.service";
 
 @Component({
   selector: 'fusio-event-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  templateUrl: './event-list.component.html',
+  styleUrls: ['./event-list.component.css']
 })
 export class EventListComponent extends List<Client, EventSubscription> {
 

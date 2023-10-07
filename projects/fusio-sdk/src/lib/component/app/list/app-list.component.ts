@@ -12,8 +12,8 @@ import {ErrorService} from "../../../service/error.service";
 
 @Component({
   selector: 'fusio-app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  templateUrl: './app-list.component.html',
+  styleUrls: ['./app-list.component.css']
 })
 export class AppListComponent extends List<Client, App> {
 
