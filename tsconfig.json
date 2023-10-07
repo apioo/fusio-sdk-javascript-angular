@@ -24,9 +24,6 @@
       "dom"
     ],
     "paths": {
-      "fusio-product": [
-        "dist/fusio-product"
-      ],
       "fusio-sdk": [
         "dist/fusio-sdk"
       ]
