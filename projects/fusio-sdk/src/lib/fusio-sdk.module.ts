@@ -92,12 +92,6 @@ import {BootstrapComponent} from "./component/bootstrap/bootstrap.component";
     SidebarComponent,
     SubscriptionComponent,
     CallbackComponent,
-    AppDetail,
-    AppList,
-    AppModal,
-    EventDetail,
-    EventList,
-    EventModal,
   ]
 })
 export class FusioSdkModule {
