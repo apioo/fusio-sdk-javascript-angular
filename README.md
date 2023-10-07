@@ -2,10 +2,7 @@
 # Fusio SDK Angular
 
 The Angular SDK provides several components and services which help to integrate Fusio into
-an Angular app. It provides two Angular libraries:
-
-* [fusio-sdk](https://www.npmjs.com/package/ngx-fusio-sdk)
-* [fusio-product](https://www.npmjs.com/package/ngx-fusio-product)
+an Angular app.
 
 ## SDK
 
@@ -59,7 +56,3 @@ import {FusioSdkModule, FusioService as Sdk} from "ngx-fusio-sdk";
   //...
 })
 ```
-
-## Product
-
-The product library provides components to create a product website for a Fusio project.
