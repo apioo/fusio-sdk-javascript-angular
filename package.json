@@ -5,7 +5,6 @@
     "ng": "ng",
     "start": "ng serve",
     "build-sdk": "ng build fusio-sdk",
-    "build-product": "ng build fusio-product",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
