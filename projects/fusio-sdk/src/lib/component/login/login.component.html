@@ -21,10 +21,10 @@
           Login
         </button>
         <span class="float-end" style="font-size:14px;"><a routerLink="/password/reset">Password reset</a></span>
-        <div class="me-2" *ngIf="identity?.totalResults > 0">
+        <div class="me-2" *ngIf="identityCount > 0">
           <hr>
           <div class="d-grid gap-2">
-            <a *ngFor="let identity of identity?.entry" class="btn btn-secondary" [href]="buildUrl(identity)"><i class="bi {{identity.icon}}"></i> {{identity.name}}</a>
+            <a *ngFor="let identity of identityCollection" class="btn btn-secondary" [href]="buildUrl(identity)"><i class="bi {{identity.icon}}"></i> {{identity.name}}</a>
           </div>
         </div>
       </form>

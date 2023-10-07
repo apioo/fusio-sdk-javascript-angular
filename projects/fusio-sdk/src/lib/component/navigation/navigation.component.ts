@@ -13,6 +13,8 @@ export class NavigationComponent implements OnInit {
   version?: string;
   items: Array<GroupItem> = [];
 
+  protected readonly Array = Array;
+
   constructor(private navigation: NavigationService, private config: ConfigService, private injector: EnvironmentInjector) {
   }
 

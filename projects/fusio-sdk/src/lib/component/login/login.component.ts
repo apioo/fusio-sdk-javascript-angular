@@ -25,17 +25,22 @@ export class LoginComponent implements OnInit {
   response?: Message;
   loading = false;
 
-  identity?: IdentityCollection;
   logo?: string;
   title: boolean = false;
+
+  identityCount: number = 0;
+  identityCollection: Array<Identity> = [];
 
   constructor(private consumer: ConsumerService, private router: Router, private location: LocationStrategy, private user: UserService, private config: ConfigService) {
   }
 
   async ngOnInit(): Promise<void> {
-    this.identity = await this.consumer.getClientAnonymous().identity().getAll(this.config.getAppId());
     this.logo = this.config.getLogo();
     this.title = this.logo === undefined;
+
+    const collection = await this.consumer.getClientAnonymous().identity().getAll(this.config.getAppId());
+    this.identityCount = collection.totalResults || 0;
+    this.identityCollection = collection.entry || [];
   }
 
   async login() {
