@@ -64,7 +64,7 @@ export abstract class FusioService<T extends ClientAbstract> {
     }
 
     const unixTimestamp = Math.floor(Date.now() / 1000);
-    return token.expires_in > unixTimestamp;
+    return this.getExpiresInTimestamp(token.expires_in) > unixTimestamp;
   }
 
   public logout(): void {
@@ -90,4 +90,16 @@ export abstract class FusioService<T extends ClientAbstract> {
     }
   }
 
+  private getExpiresInTimestamp(expiresIn: number): number
+  {
+    const nowTimestamp = Math.floor(Date.now() / 1000);
+
+    if (expiresIn < 529196400) {
+      // in case the expires in is lower than 1986-10-09 we assume that the field represents the duration in seconds
+      // otherwise it is probably a timestamp
+      expiresIn = nowTimestamp + expiresIn;
+    }
+
+    return expiresIn;
+  }
 }
