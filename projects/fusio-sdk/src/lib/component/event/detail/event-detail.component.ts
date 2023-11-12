@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {EventSubscription} from "fusio-sdk/dist/src/generated/consumer/EventSubscription";
+import {ConsumerEventSubscription} from "fusio-sdk/dist/src/ConsumerEventSubscription";
 import {Detail} from "../../../abstract/detail";
 
 @Component({
@@ -7,6 +7,6 @@ import {Detail} from "../../../abstract/detail";
   templateUrl: './event-detail.component.html',
   styleUrls: ['./event-detail.component.css']
 })
-export class EventDetailComponent extends Detail<EventSubscription> {
+export class EventDetailComponent extends Detail<ConsumerEventSubscription> {
 
 }

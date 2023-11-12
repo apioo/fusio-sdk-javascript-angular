@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {ClientAbstract} from "sdkgen-client";
-import {Collection} from "fusio-sdk/dist/src/generated/backend/Collection";
-import {Message} from "fusio-sdk/dist/src/generated/backend/Message";
-import {FusioService} from "../service/fusio.service";
+import {CommonCollection} from "fusio-sdk/dist/src/CommonCollection";
+import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
+import {ApiService} from "../service/api.service";
 import {ErrorService} from "../service/error.service";
 import {EventService} from "../service/event.service";
 
@@ -24,16 +24,16 @@ export abstract class Query<C extends ClientAbstract, T extends ModelId> impleme
   public selected?: T;
   public page: number = 1;
   public pageSize: number = 16;
-  public response?: Message;
+  public response?: CommonMessage;
   public loading: boolean = true;
 
-  protected fusio: FusioService<C>;
+  protected fusio: ApiService<C>;
   protected route: ActivatedRoute;
   protected router: Router;
   protected event: EventService;
   protected error: ErrorService;
 
-  constructor(fusio: FusioService<C>, route: ActivatedRoute, router: Router, event: EventService, error: ErrorService) {
+  constructor(fusio: ApiService<C>, route: ActivatedRoute, router: Router, event: EventService, error: ErrorService) {
     this.fusio = fusio;
     this.route = route;
     this.router = router;
@@ -164,7 +164,7 @@ export abstract class Query<C extends ClientAbstract, T extends ModelId> impleme
     }, 100);
   }
 
-  protected abstract getAll(parameters: Array<any>): Promise<Collection<T>>;
+  protected abstract getAll(parameters: Array<any>): Promise<CommonCollection<T>>;
   protected abstract get(id: string): Promise<T>;
   protected abstract getRoute(): string;
 

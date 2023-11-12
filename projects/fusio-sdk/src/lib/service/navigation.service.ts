@@ -1,13 +1,13 @@
 import {EnvironmentInjector, Injectable, runInInjectionContext} from '@angular/core';
 import {ConfigService} from "./config.service";
-import {BackendService} from "./backend.service";
+import {FusioService} from "./fusio.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class NavigationService {
 
-  constructor(private backend: BackendService, private config: ConfigService) {
+  constructor(private backend: FusioService, private config: ConfigService) {
   }
 
   async getMainNavigation(injector: EnvironmentInjector): Promise<Array<GroupItem>> {

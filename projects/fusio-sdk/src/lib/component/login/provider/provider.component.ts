@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
+import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
 import {SessionTokenStore} from "sdkgen-client";
 import {AccessToken} from "sdkgen-client/dist/src/AccessToken";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../../service/user.service";
-import {ConsumerService} from "../../../service/consumer.service";
+import {FusioService} from "../../../service/fusio.service";
 import {ErrorService} from "../../../service/error.service";
 import {ConfigService} from "../../../service/config.service";
 
@@ -15,9 +15,9 @@ import {ConfigService} from "../../../service/config.service";
 })
 export class ProviderComponent implements OnInit {
 
-  response?: Message;
+  response?: CommonMessage;
 
-  constructor(private consumer: ConsumerService, private router: Router, private user: UserService, protected route: ActivatedRoute, private error: ErrorService, private config: ConfigService) { }
+  constructor(private fusio: FusioService, private router: Router, private user: UserService, protected route: ActivatedRoute, private error: ErrorService, private config: ConfigService) { }
 
   async ngOnInit(): Promise<void> {
     const accessToken = this.route.snapshot.queryParams['access_token'];
@@ -48,7 +48,7 @@ export class ProviderComponent implements OnInit {
   }
 
   private async obtainUserInfo() {
-    const response = await this.consumer.getClient().account().get();
+    const response = await this.fusio.getClient().consumer().account().get();
 
     this.user.login(response);
 

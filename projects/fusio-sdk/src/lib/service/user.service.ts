@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {UserAccount} from "fusio-sdk/dist/src/generated/consumer/UserAccount";
-import {ConsumerService} from "./consumer.service";
+import {ConsumerUserAccount} from "fusio-sdk/dist/src/ConsumerUserAccount";
+import {FusioService} from "./fusio.service";
 import {EventService} from "./event.service";
 
 @Injectable({
@@ -8,19 +8,19 @@ import {EventService} from "./event.service";
 })
 export class UserService {
 
-  private user?: UserAccount;
+  private user?: ConsumerUserAccount;
 
-  constructor(private consumer: ConsumerService, private event: EventService) { }
+  constructor(private fusio: FusioService, private event: EventService) { }
 
-  public login(user: UserAccount): void {
+  public login(user: ConsumerUserAccount): void {
     this.user = user;
     sessionStorage.setItem('fusio_user', JSON.stringify(user));
 
     this.event.dispatchLogin(user);
   }
 
-  public get(): UserAccount|undefined {
-    if (!this.consumer.hasValidToken()) {
+  public get(): ConsumerUserAccount|undefined {
+    if (!this.fusio.hasValidToken()) {
       return undefined;
     }
 
@@ -39,7 +39,7 @@ export class UserService {
   public logout(): void {
     this.user = undefined;
     sessionStorage.removeItem('fusio_user');
-    this.consumer.logout();
+    this.fusio.logout();
 
     this.event.dispatchLogout();
   }

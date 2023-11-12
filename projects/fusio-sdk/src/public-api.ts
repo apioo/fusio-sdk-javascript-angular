@@ -31,12 +31,11 @@ export * from './lib/component/subscription/callback/callback.component';
 
 export * from './lib/guard/authentication.guard';
 
-export * from './lib/service/backend.service';
+export * from './lib/service/fusio.service';
 export * from './lib/service/config.service';
-export * from './lib/service/consumer.service';
 export * from './lib/service/error.service';
 export * from './lib/service/event.service';
-export * from './lib/service/fusio.service';
+export * from './lib/service/api.service';
 export * from './lib/service/help.service';
 export * from './lib/service/navigation.service';
 export * from './lib/service/user.service';

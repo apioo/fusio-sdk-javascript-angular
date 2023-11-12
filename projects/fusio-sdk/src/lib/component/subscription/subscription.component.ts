@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Plan} from "fusio-sdk/dist/src/generated/consumer/Plan";
-import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
-import {ConsumerService} from "../../service/consumer.service";
+import {ConsumerPlan} from "fusio-sdk/dist/src/ConsumerPlan";
+import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
+import {FusioService} from "../../service/fusio.service";
 import {LocationStrategy} from "@angular/common";
 import {EventService} from "../../service/event.service";
 import {ConfigService} from "../../service/config.service";
@@ -15,13 +15,13 @@ import {ErrorService} from "../../service/error.service";
 export class SubscriptionComponent implements OnInit {
 
   currencyCode: string = 'EUR';
-  plans?: Array<Plan>
-  response?: Message;
+  plans?: Array<ConsumerPlan>
+  response?: CommonMessage;
 
-  constructor(private consumer: ConsumerService, private location: LocationStrategy, private event: EventService, private error: ErrorService, private config: ConfigService) { }
+  constructor(private fusio: FusioService, private location: LocationStrategy, private event: EventService, private error: ErrorService, private config: ConfigService) { }
 
   async ngOnInit(): Promise<void> {
-    const response = await this.consumer.getClient().plan().getAll(0, 1024);
+    const response = await this.fusio.getClient().consumer().plan().getAll(0, 1024);
     this.plans = response.entry;
     this.currencyCode = this.config.getPaymentCurrency();
   }
@@ -31,7 +31,7 @@ export class SubscriptionComponent implements OnInit {
       const path = this.location.prepareExternalUrl(this.config.getHomePath());
       const redirectUrl = location.origin + path;
 
-      const response = await this.consumer.getClient().payment().portal(this.config.getPaymentProvider(), {
+      const response = await this.fusio.getClient().consumer().payment().portal(this.config.getPaymentProvider(), {
         returnUrl: redirectUrl
       });
 
@@ -45,12 +45,12 @@ export class SubscriptionComponent implements OnInit {
     }
   }
 
-  async doPurchase(plan: Plan) {
+  async doPurchase(plan: ConsumerPlan) {
     try {
       const path = this.location.prepareExternalUrl('/account/subscription/callback/' + plan.id);
       const redirectUrl = location.origin + path;
 
-      const response = await this.consumer.getClient().payment().checkout(this.config.getPaymentProvider(), {
+      const response = await this.fusio.getClient().consumer().payment().checkout(this.config.getPaymentProvider(), {
         planId: plan.id,
         returnUrl: redirectUrl,
       });

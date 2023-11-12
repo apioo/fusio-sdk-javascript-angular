@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {UserAccount} from "fusio-sdk/dist/src/generated/consumer/UserAccount";
+import {ConsumerUserAccount} from "fusio-sdk/dist/src/ConsumerUserAccount";
 import {ConfigService} from "./config.service";
 import {EventListener} from "../config/config";
-import {Plan} from "fusio-sdk/dist/src/generated/consumer/Plan";
-import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
+import {ConsumerPlan} from "fusio-sdk/dist/src/ConsumerPlan";
+import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class EventService {
     this.eventListener = config.getEventListener();
   }
 
-  public dispatchLogin(user: UserAccount): void {
+  public dispatchLogin(user: ConsumerUserAccount): void {
     if (this.eventListener.login) {
       this.eventListener.login.call(this, user);
     }
@@ -52,19 +52,19 @@ export class EventService {
     }
   }
 
-  public dispatchCheckout(plan: Plan): void {
+  public dispatchCheckout(plan: ConsumerPlan): void {
     if (this.eventListener.checkout) {
       this.eventListener.checkout.call(this, plan);
     }
   }
 
-  public dispatchPurchase(plan: Plan): void {
+  public dispatchPurchase(plan: ConsumerPlan): void {
     if (this.eventListener.purchase) {
       this.eventListener.purchase.call(this, plan);
     }
   }
 
-  public dispatchError(error: Message): void {
+  public dispatchError(error: CommonMessage): void {
     if (this.eventListener.error) {
       this.eventListener.error.call(this, error);
     }

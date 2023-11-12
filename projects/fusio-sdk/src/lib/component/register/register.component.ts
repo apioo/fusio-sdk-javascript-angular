@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
-import {UserRegister} from "fusio-sdk/dist/src/generated/consumer/UserRegister";
-import {ConsumerService} from "../../service/consumer.service";
+import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
+import {ConsumerUserRegister} from "fusio-sdk/dist/src/ConsumerUserRegister";
+import {FusioService} from "../../service/fusio.service";
 import {EventService} from "../../service/event.service";
 import {ConfigService} from "../../service/config.service";
 import {ErrorService} from "../../service/error.service";
@@ -13,7 +13,7 @@ import {ErrorService} from "../../service/error.service";
 })
 export class RegisterComponent implements OnInit {
 
-  credentials: UserRegister = {
+  credentials: ConsumerUserRegister = {
     name: '',
     email: '',
     password: '',
@@ -22,10 +22,10 @@ export class RegisterComponent implements OnInit {
   passwordConfirm?: string;
   captchaKey?: string
 
-  response?: Message;
+  response?: CommonMessage;
   loading = false
 
-  constructor(private consumer: ConsumerService, private event: EventService, private error: ErrorService, private config: ConfigService) {
+  constructor(private fusio: FusioService, private event: EventService, private error: ErrorService, private config: ConfigService) {
   }
 
   ngOnInit(): void {
@@ -44,7 +44,7 @@ export class RegisterComponent implements OnInit {
         throw new Error('No captcha provided');
       }
 
-      this.response = await this.consumer.getClientAnonymous().account().register(this.credentials);
+      this.response = await this.fusio.getClientAnonymous().consumer().account().register(this.credentials);
       this.loading = false;
 
       this.event.dispatchRegister(this.credentials.name, this.credentials.email);

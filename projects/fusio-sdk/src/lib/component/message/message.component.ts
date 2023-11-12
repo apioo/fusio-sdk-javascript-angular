@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Message} from "fusio-sdk/dist/src/generated/backend/Message";
+import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
 
 @Component({
   selector: 'fusio-message',
@@ -9,7 +9,7 @@ import {Message} from "fusio-sdk/dist/src/generated/backend/Message";
 export class MessageComponent implements OnInit {
 
   @Input()
-  response?: Message;
+  response?: CommonMessage;
 
   constructor() { }
 

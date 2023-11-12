@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from "@angular/core";
-import {Message} from "fusio-sdk/dist/src/generated/backend/Message";
+import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
 import {Mode} from "./list";
 import {ClientAbstract} from "sdkgen-client";
-import {FusioService} from "../service/fusio.service";
+import {ApiService} from "../service/api.service";
 import {ErrorService} from "../service/error.service";
 import {ModelId} from "./query";
 
@@ -16,16 +16,16 @@ import {ModelId} from "./query";
 })
 export abstract class Manipulation<C extends ClientAbstract, T extends ModelId> implements OnInit {
 
-  response?: Message;
+  response?: CommonMessage;
   loading: boolean = false;
 
   @Input() mode: Mode = Mode.Create;
   @Input() entity: T = this.newEntity();
 
-  protected fusio: FusioService<C>;
+  protected fusio: ApiService<C>;
   protected error: ErrorService;
 
-  constructor(fusio: FusioService<C>, error: ErrorService) {
+  constructor(fusio: ApiService<C>, error: ErrorService) {
     this.fusio = fusio;
     this.error = error;
   }
@@ -63,12 +63,12 @@ export abstract class Manipulation<C extends ClientAbstract, T extends ModelId> 
     }
   }
 
-  protected onResponse(response: Message, entity: T): void {
+  protected onResponse(response: CommonMessage, entity: T): void {
   }
 
-  protected abstract create(entity: T): Promise<Message|void>;
-  protected abstract update(entity: T): Promise<Message|void>;
-  protected abstract delete(entity: T): Promise<Message|void>;
+  protected abstract create(entity: T): Promise<CommonMessage|void>;
+  protected abstract update(entity: T): Promise<CommonMessage|void>;
+  protected abstract delete(entity: T): Promise<CommonMessage|void>;
   protected abstract newEntity(): T;
 
 }

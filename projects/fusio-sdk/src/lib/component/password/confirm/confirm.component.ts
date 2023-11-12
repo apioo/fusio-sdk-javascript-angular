@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
+import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
 import {ActivatedRoute} from "@angular/router";
-import {UserPasswordReset} from "fusio-sdk/dist/src/generated/consumer/UserPasswordReset";
-import {ConsumerService} from "../../../service/consumer.service";
+import {ConsumerUserPasswordReset} from "fusio-sdk/dist/src/ConsumerUserPasswordReset";
+import {FusioService} from "../../../service/fusio.service";
 import {ErrorService} from "../../../service/error.service";
 
 @Component({
@@ -12,17 +12,17 @@ import {ErrorService} from "../../../service/error.service";
 })
 export class ConfirmComponent implements OnInit {
 
-  reset: UserPasswordReset = {
+  reset: ConsumerUserPasswordReset = {
     token: '',
     newPassword: '',
   }
 
   passwordConfirm?: string;
 
-  response?: Message;
+  response?: CommonMessage;
   loading = false
 
-  constructor(private consumer: ConsumerService, private error: ErrorService, protected route: ActivatedRoute) {
+  constructor(private fusio: FusioService, private error: ErrorService, protected route: ActivatedRoute) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -42,7 +42,7 @@ export class ConfirmComponent implements OnInit {
         throw new Error('The provided password does not match with the confirmation password');
       }
 
-      this.response = await this.consumer.getClientAnonymous().account().executePasswordReset(this.reset);
+      this.response = await this.fusio.getClientAnonymous().consumer().account().executePasswordReset(this.reset);
       this.loading = false;
     } catch (error) {
       this.loading = false;

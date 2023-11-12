@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ClientAbstract} from "sdkgen-client";
-import {FusioService} from "../service/fusio.service";
+import {ApiService} from "../service/api.service";
 import {ErrorService} from "../service/error.service";
 import {EventService} from "../service/event.service";
 import {Result} from "./modal";
@@ -19,7 +19,7 @@ export abstract class List<C extends ClientAbstract, T extends ModelId> extends 
 
   protected modalService: NgbModal;
 
-  constructor(fusio: FusioService<C>, route: ActivatedRoute, router: Router, event: EventService, error: ErrorService, modalService: NgbModal) {
+  constructor(fusio: ApiService<C>, route: ActivatedRoute, router: Router, event: EventService, error: ErrorService, modalService: NgbModal) {
     super(fusio, route, router, event, error);
     this.modalService = modalService;
   }

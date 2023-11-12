@@ -1,13 +1,13 @@
 import {Component} from '@angular/core';
 import {Modal} from "../../../abstract/modal";
-import {Client} from "fusio-sdk/dist/src/generated/consumer/Client";
-import {App} from "fusio-sdk/dist/src/generated/consumer/App";
-import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
-import {AppCreate} from "fusio-sdk/dist/src/generated/consumer/AppCreate";
-import {AppUpdate} from "fusio-sdk/dist/src/generated/consumer/AppUpdate";
-import {Scope} from "fusio-sdk/dist/src/generated/consumer/Scope";
+import {Client} from "fusio-sdk/dist/src/Client";
+import {ConsumerApp} from "fusio-sdk/dist/src/ConsumerApp";
+import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
+import {ConsumerAppCreate} from "fusio-sdk/dist/src/ConsumerAppCreate";
+import {ConsumerAppUpdate} from "fusio-sdk/dist/src/ConsumerAppUpdate";
+import {ConsumerScope} from "fusio-sdk/dist/src/ConsumerScope";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {ConsumerService} from "../../../service/consumer.service";
+import {FusioService} from "../../../service/fusio.service";
 import {ErrorService} from "../../../service/error.service";
 
 @Component({
@@ -15,32 +15,32 @@ import {ErrorService} from "../../../service/error.service";
   templateUrl: './app-modal.component.html',
   styleUrls: ['./app-modal.component.css']
 })
-export class AppModalComponent extends Modal<Client, App> {
+export class AppModalComponent extends Modal<Client, ConsumerApp> {
 
-  scopes?: Array<Scope>;
+  scopes?: Array<ConsumerScope>;
 
-  constructor(fusio: ConsumerService, error: ErrorService, modalService: NgbModal, modal: NgbActiveModal) {
+  constructor(fusio: FusioService, error: ErrorService, modalService: NgbModal, modal: NgbActiveModal) {
     super(fusio, error, modalService, modal);
   }
 
   override async ngOnInit(): Promise<void> {
-    const response = await this.fusio.getClient().scope().getAll(0, 1024);
+    const response = await this.fusio.getClient().consumer().scope().getAll(0, 1024);
     this.scopes = response.entry;
   }
 
-  protected async create(entity: App): Promise<Message> {
-    return this.fusio.getClient().app().create(<AppCreate> entity);
+  protected async create(entity: ConsumerApp): Promise<CommonMessage> {
+    return this.fusio.getClient().consumer().app().create(<ConsumerAppCreate> entity);
   }
 
-  protected async update(entity: App): Promise<Message> {
-    return this.fusio.getClient().app().update('' + entity.id, <AppUpdate> entity);
+  protected async update(entity: ConsumerApp): Promise<CommonMessage> {
+    return this.fusio.getClient().consumer().app().update('' + entity.id, <ConsumerAppUpdate> entity);
   }
 
-  protected async delete(entity: App): Promise<Message> {
-    return this.fusio.getClient().app().delete('' + entity.id);
+  protected async delete(entity: ConsumerApp): Promise<CommonMessage> {
+    return this.fusio.getClient().consumer().app().delete('' + entity.id);
   }
 
-  protected newEntity(): App {
+  protected newEntity(): ConsumerApp {
     return {
       name: '',
       url: '',

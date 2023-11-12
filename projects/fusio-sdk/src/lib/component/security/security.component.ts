@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ConsumerService} from "../../service/consumer.service";
-import {AccountChangePassword} from "fusio-sdk/dist/src/generated/consumer/AccountChangePassword";
-import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
+import {FusioService} from "../../service/fusio.service";
+import {BackendAccountChangePassword} from "fusio-sdk/dist/src/BackendAccountChangePassword";
+import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
 import {ErrorService} from "../../service/error.service";
 
 @Component({
@@ -11,14 +11,14 @@ import {ErrorService} from "../../service/error.service";
 })
 export class SecurityComponent implements OnInit {
 
-  credentials: AccountChangePassword = {
+  credentials: BackendAccountChangePassword = {
     oldPassword: '',
     newPassword: '',
     verifyPassword: '',
   };
-  response?: Message;
+  response?: CommonMessage;
 
-  constructor(private consumer: ConsumerService, private error: ErrorService) { }
+  constructor(private fusio: FusioService, private error: ErrorService) { }
 
   ngOnInit(): void {
   }
@@ -29,7 +29,7 @@ export class SecurityComponent implements OnInit {
         return;
       }
 
-      this.response = await this.consumer.getClient().account().changePassword(this.credentials);
+      this.response = await this.fusio.getClient().consumer().account().changePassword(this.credentials);
     } catch (error) {
       this.response = this.error.convert(error);
     }

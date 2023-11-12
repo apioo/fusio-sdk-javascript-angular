@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
-import {Message} from "fusio-sdk/dist/src/generated/backend/Message";
+import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ClientAbstract} from "sdkgen-client";
-import {FusioService} from "../service/fusio.service";
+import {ApiService} from "../service/api.service";
 import {ErrorService} from "../service/error.service";
 import {Manipulation} from "./manipulation";
 import {ModelId} from "./query";
@@ -19,13 +19,13 @@ export abstract class Modal<C extends ClientAbstract, T extends ModelId> extends
   protected modalService: NgbModal;
   public modal: NgbActiveModal;
 
-  constructor(fusio: FusioService<C>, error: ErrorService, modalService: NgbModal, modal: NgbActiveModal) {
+  constructor(fusio: ApiService<C>, error: ErrorService, modalService: NgbModal, modal: NgbActiveModal) {
     super(fusio, error);
     this.modalService = modalService;
     this.modal = modal;
   }
 
-  protected override onResponse(response: Message, entity: T) {
+  protected override onResponse(response: CommonMessage, entity: T) {
     this.modal.close({
       entity: entity,
       response: response,
@@ -36,5 +36,5 @@ export abstract class Modal<C extends ClientAbstract, T extends ModelId> extends
 
 export interface Result<T> {
   entity: T,
-  response: Message,
+  response: CommonMessage,
 }

@@ -1,14 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
+import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
 import axios from "axios";
 import {Router} from "@angular/router";
 import {UserService} from "../../service/user.service";
-import {ConsumerService} from "../../service/consumer.service";
+import {FusioService} from "../../service/fusio.service";
 import {ConfigService} from "../../service/config.service";
 import {ClientException} from "sdkgen-client";
-import {IdentityCollection} from "fusio-sdk/dist/src/generated/consumer/IdentityCollection";
 import {LocationStrategy} from "@angular/common";
-import {Identity} from "fusio-sdk/dist/src/generated/consumer/Identity";
+import {ConsumerIdentity} from "fusio-sdk/dist/src/ConsumerIdentity";
 
 @Component({
   selector: 'fusio-login',
@@ -22,23 +21,23 @@ export class LoginComponent implements OnInit {
     password: ''
   }
 
-  response?: Message;
+  response?: CommonMessage;
   loading = false;
 
   logo?: string;
   title: boolean = false;
 
   identityCount: number = 0;
-  identityCollection: Array<Identity> = [];
+  identityCollection: Array<ConsumerIdentity> = [];
 
-  constructor(private consumer: ConsumerService, private router: Router, private location: LocationStrategy, private user: UserService, private config: ConfigService) {
+  constructor(private fusio: FusioService, private router: Router, private location: LocationStrategy, private user: UserService, private config: ConfigService) {
   }
 
   async ngOnInit(): Promise<void> {
     this.logo = this.config.getLogo();
     this.title = this.logo === undefined;
 
-    const collection = await this.consumer.getClientAnonymous().identity().getAll(this.config.getAppId());
+    const collection = await this.fusio.getClientAnonymous().consumer().identity().getAll(this.config.getAppId());
     this.identityCount = collection.totalResults || 0;
     this.identityCollection = collection.entry || [];
   }
@@ -47,7 +46,7 @@ export class LoginComponent implements OnInit {
     this.loading = true;
 
     try {
-      const response = await this.consumer.getClientWithCredentials(this.credentials.username, this.credentials.password).account().get();
+      const response = await this.fusio.getClientWithCredentials(this.credentials.username, this.credentials.password).consumer().account().get();
 
       this.user.login(response);
 
@@ -72,7 +71,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  public buildUrl(identity?: Identity): string {
+  public buildUrl(identity?: ConsumerIdentity): string {
     if (!identity || !identity.redirect) {
       return '';
     }

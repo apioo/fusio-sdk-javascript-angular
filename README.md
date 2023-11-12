@@ -15,14 +15,14 @@ extends from the `FusioService` in this SDK s.
 
 ```typescript
 import {Injectable} from '@angular/core';
-import {FusioService as Sdk} from "ngx-fusio-sdk";
+import {ApiService} from "ngx-fusio-sdk";
 import {CredentialsInterface, TokenStoreInterface} from "sdkgen-client";
 import Client from "fusio-sdk/dist/src/generated/backend/Client";
 
 @Injectable({
   providedIn: 'root'
 })
-export class FusioService extends Sdk<Client> {
+export class FusioService extends ApiService<Client> {
 
   protected newClient(baseUrl: string, credentials: CredentialsInterface | null | undefined, tokenStore: TokenStoreInterface | undefined): Client {
     return new Client(baseUrl, credentials, tokenStore);

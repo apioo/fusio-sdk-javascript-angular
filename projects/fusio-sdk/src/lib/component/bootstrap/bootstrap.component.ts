@@ -1,5 +1,5 @@
 import {Component, EnvironmentInjector, OnInit} from '@angular/core';
-import {User} from "fusio-sdk/dist/src/generated/backend/User";
+import {BackendUser} from "fusio-sdk/dist/src/BackendUser";
 import {UserService} from "../../service/user.service";
 import {Item, NavigationService} from "../../service/navigation.service";
 
@@ -9,7 +9,7 @@ import {Item, NavigationService} from "../../service/navigation.service";
   styleUrls: ['./bootstrap.component.css']
 })
 export class BootstrapComponent implements OnInit {
-  user?: User;
+  user?: BackendUser;
   userMenu: Array<Item> = [];
   anonymousMenu: Array<Item> = [];
 

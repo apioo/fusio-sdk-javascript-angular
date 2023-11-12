@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
-import {EventSubscription} from "fusio-sdk/dist/src/generated/consumer/EventSubscription";
-import {Client} from "fusio-sdk/dist/src/generated/consumer/Client";
+import {ConsumerEventSubscription} from "fusio-sdk/dist/src/ConsumerEventSubscription";
+import {Client} from "fusio-sdk/dist/src/Client";
 import {Modal} from "../../../abstract/modal";
-import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
-import {Event} from "fusio-sdk/dist/src/generated/consumer/Event";
-import {EventSubscriptionCreate} from "fusio-sdk/dist/src/generated/consumer/EventSubscriptionCreate";
-import {EventSubscriptionUpdate} from "fusio-sdk/dist/src/generated/consumer/EventSubscriptionUpdate";
-import {ConsumerService} from "../../../service/consumer.service";
+import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
+import {ConsumerEvent} from "fusio-sdk/dist/src/ConsumerEvent";
+import {ConsumerEventSubscriptionCreate} from "fusio-sdk/dist/src/ConsumerEventSubscriptionCreate";
+import {ConsumerEventSubscriptionUpdate} from "fusio-sdk/dist/src/ConsumerEventSubscriptionUpdate";
+import {FusioService} from "../../../service/fusio.service";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ErrorService} from "../../../service/error.service";
 
@@ -15,32 +15,32 @@ import {ErrorService} from "../../../service/error.service";
   templateUrl: './event-modal.component.html',
   styleUrls: ['./event-modal.component.css']
 })
-export class EventModalComponent extends Modal<Client, EventSubscription> {
+export class EventModalComponent extends Modal<Client, ConsumerEventSubscription> {
 
-  events?: Array<Event>;
+  events?: Array<ConsumerEvent>;
 
-  constructor(fusio: ConsumerService, error: ErrorService, modalService: NgbModal, modal: NgbActiveModal) {
+  constructor(fusio: FusioService, error: ErrorService, modalService: NgbModal, modal: NgbActiveModal) {
     super(fusio, error, modalService, modal);
   }
 
   override async ngOnInit(): Promise<void> {
-    const response = await this.fusio.getClient().event().getAll(0, 1024);
+    const response = await this.fusio.getClient().consumer().event().getAll(0, 1024);
     this.events = response.entry;
   }
 
-  protected async create(entity: EventSubscription): Promise<Message> {
-    return this.fusio.getClient().subscription().create(<EventSubscriptionCreate> entity);
+  protected async create(entity: ConsumerEventSubscription): Promise<CommonMessage> {
+    return this.fusio.getClient().consumer().subscription().create(<ConsumerEventSubscriptionCreate> entity);
   }
 
-  protected async update(entity: EventSubscription): Promise<Message> {
-    return this.fusio.getClient().subscription().update('' + entity.id, <EventSubscriptionUpdate> entity);
+  protected async update(entity: ConsumerEventSubscription): Promise<CommonMessage> {
+    return this.fusio.getClient().consumer().subscription().update('' + entity.id, <ConsumerEventSubscriptionUpdate> entity);
   }
 
-  protected async delete(entity: EventSubscription): Promise<Message> {
-    return this.fusio.getClient().subscription().delete('' + entity.id);
+  protected async delete(entity: ConsumerEventSubscription): Promise<CommonMessage> {
+    return this.fusio.getClient().consumer().subscription().delete('' + entity.id);
   }
 
-  protected newEntity(): EventSubscription {
+  protected newEntity(): ConsumerEventSubscription {
     return {
       event: '',
       endpoint: '',

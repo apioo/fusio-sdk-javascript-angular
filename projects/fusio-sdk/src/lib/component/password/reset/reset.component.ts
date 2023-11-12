@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
+import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
 import {ActivatedRoute} from "@angular/router";
-import {UserEmail} from "fusio-sdk/dist/src/generated/consumer/UserEmail";
-import {ConsumerService} from "../../../service/consumer.service";
+import {ConsumerUserEmail} from "fusio-sdk/dist/src/ConsumerUserEmail";
+import {FusioService} from "../../../service/fusio.service";
 import {ErrorService} from "../../../service/error.service";
 import {ConfigService} from "../../../service/config.service";
 
@@ -13,16 +13,16 @@ import {ConfigService} from "../../../service/config.service";
 })
 export class ResetComponent implements OnInit {
 
-  data: UserEmail = {
+  data: ConsumerUserEmail = {
     email: '',
   }
 
   captchaKey?: string
 
-  response?: Message;
+  response?: CommonMessage;
   loading = false
 
-  constructor(private consumer: ConsumerService, private error: ErrorService, private config: ConfigService, protected route: ActivatedRoute) {
+  constructor(private fusio: FusioService, private error: ErrorService, private config: ConfigService, protected route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -40,7 +40,7 @@ export class ResetComponent implements OnInit {
         throw new Error('No captcha provided');
       }
 
-      this.response = await this.consumer.getClientAnonymous().account().requestPasswordReset(this.data);
+      this.response = await this.fusio.getClientAnonymous().consumer().account().requestPasswordReset(this.data);
       this.loading = false;
     } catch (error) {
       this.loading = false;

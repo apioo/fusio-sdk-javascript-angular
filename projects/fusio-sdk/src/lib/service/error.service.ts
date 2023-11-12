@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
+import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
 import {EventService} from "./event.service";
 import {KnownStatusCodeException} from "sdkgen-client";
 
@@ -10,8 +10,8 @@ export class ErrorService {
 
   constructor(private event: EventService) { }
 
-  public convert(error: any): Message {
-    let message: Message;
+  public convert(error: any): CommonMessage {
+    let message: CommonMessage;
     if (error instanceof KnownStatusCodeException) {
       message = error.getPayload();
     } else {

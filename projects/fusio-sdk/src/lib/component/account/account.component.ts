@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ConsumerService} from "../../service/consumer.service";
-import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
-import {UserAccount} from "fusio-sdk/dist/src/generated/consumer/UserAccount";
+import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
+import {ConsumerUserAccount} from "fusio-sdk/dist/src/ConsumerUserAccount";
 import {ErrorService} from "../../service/error.service";
+import {FusioService} from "../../service/fusio.service";
 
 @Component({
   selector: 'fusio-account',
@@ -11,16 +11,16 @@ import {ErrorService} from "../../service/error.service";
 })
 export class AccountComponent implements OnInit {
 
-  user?: UserAccount;
-  response?: Message;
+  user?: ConsumerUserAccount;
+  response?: CommonMessage;
   email: string = '';
 
-  constructor(private consumer: ConsumerService, private error: ErrorService) { }
+  constructor(private fusio: FusioService, private error: ErrorService) { }
 
   async ngOnInit(): Promise<void> {
     try {
-      this.user = await this.consumer.getClient().account().get();
-      this.email = this.user.email || '';
+      this.user = await this.fusio.getClient().consumer().account().get();
+      this.email = this.user?.email || '';
       this.response = undefined;
     } catch (error) {
       this.response = this.error.convert(error);
@@ -33,7 +33,7 @@ export class AccountComponent implements OnInit {
         return;
       }
 
-      this.response = await this.consumer.getClient().account().update(this.user);
+      this.response = await this.fusio.getClient().consumer().account().update(this.user);
     } catch (error) {
       this.response = this.error.convert(error);
     }

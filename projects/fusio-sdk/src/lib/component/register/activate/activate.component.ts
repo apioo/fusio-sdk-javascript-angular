@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
+import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
 import {ActivatedRoute} from "@angular/router";
-import {UserActivate} from "fusio-sdk/dist/src/generated/consumer/UserActivate";
-import {ConsumerService} from "../../../service/consumer.service";
+import {ConsumerUserActivate} from "fusio-sdk/dist/src/ConsumerUserActivate";
+import {FusioService} from "../../../service/fusio.service";
 import {EventService} from "../../../service/event.service";
 import {ErrorService} from "../../../service/error.service";
 
@@ -13,9 +13,9 @@ import {ErrorService} from "../../../service/error.service";
 })
 export class ActivateComponent implements OnInit {
 
-  response?: Message;
+  response?: CommonMessage;
 
-  constructor(private consumer: ConsumerService, private event: EventService, private error: ErrorService, protected route: ActivatedRoute) {
+  constructor(private fusio: FusioService, private event: EventService, private error: ErrorService, protected route: ActivatedRoute) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -28,12 +28,12 @@ export class ActivateComponent implements OnInit {
   }
 
   private async activate(token: string) {
-    let activate: UserActivate = {
+    let activate: ConsumerUserActivate = {
       token: token
     };
 
     try {
-      this.response = await this.consumer.getClientAnonymous().account().activate(activate);
+      this.response = await this.fusio.getClientAnonymous().consumer().account().activate(activate);
 
       this.event.dispatchRegisterActivate();
     } catch (error) {
