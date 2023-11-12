@@ -1,7 +1,7 @@
 import {InjectionToken} from "@angular/core";
-import {UserAccount} from "fusio-sdk/dist/src/generated/consumer/UserAccount";
-import {Plan} from "fusio-sdk/dist/src/generated/consumer/Plan";
-import {Message} from "fusio-sdk/dist/src/generated/consumer/Message";
+import {ConsumerUserAccount} from "fusio-sdk/dist/src/ConsumerUserAccount";
+import {ConsumerPlan} from "fusio-sdk/dist/src/ConsumerPlan";
+import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
 import {GroupItem, Items} from "../service/navigation.service";
 
 export interface Config {
@@ -27,7 +27,7 @@ export interface EventListener {
   /**
    * Invoked on login
    */
-  login?: (user: UserAccount) => void,
+  login?: (user: ConsumerUserAccount) => void,
 
   /**
    * Invoked on logout
@@ -57,17 +57,17 @@ export interface EventListener {
   /**
    * Invoked in case a user starts a checkout of a plan
    */
-  checkout?: (plan: Plan) => void,
+  checkout?: (plan: ConsumerPlan) => void,
 
   /**
    * Invoked in case a user has purchased a plan
    */
-  purchase?: (plan: Plan) => void,
+  purchase?: (plan: ConsumerPlan) => void,
 
   /**
    * Invoked in case an error occurred
    */
-  error?: (error: Message) => void,
+  error?: (error: CommonMessage) => void,
 
   /**
    * Invoked in case a model list was called
