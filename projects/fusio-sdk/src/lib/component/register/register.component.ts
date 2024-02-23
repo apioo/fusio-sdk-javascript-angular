@@ -40,6 +40,14 @@ export class RegisterComponent implements OnInit {
         throw new Error('The provided password does not match with the confirmation password');
       }
 
+      if (!this.credentials.name) {
+        throw new Error('No name provided');
+      }
+
+      if (!this.credentials.email) {
+        throw new Error('No email provided');
+      }
+
       if (this.captchaKey && !this.credentials.captcha) {
         throw new Error('No captcha provided');
       }
