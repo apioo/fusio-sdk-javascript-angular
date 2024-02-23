@@ -13,7 +13,7 @@
         </div>
         <div class="mb-3" *ngIf="captchaKey">
           <label>Captcha:</label>
-          <ngx-recaptcha2 #captchaElem [siteKey]="captchaKey" (success)="setCaptcha($event)" [useGlobalDomain]="false" formControlName="recaptcha"></ngx-recaptcha2>
+          <ngx-recaptcha2 #captchaElem [siteKey]="captchaKey" (success)="setCaptcha($event)" [useGlobalDomain]="false"></ngx-recaptcha2>
         </div>
         <button type="submit" class="btn btn-primary" [disabled]="loading">
           <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>

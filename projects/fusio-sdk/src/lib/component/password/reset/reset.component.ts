@@ -26,10 +26,7 @@ export class ResetComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let captchaKey = this.config.getRecpatcha();
-    if (captchaKey) {
-      this.captchaKey = captchaKey;
-    }
+    this.captchaKey = this.config.getRecpatcha();
   }
 
   public async doReset() {
