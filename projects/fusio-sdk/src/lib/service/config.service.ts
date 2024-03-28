@@ -87,13 +87,17 @@ export class ConfigService {
       path: '/account/app',
       scope: 'consumer.app',
     }, {
-      title: 'Events',
-      path: '/account/event',
-      scope: 'consumer.subscription',
-    }, {
-      title: 'Subscriptions',
+      title: 'Subscription',
       path: '/account/subscription',
       scope: 'consumer.payment',
+    }, {
+      title: 'Webhook',
+      path: '/account/webhook',
+      scope: 'consumer.webhook',
+    }, {
+      title: 'Token',
+      path: '/account/token',
+      scope: 'consumer.token',
     }];
   }
 
