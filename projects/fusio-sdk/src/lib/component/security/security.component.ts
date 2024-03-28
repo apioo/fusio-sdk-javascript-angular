@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FusioService} from "../../service/fusio.service";
-import {BackendAccountChangePassword} from "fusio-sdk/dist/src/BackendAccountChangePassword";
-import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
+import {BackendAccountChangePassword} from "fusio-sdk/dist/BackendAccountChangePassword";
+import {CommonMessage} from "fusio-sdk/dist/CommonMessage";
 import {ErrorService} from "../../service/error.service";
 
 @Component({

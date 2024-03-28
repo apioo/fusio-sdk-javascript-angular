@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {ConsumerApp} from "fusio-sdk/dist/src/ConsumerApp";
-import {Client} from "fusio-sdk/dist/src/Client";
-import {CommonCollection} from "fusio-sdk/dist/src/CommonCollection";
+import {ConsumerApp} from "fusio-sdk/dist/ConsumerApp";
+import {Client} from "fusio-sdk/dist/Client";
+import {CommonCollection} from "fusio-sdk/dist/CommonCollection";
 import {List} from "../../../abstract/list";
 import {AppModalComponent} from "../modal/app-modal.component";
 import {ActivatedRoute, Router} from "@angular/router";

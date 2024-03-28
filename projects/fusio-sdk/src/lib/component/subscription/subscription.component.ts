@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {ConsumerPlan} from "fusio-sdk/dist/src/ConsumerPlan";
-import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
+import {ConsumerPlan} from "fusio-sdk/dist/ConsumerPlan";
+import {CommonMessage} from "fusio-sdk/dist/CommonMessage";
 import {FusioService} from "../../service/fusio.service";
 import {LocationStrategy} from "@angular/common";
 import {EventService} from "../../service/event.service";

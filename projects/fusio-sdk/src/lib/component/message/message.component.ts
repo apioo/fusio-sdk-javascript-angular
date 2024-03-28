@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
+import {CommonMessage} from "fusio-sdk/dist/CommonMessage";
 
 @Component({
   selector: 'fusio-message',

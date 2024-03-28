@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
+import {CommonMessage} from "fusio-sdk/dist/CommonMessage";
 import {ActivatedRoute} from "@angular/router";
-import {ConsumerUserActivate} from "fusio-sdk/dist/src/ConsumerUserActivate";
+import {ConsumerUserActivate} from "fusio-sdk/dist/ConsumerUserActivate";
 import {FusioService} from "../../../service/fusio.service";
 import {EventService} from "../../../service/event.service";
 import {ErrorService} from "../../../service/error.service";

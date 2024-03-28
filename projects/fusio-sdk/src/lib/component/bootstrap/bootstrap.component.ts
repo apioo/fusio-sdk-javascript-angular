@@ -1,5 +1,5 @@
 import {Component, EnvironmentInjector, OnInit} from '@angular/core';
-import {BackendUser} from "fusio-sdk/dist/src/BackendUser";
+import {BackendUser} from "fusio-sdk/dist/BackendUser";
 import {UserService} from "../../service/user.service";
 import {Item, NavigationService} from "../../service/navigation.service";
 

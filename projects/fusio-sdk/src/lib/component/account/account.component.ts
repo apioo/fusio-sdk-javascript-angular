@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
-import {ConsumerUserAccount} from "fusio-sdk/dist/src/ConsumerUserAccount";
+import {CommonMessage} from "fusio-sdk/dist/CommonMessage";
+import {ConsumerUserAccount} from "fusio-sdk/dist/ConsumerUserAccount";
 import {ErrorService} from "../../service/error.service";
 import {FusioService} from "../../service/fusio.service";
 
