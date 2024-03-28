@@ -1,0 +1,21 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col text-center">
+      <h1 class="mt-4 mb-4">Fusio-SDK Angular</h1>
+    </div>
+  </div>
+  <div class="row" *ngIf="user">
+    <div class="col">
+      <div class="btn-group float-end">
+        <a class="btn btn-secondary disabled">Loggend in as: {{user.name}}</a>
+        <a routerLink="/logout" class="btn btn-primary">Logout</a>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
