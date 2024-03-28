@@ -25,14 +25,17 @@ import {SecurityComponent} from './component/security/security.component';
 import {AppDetailComponent} from './component/app/detail/app-detail.component';
 import {AppListComponent} from './component/app/list/app-list.component';
 import {AppModalComponent} from './component/app/modal/app-modal.component';
-import {EventDetailComponent} from './component/event/detail/event-detail.component';
-import {EventListComponent} from './component/event/list/event-list.component';
-import {EventModalComponent} from './component/event/modal/event-modal.component';
 import {AccountContainerComponent} from "./component/account-container/account-container.component";
 import {SubscriptionComponent} from './component/subscription/subscription.component';
 import {CallbackComponent} from './component/subscription/callback/callback.component';
 import {NavigationComponent} from "./component/navigation/navigation.component";
 import {BootstrapComponent} from "./component/bootstrap/bootstrap.component";
+import {TokenDetailComponent} from "./component/token/detail/token-detail.component";
+import {TokenListComponent} from "./component/token/list/token-list.component";
+import {TokenModalComponent} from "./component/token/modal/token-modal.component";
+import {WebhookDetailComponent} from "./component/webhook/detail/webhook-detail.component";
+import {WebhookListComponent} from "./component/webhook/list/webhook-list.component";
+import {WebhookModalComponent} from "./component/webhook/modal/webhook-modal.component";
 
 @NgModule({
   declarations: [
@@ -59,9 +62,12 @@ import {BootstrapComponent} from "./component/bootstrap/bootstrap.component";
     AppDetailComponent,
     AppListComponent,
     AppModalComponent,
-    EventDetailComponent,
-    EventListComponent,
-    EventModalComponent,
+    TokenDetailComponent,
+    TokenListComponent,
+    TokenModalComponent,
+    WebhookDetailComponent,
+    WebhookListComponent,
+    WebhookModalComponent,
   ],
   imports: [
     BrowserModule,
