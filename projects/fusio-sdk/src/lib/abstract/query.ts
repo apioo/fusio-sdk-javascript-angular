@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {ClientAbstract} from "sdkgen-client";
-import {CommonCollection} from "fusio-sdk/dist/src/CommonCollection";
-import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
+import {CommonCollection} from "fusio-sdk/dist/CommonCollection";
+import {CommonMessage} from "fusio-sdk/dist/CommonMessage";
 import {ApiService} from "../service/api.service";
 import {ErrorService} from "../service/error.service";
 import {EventService} from "../service/event.service";

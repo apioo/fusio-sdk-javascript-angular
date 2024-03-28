@@ -1,7 +1,7 @@
 import {InjectionToken} from "@angular/core";
-import {ConsumerUserAccount} from "fusio-sdk/dist/src/ConsumerUserAccount";
-import {ConsumerPlan} from "fusio-sdk/dist/src/ConsumerPlan";
-import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
+import {ConsumerUserAccount} from "fusio-sdk/dist/ConsumerUserAccount";
+import {ConsumerPlan} from "fusio-sdk/dist/ConsumerPlan";
+import {CommonMessage} from "fusio-sdk/dist/CommonMessage";
 import {GroupItem, Items} from "../service/navigation.service";
 
 export interface Config {
