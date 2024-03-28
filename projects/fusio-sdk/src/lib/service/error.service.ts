@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {CommonMessage} from "fusio-sdk/dist/src/CommonMessage";
+import {CommonMessage} from "fusio-sdk/dist/CommonMessage";
 import {EventService} from "./event.service";
 import {KnownStatusCodeException} from "sdkgen-client";
 
