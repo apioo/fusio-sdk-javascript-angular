@@ -23,7 +23,9 @@
     "zone.js": "~0.13.0",
     "fusio-sdk": "^5.0.0",
     "ngx-captcha": "^13.0.0",
-    "ngx-gravatar": "^13.0.0"
+    "ngx-gravatar": "^13.0.0",
+    "bootstrap": "^5.2.3",
+    "bootstrap-icons": "^1.10.5"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^16.2.12",
