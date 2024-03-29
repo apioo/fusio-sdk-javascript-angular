@@ -15,12 +15,16 @@
         <div class="col-10"><fusio-scopes [scopes]="selected.scopes"></fusio-scopes></div>
       </div>
       <div class="row">
+        <div class="col-2 fw-bold">IP</div>
+        <div class="col-10">{{selected.ip}}</div>
+      </div>
+      <div class="row">
         <div class="col-2 fw-bold">Expires</div>
-        <div class="col-10">{{selected.expire}}</div>
+        <div class="col-10">{{selected.expire|date:'short'}}</div>
       </div>
       <div class="row">
         <div class="col-2 fw-bold">Created</div>
-        <div class="col-10">{{selected.date}}</div>
+        <div class="col-10">{{selected.date|date:'short'}}</div>
       </div>
     </div>
   </div>

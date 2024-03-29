@@ -1,3 +1,81 @@
 
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 @import "~bootstrap/dist/css/bootstrap.min.css";
+
+
+.fusio-table-tab tbody tr:first-child td
+{
+  border-top:none;
+}
+
+.fusio-table-tab-token pre
+{
+  background-color:transparent;
+}
+
+.fusio-panel
+{
+  height:300px;
+  overflow:hidden;
+  margin-bottom:16px;
+}
+
+.fusio-login
+{
+  background-color:#021c35;
+  position:fixed;
+  left:0px;
+  top:0px;
+  width:100%;
+  height:100%;
+  z-index:101;
+}
+
+.fusio-login header
+{
+}
+
+.fusio-login-panel
+{
+  background-color:#fff;
+  width:400px;
+  border:1px solid #fff;
+  margin:0 auto;
+  margin-top:32px;
+}
+
+.fusio-login-panel-body
+{
+  margin:8px;
+}
+
+.fusio-detail
+{
+  margin:8px 0;
+}
+
+.fusio-detail > .row
+{
+}
+
+.fusio-detail > .row:nth-child(even)
+{
+  background-color:rgba(0,0,0,.03);
+}
+
+.fusio-detail > .row > div
+{
+  margin:12px 0;
+}
+
+.fusio-detail > .row > div:first-child
+{
+  font-weight:bold;
+  font-size:14px;
+}
+
+.fusio-detail .badge
+{
+  margin-right:4px;
+}
+
