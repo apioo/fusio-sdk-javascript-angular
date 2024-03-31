@@ -32,7 +32,10 @@
         <div class="col-10">
           <span *ngIf="hideSecret"><code>...</code></span>
           <span *ngIf="!hideSecret"><code>{{selected.appSecret}}</code></span>
-          <button class="btn btn-sm btn-secondary float-end" (click)="hideSecret = !hideSecret">Show</button>
+          <div class="btn-group float-end">
+            <button class="btn btn-sm btn-secondary" ngxClipboard [cbContent]="selected.appSecret">Copy</button>
+            <button class="btn btn-sm btn-secondary" (click)="hideSecret = !hideSecret">Show</button>
+          </div>
         </div>
       </div>
       <div class="row">
