@@ -5,17 +5,17 @@
 
 <hr>
 
-<div class="card float-start" style="width:14rem;margin-right:1rem;margin-bottom:1rem" *ngFor="let plan of plans">
+<div class="card float-start" style="width:16rem;margin-right:1rem;margin-bottom:1rem" *ngFor="let plan of plans">
   <h5 class="card-header">{{plan.name}}</h5>
   <div class="card-body">
-    <dl>
-      <dt>Price</dt>
-      <dd>{{ plan.price | currency : currencyCode }}</dd>
-      <dt>Points</dt>
-      <dd>{{ plan.points }}</dd>
-    </dl>
-    <p>{{ plan.description }}</p>
-    <div class="btn-group" role="group">
+    <div class="text-center mb-3">
+      <h1 class="card-title">{{ plan.price | currency : currencyCode }}</h1>
+      <div *ngIf="plan.points && plan.points > 0" class="text-muted">Points: {{plan.points}}</div>
+      <span *ngIf="plan.period === 0" class="badge text-bg-primary">one-time</span>
+      <span *ngIf="plan.period === 1" class="badge text-bg-primary">subscription</span>
+    </div>
+    <markdown [data]="plan.description"></markdown>
+    <div class="btn-group w-100" role="group">
       <a (click)="doPurchase(plan)" class="btn btn-primary">Purchase</a>
     </div>
   </div>

@@ -6,6 +6,7 @@ import {RouterModule} from '@angular/router';
 import {NgxCaptchaModule} from "ngx-captcha";
 import {GravatarModule} from "ngx-gravatar";
 import {ClipboardModule} from 'ngx-clipboard';
+import {MarkdownModule} from "ngx-markdown";
 import {Config, FUSIO_CONFIG} from "./config/config";
 import {EmptyComponent} from "./component/empty/empty.component";
 import {MessageComponent} from "./component/message/message.component";
@@ -81,6 +82,7 @@ import {WebhookModalComponent} from "./component/webhook/modal/webhook-modal.com
     NgxCaptchaModule,
     GravatarModule,
     ClipboardModule,
+    MarkdownModule.forRoot(),
   ],
   exports: [
     AccountComponent,
