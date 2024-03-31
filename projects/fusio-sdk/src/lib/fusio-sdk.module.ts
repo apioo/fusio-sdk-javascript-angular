@@ -25,6 +25,7 @@ import {ActivateComponent} from "./component/register/activate/activate.componen
 import {AboutComponent} from "./component/about/about.component";
 import {AccountComponent} from './component/account/account.component';
 import {SecurityComponent} from './component/security/security.component';
+import {SpecificationComponent} from "./component/specification/specification.component";
 import {AppDetailComponent} from './component/app/detail/app-detail.component';
 import {AppListComponent} from './component/app/list/app-list.component';
 import {AppModalComponent} from './component/app/modal/app-modal.component';
@@ -44,6 +45,7 @@ import {WebhookModalComponent} from "./component/webhook/modal/webhook-modal.com
 @NgModule({
   declarations: [
     AboutComponent,
+    SpecificationComponent,
     AccountComponent,
     AccountContainerComponent,
     BootstrapComponent,
