@@ -5,11 +5,11 @@ import {CommonMessage} from "fusio-sdk/dist/CommonMessage";
 import {ConsumerToken} from "fusio-sdk/dist/ConsumerToken";
 import {ConsumerTokenCreate} from "fusio-sdk/dist/ConsumerTokenCreate";
 import {ConsumerTokenUpdate} from "fusio-sdk/dist/ConsumerTokenUpdate";
-import {ConsumerTokenAccessToken} from "fusio-sdk/dist/ConsumerTokenAccessToken";
 import {ConsumerScope} from "fusio-sdk/dist/ConsumerScope";
 import {FusioService} from "../../../service/fusio.service";
 import {ErrorService} from "../../../service/error.service";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {TokenShowComponent} from "../show/token-show.component";
 
 @Component({
   selector: 'fusio-token-modal',
@@ -32,18 +32,28 @@ export class TokenModalComponent extends Modal<Client, ConsumerToken> {
   protected async create(entity: ConsumerToken): Promise<CommonMessage> {
     const accessToken = await this.fusio.getClient().consumer().token().create(<ConsumerTokenCreate> entity);
 
+    const modalRef = this.modalService.open(TokenShowComponent, {
+      size: 'md'
+    });
+    modalRef.componentInstance.token = accessToken;
+
     return {
       success: true,
-      message: '',
+      message: 'Token successfully generated',
     };
   }
 
   protected async update(entity: ConsumerToken): Promise<CommonMessage> {
     const accessToken = await this.fusio.getClient().consumer().token().update('' + entity.id, <ConsumerTokenUpdate> entity);
 
+    const modalRef = this.modalService.open(TokenShowComponent, {
+      size: 'md'
+    });
+    modalRef.componentInstance.token = accessToken;
+
     return {
       success: true,
-      message: '',
+      message: 'Token successfully updated',
     };
   }
 

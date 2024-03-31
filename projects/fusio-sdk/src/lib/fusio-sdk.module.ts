@@ -5,6 +5,7 @@ import {FormsModule} from "@angular/forms";
 import {RouterModule} from '@angular/router';
 import {NgxCaptchaModule} from "ngx-captcha";
 import {GravatarModule} from "ngx-gravatar";
+import {ClipboardModule} from 'ngx-clipboard';
 import {Config, FUSIO_CONFIG} from "./config/config";
 import {EmptyComponent} from "./component/empty/empty.component";
 import {MessageComponent} from "./component/message/message.component";
@@ -33,6 +34,7 @@ import {BootstrapComponent} from "./component/bootstrap/bootstrap.component";
 import {TokenDetailComponent} from "./component/token/detail/token-detail.component";
 import {TokenListComponent} from "./component/token/list/token-list.component";
 import {TokenModalComponent} from "./component/token/modal/token-modal.component";
+import {TokenShowComponent} from "./component/token/show/token-show.component";
 import {WebhookDetailComponent} from "./component/webhook/detail/webhook-detail.component";
 import {WebhookListComponent} from "./component/webhook/list/webhook-list.component";
 import {WebhookModalComponent} from "./component/webhook/modal/webhook-modal.component";
@@ -65,6 +67,7 @@ import {WebhookModalComponent} from "./component/webhook/modal/webhook-modal.com
     TokenDetailComponent,
     TokenListComponent,
     TokenModalComponent,
+    TokenShowComponent,
     WebhookDetailComponent,
     WebhookListComponent,
     WebhookModalComponent,
@@ -77,6 +80,7 @@ import {WebhookModalComponent} from "./component/webhook/modal/webhook-modal.com
     NgbModule,
     NgxCaptchaModule,
     GravatarModule,
+    ClipboardModule,
   ],
   exports: [
     AccountComponent,
