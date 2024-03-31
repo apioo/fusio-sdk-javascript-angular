@@ -3,7 +3,7 @@ import {Config} from "../../projects/fusio-sdk/src/lib/config/config";
 export class ConfigBuilder {
 
   public static build(): Config {
-    let baseUrl = 'https://demo.fusio-project.org/';
+    let baseUrl = FUSIO_URL;
     if (!baseUrl) {
       throw new Error('No base url configured, please provide a variable "FUSIO_URL" containing the Fusio base url');
     }
