@@ -33,3 +33,7 @@ import {AccountComponent} from './account/account.component';
 })
 export class AppModule {
 }
+
+declare global {
+  var FUSIO_URL: string | undefined;
+}
