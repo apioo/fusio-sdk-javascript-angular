@@ -6,6 +6,7 @@ import {SubscriptionComponent} from "../component/subscription/subscription.comp
 import {CallbackComponent} from "../component/subscription/callback/callback.component";
 import {WebhookListComponent} from "../component/webhook/list/webhook-list.component";
 import {TokenListComponent} from "../component/token/list/token-list.component";
+import {AboutComponent} from "../component/about/about.component";
 import {isAuthenticated} from "../guard/authentication.guard";
 
 export class AccountRoute {
@@ -22,6 +23,7 @@ export class AccountRoute {
       {path: 'webhook/:id', component: WebhookListComponent, canActivate: [isAuthenticated] },
       {path: 'token', component: TokenListComponent, canActivate: [isAuthenticated] },
       {path: 'token/:id', component: TokenListComponent, canActivate: [isAuthenticated] },
+      {path: 'about', component: AboutComponent, canActivate: [isAuthenticated] },
     ];
   }
 

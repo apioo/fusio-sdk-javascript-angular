@@ -22,6 +22,7 @@ import {ConfirmComponent} from "./component/password/confirm/confirm.component";
 import {ResetComponent} from "./component/password/reset/reset.component";
 import {RegisterComponent} from "./component/register/register.component";
 import {ActivateComponent} from "./component/register/activate/activate.component";
+import {AboutComponent} from "./component/about/about.component";
 import {AccountComponent} from './component/account/account.component';
 import {SecurityComponent} from './component/security/security.component';
 import {AppDetailComponent} from './component/app/detail/app-detail.component';
@@ -42,6 +43,7 @@ import {WebhookModalComponent} from "./component/webhook/modal/webhook-modal.com
 
 @NgModule({
   declarations: [
+    AboutComponent,
     AccountComponent,
     AccountContainerComponent,
     BootstrapComponent,
