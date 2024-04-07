@@ -1,0 +1,28 @@
+
+<fusio-message [response]="response"></fusio-message>
+
+<fusio-search
+  [searchTerm]="search"
+  (search)="doSearch(1, $event)"
+  placeholder="log">
+</fusio-search>
+
+<div class="row">
+  <div class="col-md-3">
+    <fusio-sidebar
+      name="log"
+      nameKey="path"
+      [entries]="entries"
+      [totalResults]="totalResults"
+      [selected]="selected"
+      [page]="page"
+      [pageSize]="pageSize"
+      (pageChange)="doSearch($event, search)"
+      (entrySelect)="doSelect($event)">
+    </fusio-sidebar>
+  </div>
+  <div class="col-md-9">
+    <fusio-empty *ngIf="!selected" [loading]="loading" ></fusio-empty>
+    <fusio-log-detail *ngIf="selected" [selected]="selected"></fusio-log-detail>
+  </div>
+</div>

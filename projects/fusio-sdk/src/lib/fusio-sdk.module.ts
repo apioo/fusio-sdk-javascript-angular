@@ -41,34 +41,42 @@ import {TokenShowComponent} from "./component/token/show/token-show.component";
 import {WebhookDetailComponent} from "./component/webhook/detail/webhook-detail.component";
 import {WebhookListComponent} from "./component/webhook/list/webhook-list.component";
 import {WebhookModalComponent} from "./component/webhook/modal/webhook-modal.component";
+import {LogListComponent} from "./component/log/list/log-list.component";
+import {LogDetailComponent} from "./component/log/detail/log-detail.component";
 
 @NgModule({
   declarations: [
-    AboutComponent,
-    SpecificationComponent,
-    AccountComponent,
-    AccountContainerComponent,
     BootstrapComponent,
     EmptyComponent,
     HelpComponent,
+    MessageComponent,
+    NavigationComponent,
+    ScopesComponent,
+    SearchComponent,
+    SidebarComponent,
+
+    // authorization
     LoginComponent,
     ProviderComponent,
     LogoutComponent,
-    MessageComponent,
-    NavigationComponent,
-    ConfirmComponent,
-    ResetComponent,
     RegisterComponent,
     ActivateComponent,
-    ScopesComponent,
-    SearchComponent,
-    SecurityComponent,
-    SidebarComponent,
-    SubscriptionComponent,
-    CallbackComponent,
+    ConfirmComponent,
+    ResetComponent,
+
+    // account
+    AboutComponent,
+    AccountComponent,
+    AccountContainerComponent,
     AppDetailComponent,
     AppListComponent,
     AppModalComponent,
+    LogListComponent,
+    LogDetailComponent,
+    SecurityComponent,
+    SpecificationComponent,
+    SubscriptionComponent,
+    CallbackComponent,
     TokenDetailComponent,
     TokenListComponent,
     TokenModalComponent,

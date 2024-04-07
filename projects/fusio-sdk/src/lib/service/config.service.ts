@@ -99,6 +99,9 @@ export class ConfigService {
       path: '/account/token',
       scope: 'consumer.token',
     }, {
+      title: 'Log',
+      path: '/account/log',
+    }, {
       title: 'Specification',
       path: '/account/specification',
     }, {
