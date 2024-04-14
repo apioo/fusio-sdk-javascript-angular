@@ -33,6 +33,10 @@ export class ConfigService {
     return this.config.appId;
   }
 
+  public getAppKey(): string|undefined {
+    return this.config.appKey;
+  }
+
   public getHomePath(): string {
     if (this.config.homePath) {
       return this.config.homePath;

@@ -10,6 +10,7 @@ export interface Config {
   version?: string,
   logo?: string,
   appId?: number,
+  appKey?: string,
   homePath?: string,
   loginPath?: string,
   navigation?: Array<GroupItem>,

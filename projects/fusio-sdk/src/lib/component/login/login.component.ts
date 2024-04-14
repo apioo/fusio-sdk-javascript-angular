@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
     this.logo = this.config.getLogo();
     this.title = this.logo === undefined;
 
-    const collection = await this.fusio.getClientAnonymous().consumer().identity().getAll(this.config.getAppId());
+    const collection = await this.fusio.getClientAnonymous().consumer().identity().getAll(this.config.getAppId(), this.config.getAppKey());
     this.identityCount = collection.totalResults || 0;
     this.identityCollection = collection.entry || [];
   }
