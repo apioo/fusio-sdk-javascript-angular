@@ -16,6 +16,8 @@ export abstract class Detail<T> implements OnInit {
   @Output()
   deleteClick: EventEmitter<void> = new EventEmitter<void>();
 
+  jsonView: boolean = false;
+
   async ngOnInit() {
   }
 
