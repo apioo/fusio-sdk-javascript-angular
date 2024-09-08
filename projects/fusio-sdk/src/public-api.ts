@@ -6,6 +6,7 @@ export * from './lib/abstract/detail';
 export * from './lib/abstract/list';
 export * from './lib/abstract/manipulation';
 export * from './lib/abstract/modal';
+export * from './lib/abstract/object-selector';
 export * from './lib/abstract/query';
 
 export * from './lib/component/account/account.component';
