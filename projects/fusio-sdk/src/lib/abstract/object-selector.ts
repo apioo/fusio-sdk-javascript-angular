@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {catchError, debounceTime, distinctUntilChanged, map, merge, Observable, of, OperatorFunction, Subject, switchMap, tap} from "rxjs";
 import {fromPromise} from "rxjs/internal/observable/innerFrom";
 import {CommonCollection} from "fusio-sdk/dist/CommonCollection";
@@ -9,7 +9,7 @@ import {CommonCollection} from "fusio-sdk/dist/CommonCollection";
 @Component({
   template: '',
 })
-export abstract class ObjectSelector<T, R> {
+export abstract class ObjectSelector<T, R> implements OnInit {
 
   @Input() name!: string;
   @Input() disabled: boolean = false;
