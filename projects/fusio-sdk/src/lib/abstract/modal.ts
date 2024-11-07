@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {CommonMessage} from "fusio-sdk/dist/CommonMessage";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {ClientAbstract} from "sdkgen-client";
+import {ClientAbstract} from "sdkgen-client/dist/src/ClientAbstract";
 import {ApiService} from "../service/api.service";
 import {ErrorService} from "../service/error.service";
 import {Manipulation} from "./manipulation";

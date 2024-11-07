@@ -5,7 +5,7 @@ import {Router} from "@angular/router";
 import {UserService} from "../../service/user.service";
 import {FusioService} from "../../service/fusio.service";
 import {ConfigService} from "../../service/config.service";
-import {ClientException} from "sdkgen-client";
+import {ClientException} from "sdkgen-client/dist/src/Exception/ClientException";
 import {LocationStrategy} from "@angular/common";
 import {ConsumerIdentity} from "fusio-sdk/dist/ConsumerIdentity";
 

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Client} from "fusio-sdk/dist/Client";
-import {CredentialsInterface} from "sdkgen-client";
+import {CredentialsInterface} from "sdkgen-client/dist/src/CredentialsInterface";
 import {ApiService} from "./api.service";
 
 @Injectable({
