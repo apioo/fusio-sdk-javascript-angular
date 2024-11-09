@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
-import {ConsumerUserAccount} from "fusio-sdk/dist/ConsumerUserAccount";
+import {CommonMessage, ConsumerPlan, ConsumerUserAccount} from "fusio-sdk";
 import {ConfigService} from "./config.service";
 import {EventListener} from "../config/config";
-import {ConsumerPlan} from "fusio-sdk/dist/ConsumerPlan";
-import {CommonMessage} from "fusio-sdk/dist/CommonMessage";
 
 @Injectable({
   providedIn: 'root'

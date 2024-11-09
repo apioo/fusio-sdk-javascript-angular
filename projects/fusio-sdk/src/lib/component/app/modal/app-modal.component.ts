@@ -1,12 +1,7 @@
 import {Component} from '@angular/core';
-import {Modal} from "../../../abstract/modal";
-import {Client} from "fusio-sdk/dist/Client";
-import {ConsumerApp} from "fusio-sdk/dist/ConsumerApp";
-import {CommonMessage} from "fusio-sdk/dist/CommonMessage";
-import {ConsumerAppCreate} from "fusio-sdk/dist/ConsumerAppCreate";
-import {ConsumerAppUpdate} from "fusio-sdk/dist/ConsumerAppUpdate";
-import {ConsumerScope} from "fusio-sdk/dist/ConsumerScope";
+import {Client, CommonMessage, ConsumerApp, ConsumerAppCreate, ConsumerAppUpdate, ConsumerScope} from "fusio-sdk";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {Modal} from "../../../abstract/modal";
 import {FusioService} from "../../../service/fusio.service";
 import {ErrorService} from "../../../service/error.service";
 

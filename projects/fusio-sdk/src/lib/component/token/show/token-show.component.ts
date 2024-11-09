@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {ConsumerTokenAccessToken} from "fusio-sdk/dist/ConsumerTokenAccessToken";
+import {ConsumerTokenAccessToken} from "fusio-sdk";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({

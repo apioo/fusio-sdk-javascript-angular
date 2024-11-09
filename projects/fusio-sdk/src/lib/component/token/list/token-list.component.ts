@@ -1,9 +1,7 @@
 import {Component} from '@angular/core';
-import {Client} from "fusio-sdk/dist/Client";
+import {Client, ConsumerToken, ConsumerTokenCollection} from "fusio-sdk";
 import {List} from "../../../abstract/list";
 import {TokenModalComponent} from "../modal/token-modal.component";
-import {ConsumerToken} from "fusio-sdk/dist/ConsumerToken";
-import {ConsumerTokenCollection} from "fusio-sdk/dist/ConsumerTokenCollection";
 
 @Component({
   selector: 'fusio-token-list',

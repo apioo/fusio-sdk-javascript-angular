@@ -1,11 +1,6 @@
 import {Component} from '@angular/core';
-import {Client} from "fusio-sdk/dist/Client";
+import {Client, CommonMessage, ConsumerScope, ConsumerToken, ConsumerTokenCreate, ConsumerTokenUpdate} from "fusio-sdk";
 import {Modal} from "../../../abstract/modal";
-import {CommonMessage} from "fusio-sdk/dist/CommonMessage";
-import {ConsumerToken} from "fusio-sdk/dist/ConsumerToken";
-import {ConsumerTokenCreate} from "fusio-sdk/dist/ConsumerTokenCreate";
-import {ConsumerTokenUpdate} from "fusio-sdk/dist/ConsumerTokenUpdate";
-import {ConsumerScope} from "fusio-sdk/dist/ConsumerScope";
 import {FusioService} from "../../../service/fusio.service";
 import {ErrorService} from "../../../service/error.service";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";

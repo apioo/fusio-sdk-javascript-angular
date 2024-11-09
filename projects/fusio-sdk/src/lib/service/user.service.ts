@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ConsumerUserAccount} from "fusio-sdk/dist/ConsumerUserAccount";
+import {ConsumerUserAccount} from "fusio-sdk";
 import {FusioService} from "./fusio.service";
 import {EventService} from "./event.service";
 

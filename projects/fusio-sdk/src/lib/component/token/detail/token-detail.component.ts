@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
+import {ConsumerToken} from "fusio-sdk";
 import {Detail} from "../../../abstract/detail";
-import {ConsumerToken} from "fusio-sdk/dist/ConsumerToken";
 
 @Component({
   selector: 'fusio-token-detail',

@@ -1,14 +1,9 @@
 import {Component} from '@angular/core';
-import {Client} from "fusio-sdk/dist/Client";
+import {Client, CommonMessage, ConsumerEvent, ConsumerWebhook, ConsumerWebhookCreate, ConsumerWebhookUpdate} from "fusio-sdk";
 import {Modal} from "../../../abstract/modal";
-import {CommonMessage} from "fusio-sdk/dist/CommonMessage";
-import {ConsumerEvent} from "fusio-sdk/dist/ConsumerEvent";
 import {FusioService} from "../../../service/fusio.service";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ErrorService} from "../../../service/error.service";
-import {ConsumerWebhook} from "fusio-sdk/dist/ConsumerWebhook";
-import {ConsumerWebhookCreate} from "fusio-sdk/dist/ConsumerWebhookCreate";
-import {ConsumerWebhookUpdate} from "fusio-sdk/dist/ConsumerWebhookUpdate";
 
 @Component({
   selector: 'fusio-webhook-modal',

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {SystemAbout} from "fusio-sdk";
 import {FusioService} from "../../service/fusio.service";
-import {SystemAbout} from "fusio-sdk/dist/SystemAbout";
 
 @Component({
   selector: 'fusio-about',

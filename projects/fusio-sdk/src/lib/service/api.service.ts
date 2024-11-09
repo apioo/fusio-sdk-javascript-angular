@@ -1,9 +1,5 @@
 import {Injectable} from '@angular/core';
-import {TokenStoreInterface} from "sdkgen-client/dist/src/TokenStoreInterface";
-import {SessionTokenStore} from "sdkgen-client/dist/src/TokenStore/SessionTokenStore";
-import {OAuth2} from "sdkgen-client/dist/src/Credentials/OAuth2";
-import {ClientAbstract} from "sdkgen-client/dist/src/ClientAbstract";
-import {CredentialsInterface} from "sdkgen-client/dist/src/CredentialsInterface";
+import {ClientAbstract, CredentialsInterface, OAuth2, SessionTokenStore, TokenStoreInterface} from "sdkgen-client";
 import {ConfigService} from "./config.service";
 
 @Injectable({

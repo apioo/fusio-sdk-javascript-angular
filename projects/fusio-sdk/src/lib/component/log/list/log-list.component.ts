@@ -1,8 +1,6 @@
 import {Component} from '@angular/core';
-import {Client} from "fusio-sdk/dist/Client";
+import {Client, ConsumerLog, ConsumerLogCollection} from "fusio-sdk";
 import {List} from "../../../abstract/list";
-import {ConsumerLog} from "fusio-sdk/dist/ConsumerLog";
-import {ConsumerLogCollection} from "fusio-sdk/dist/ConsumerLogCollection";
 
 @Component({
   selector: 'fusio-log-list',

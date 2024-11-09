@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {CommonMessage} from "fusio-sdk/dist/CommonMessage";
-import {SessionTokenStore} from "sdkgen-client/dist/src/TokenStore/SessionTokenStore";
-import {AccessToken} from "sdkgen-client/dist/src/AccessToken";
+import {CommonMessage} from "fusio-sdk";
+import {AccessToken, SessionTokenStore} from "sdkgen-client";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../../service/user.service";
 import {FusioService} from "../../../service/fusio.service";
