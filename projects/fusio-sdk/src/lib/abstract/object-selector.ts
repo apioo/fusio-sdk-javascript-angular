@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {catchError, debounceTime, distinctUntilChanged, map, merge, Observable, of, OperatorFunction, Subject, switchMap, tap} from "rxjs";
 import {fromPromise} from "rxjs/internal/observable/innerFrom";
-import {CommonCollection} from "fusio-sdk/dist/CommonCollection";
+import {CommonCollection} from "fusio-sdk";
 
 /**
  * Object selector
