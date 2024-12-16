@@ -146,4 +146,20 @@ export class ConfigService {
     }
   }
 
+  /**
+   * @see https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript
+   */
+  public getInstanceCode(): number {
+    let hash = 0;
+    if (this.config.baseUrl.length === 0) {
+      return hash;
+    }
+
+    for (let i = 0; i < this.config.baseUrl.length; i++) {
+      hash = ((hash << 5) - hash) + this.config.baseUrl.charCodeAt(i);
+      hash |= 0;
+    }
+
+    return hash;
+  }
 }

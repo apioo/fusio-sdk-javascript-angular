@@ -7,14 +7,13 @@ import {ConfigService} from "./config.service";
 })
 export abstract class ApiService<T extends ClientAbstract> {
 
-  private readonly baseUrl: string;
-  private readonly store: TokenStoreInterface;
+  private baseUrl: string;
+  private store: TokenStoreInterface;
 
   constructor(private config: ConfigService) {
-    let baseUrl = this.config.getBaseUrl();
-
-    this.baseUrl = ApiService.normalizeBaseUrl(baseUrl);
+    this.baseUrl = '';
     this.store = new SessionTokenStore();
+    this.setBaseUrl(this.config.getBaseUrl());
   }
 
   public getClientWithCredentials(clientId: string, clientSecret: string): T {
@@ -54,6 +53,15 @@ export abstract class ApiService<T extends ClientAbstract> {
     return this.baseUrl;
   }
 
+  public setBaseUrl(baseUrl: string) {
+    this.baseUrl = ApiService.normalizeBaseUrl(baseUrl);
+    this.store = new SessionTokenStore('fusio_access_token_' + this.config.getInstanceCode());
+  }
+
+  public getTokenStore(): TokenStoreInterface {
+    return this.store;
+  }
+
   public hasValidToken(): boolean {
     const token = this.store.get();
     if (!token) {
@@ -87,8 +95,7 @@ export abstract class ApiService<T extends ClientAbstract> {
     }
   }
 
-  private getExpiresInTimestamp(expiresIn: number): number
-  {
+  private getExpiresInTimestamp(expiresIn: number): number {
     const nowTimestamp = Math.floor(Date.now() / 1000);
 
     if (expiresIn < 529196400) {
