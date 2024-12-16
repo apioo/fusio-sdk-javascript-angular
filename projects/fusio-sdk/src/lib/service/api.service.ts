@@ -13,7 +13,7 @@ export abstract class ApiService<T extends ClientAbstract> {
   constructor(private config: ConfigService) {
     this.baseUrl = '';
     this.store = new SessionTokenStore();
-    this.setBaseUrl(this.config.getBaseUrl());
+    this.reload();
   }
 
   public getClientWithCredentials(clientId: string, clientSecret: string): T {
@@ -53,13 +53,22 @@ export abstract class ApiService<T extends ClientAbstract> {
     return this.baseUrl;
   }
 
-  public setBaseUrl(baseUrl: string) {
-    this.baseUrl = ApiService.normalizeBaseUrl(baseUrl);
-    this.store = new SessionTokenStore('fusio_access_token_' + this.config.getInstanceCode());
-  }
-
   public getTokenStore(): TokenStoreInterface {
     return this.store;
+  }
+
+  /**
+   * Reloads all values from the config
+   */
+  public reload() {
+    this.baseUrl = ApiService.normalizeBaseUrl(this.config.getBaseUrl());
+
+    const instance = this.config.getInstance();
+    if (instance !== undefined) {
+      this.store = new SessionTokenStore('fusio_access_token_' + instance);
+    } else {
+      this.store = new SessionTokenStore('fusio_access_token');
+    }
   }
 
   public hasValidToken(): boolean {

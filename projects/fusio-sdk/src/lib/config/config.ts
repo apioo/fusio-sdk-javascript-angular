@@ -3,6 +3,7 @@ import {CommonMessage, ConsumerPlan, ConsumerUserAccount} from "fusio-sdk";
 import {GroupItem, Items} from "../service/navigation.service";
 
 export interface Config {
+  instance?: number,
   baseUrl: string,
   title?: string,
   version?: string,

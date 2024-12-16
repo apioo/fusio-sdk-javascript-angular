@@ -46,6 +46,11 @@ export class UserService {
   }
 
   private getKey(): string {
-    return 'fusio_user_' + this.config.getInstanceCode();
+    const instance = this.config.getInstance();
+    if (instance !== undefined) {
+      return 'fusio_user_' + instance;
+    } else {
+      return 'fusio_user';
+    }
   }
 }
