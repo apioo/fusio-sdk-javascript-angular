@@ -1,32 +1,66 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
+import {CommonMessage} from "fusio-sdk";
+import {ErrorService} from "../service/error.service";
+import {Service} from "./service";
 
 /**
- * This component is only a basic view component which renders a provided entity. It should only render the provided
- * JSON data it should not contain any additional logic to request data from an endpoint
+ * Base component to show a detail page of a single entity
  */
 @Component({
   template: '',
 })
 export abstract class Detail<T> implements OnInit {
 
-  @Input()
-  selected!: T;
-  @Output()
-  updateClick: EventEmitter<void> = new EventEmitter<void>();
-  @Output()
-  deleteClick: EventEmitter<void> = new EventEmitter<void>();
+  public selected?: T;
+  public response?: CommonMessage;
 
-  jsonView: boolean = false;
-
-  async ngOnInit() {
+  protected constructor(protected route: ActivatedRoute, public router: Router, protected error: ErrorService) {
   }
 
-  doUpdateClick() {
-    this.updateClick.emit();
+  async ngOnInit(): Promise<void> {
+    this.route.paramMap.subscribe(async params => {
+      const id = params.get('id');
+      if (id) {
+        await this.doGet(id);
+      }
+    });
   }
 
-  doDeleteClick() {
-    this.deleteClick.emit();
+  async doGet(id: string) {
+    try {
+      this.selected = await this.getService().get(id);
+
+      this.onLoad();
+    } catch (error) {
+      this.response = this.error.convert(error);
+    }
   }
 
+  public getListLink(): Array<string>
+  {
+    return this.getService().getLink();
+  }
+
+  public getEditLink(id: any): Array<string>
+  {
+    const link = this.getService().getLink();
+    link.push('' + id)
+    link.push('edit')
+    return link;
+  }
+
+  public getDeleteLink(id: any): Array<string>
+  {
+    const link = this.getService().getLink();
+    link.push('' + id)
+    link.push('delete')
+    return link;
+  }
+
+  protected abstract getService(): Service<T>;
+
+  protected onLoad(): void
+  {
+  }
 }

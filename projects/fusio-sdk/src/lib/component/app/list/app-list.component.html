@@ -1,33 +1,47 @@
-
-<fusio-message [response]="response"></fusio-message>
-
-<fusio-search
-  [searchTerm]="search"
-  (search)="doSearch(1, $event)"
-  (newClick)="openCreateDialog()"
-  placeholder="app">
-</fusio-search>
-
-<div class="row">
-  <div class="col-md-3">
-    <fusio-sidebar
-      name="app"
-      nameKey="name"
-      [entries]="entries"
-      [totalResults]="totalResults"
-      [selected]="selected"
-      [page]="page"
+<div class="card">
+  <div class="card-header">App</div>
+  <div class="card-body">
+    <fusio-search
+      [searchTerm]="search"
+      (search)="doSearch(1, $event)"
+      (newClick)="router.navigate(getNewLink())"
+      placeholder="app">
+    </fusio-search>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th style="width:100px">Status</th>
+        <th style="">Name</th>
+        <th style="width:200px">Insert-Date</th>
+        <th style="width:100px"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let entry of entries">
+        <td>
+          <ng-container *ngIf="entry.status === 1"><span class="badge text-bg-primary">Active</span></ng-container>
+          <ng-container *ngIf="entry.status === 2"><span class="badge text-bg-secondary">Pending</span></ng-container>
+          <ng-container *ngIf="entry.status === 3"><span class="badge text-bg-danger">Deactivated</span></ng-container>
+          <ng-container *ngIf="entry.status === 4"><span class="badge text-bg-secondary">Deleted</span></ng-container>
+        </td>
+        <td>{{entry.name}}</td>
+        <td>{{entry.date|date:'short'}}</td>
+        <td>
+          <div class="btn-group" role="group">
+            <a [routerLink]="getDetailLink(entry.id)" class="btn btn-primary"><i class="bi bi-search"></i></a>
+            <a [routerLink]="getEditLink(entry.id)" class="btn btn-secondary"><i class="bi bi-pen"></i></a>
+            <a [routerLink]="getDeleteLink(entry.id)" class="btn btn-secondary"><i class="bi bi-x"></i></a>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <ngb-pagination
+      [(page)]="page"
       [pageSize]="pageSize"
-      (pageChange)="doSearch($event, search)"
-      (entrySelect)="doSelect($event)">
-    </fusio-sidebar>
-  </div>
-  <div class="col-md-9">
-    <fusio-empty *ngIf="!selected" [loading]="loading" (newClick)="openCreateDialog()"></fusio-empty>
-    <fusio-app-detail *ngIf="selected"
-                            [selected]="selected"
-                            (updateClick)="openUpdateDialog(selected)"
-                            (deleteClick)="openDeleteDialog(selected)">
-    </fusio-app-detail>
+      [collectionSize]="totalResults"
+      [maxSize]="4"
+      [ellipses]="false"
+      (pageChange)="doSearch($event)"></ngb-pagination>
   </div>
 </div>
