@@ -54,4 +54,8 @@ export class TokenService extends Service<ConsumerToken> {
     return ['/', 'account', 'token'];
   }
 
+  getToken(): ConsumerTokenAccessToken|undefined {
+    return this.token;
+  }
+
 }

@@ -1,14 +1,13 @@
 import {Injectable} from '@angular/core';
 import {CommonMessage} from "fusio-sdk";
 import {KnownStatusCodeException} from "sdkgen-client";
-import {EventService} from "./event.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ErrorService {
 
-  constructor(private event: EventService) { }
+  constructor() { }
 
   public convert(error: any): CommonMessage {
     let message: CommonMessage;
@@ -20,8 +19,6 @@ export class ErrorService {
         message: String(error),
       };
     }
-
-    this.event.dispatchError(message);
 
     return message;
   }

@@ -11,13 +11,11 @@ export class UserService {
 
   private user?: ConsumerUserAccount;
 
-  constructor(private fusio: FusioService, private config: ConfigService, private event: EventService) { }
+  constructor(private fusio: FusioService, private config: ConfigService) { }
 
   public login(user: ConsumerUserAccount): void {
     this.user = user;
     sessionStorage.setItem(this.getKey(), JSON.stringify(user));
-
-    this.event.dispatchLogin(user);
   }
 
   public get(): ConsumerUserAccount|undefined {
@@ -41,8 +39,6 @@ export class UserService {
     this.user = undefined;
     sessionStorage.removeItem(this.getKey());
     this.fusio.logout();
-
-    this.event.dispatchLogout();
   }
 
   private getKey(): string {
