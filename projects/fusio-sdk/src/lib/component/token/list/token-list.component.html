@@ -10,10 +10,8 @@
     <table class="table table-striped">
       <thead>
       <tr>
-        <th style="">Name</th>
-        <th style="width:200px">Scopes</th>
-        <th style="width:200px">Expire-Date</th>
-        <th style="width:200px">Insert-Date</th>
+        <th style="width:50%">Name</th>
+        <th style="width:50%">Scopes</th>
         <th style="width:100px"></th>
       </tr>
       </thead>
@@ -21,8 +19,6 @@
       <tr *ngFor="let entry of entries">
         <td>{{entry.name}}</td>
         <td><fusio-scopes [scopes]="entry.scopes"></fusio-scopes></td>
-        <td>{{entry.expire|date:'short'}}</td>
-        <td>{{entry.date|date:'short'}}</td>
         <td>
           <div class="btn-group" role="group">
             <a [routerLink]="getDetailLink(entry.id)" class="btn btn-primary"><i class="bi bi-search"></i></a>

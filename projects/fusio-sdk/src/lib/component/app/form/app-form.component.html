@@ -11,7 +11,7 @@
         <label for="name" class="col-sm-2 col-form-label fw-bold">Name</label>
         <div class="col-sm-10">
           <div class="input-group">
-            <input type="text" id="name" name="name" [(ngModel)]="entity.name" class="form-control">
+            <input type="text" id="name" name="name" [(ngModel)]="entity.name" [disabled]="mode === 3" class="form-control">
             <button class="btn btn-outline-secondary" type="button" [ngbPopover]="nameHelp"><i class="bi bi-question"></i></button>
             <ng-template #nameHelp>Name of the app</ng-template>
           </div>
@@ -21,7 +21,7 @@
         <label for="url" class="col-sm-2 col-form-label fw-bold">Url</label>
         <div class="col-sm-10">
           <div class="input-group">
-            <input type="url" id="url" name="url" [(ngModel)]="entity.url" class="form-control">
+            <input type="url" id="url" name="url" [(ngModel)]="entity.url" [disabled]="mode === 3" class="form-control">
             <button class="btn btn-outline-secondary" type="button" [ngbPopover]="urlHelp"><i class="bi bi-question"></i></button>
             <ng-template #urlHelp>Url of the app</ng-template>
           </div>
@@ -30,7 +30,7 @@
       <div class="mb-3 row">
         <label class="col-sm-2 col-form-label fw-bold">Scopes</label>
         <div class="col-sm-10">
-          <fusio-checkbox-list name="scopes" [service]="scope" [data]="entity.scopes" (dataChange)="entity.scopes = $event"></fusio-checkbox-list>
+          <fusio-checkbox-list name="scopes" [service]="scope" [data]="entity.scopes" (dataChange)="entity.scopes = $event" [disabled]="mode === 3"></fusio-checkbox-list>
         </div>
       </div>
       <div class="btn-group" role="group">

@@ -6,12 +6,19 @@
   </div>
   <div class="card-body">
     <fusio-message [response]="response"></fusio-message>
+    <div *ngIf="accessToken">
+      <p>Make sure to copy your personal access token now as you will not be able to see this again.</p>
+      <div class="input-group mb-3">
+        <input type="text" [ngModel]="accessToken.access_token" readonly class="form-control">
+        <button class="btn btn-primary" ngxClipboard [cbContent]="accessToken.access_token">Copy</button>
+      </div>
+    </div>
     <form>
       <div class="mb-3 row">
         <label for="name" class="col-sm-2 col-form-label fw-bold">Name</label>
         <div class="col-sm-10">
           <div class="input-group">
-            <input type="text" id="name" name="name" [(ngModel)]="entity.name" class="form-control">
+            <input type="text" id="name" name="name" [(ngModel)]="entity.name" [disabled]="mode === 3" class="form-control">
             <button class="btn btn-outline-secondary" type="button" [ngbPopover]="nameHelp"><i class="bi bi-question"></i></button>
             <ng-template #nameHelp>The name of the token</ng-template>
           </div>
@@ -21,7 +28,7 @@
         <label for="name" class="col-sm-2 col-form-label fw-bold">Expires</label>
         <div class="col-sm-10">
           <div class="input-group">
-            <input type="date" id="expire" name="expire" [(ngModel)]="entity.expire" class="form-control">
+            <input type="date" id="expire" name="expire" [(ngModel)]="entity.expire" [disabled]="mode === 3" class="form-control">
             <button class="btn btn-outline-secondary" type="button" [ngbPopover]="expireHelp"><i class="bi bi-question"></i></button>
             <ng-template #expireHelp>Date at which the token expires</ng-template>
           </div>
@@ -30,7 +37,7 @@
       <div class="mb-3 row">
         <label class="col-sm-2 col-form-label fw-bold">Scopes</label>
         <div class="col-sm-10">
-          <fusio-checkbox-list name="scopes" [service]="scope" [data]="entity.scopes" (dataChange)="entity.scopes = $event"></fusio-checkbox-list>
+          <fusio-checkbox-list name="scopes" [service]="scope" [data]="entity.scopes" (dataChange)="entity.scopes = $event" [disabled]="mode === 3"></fusio-checkbox-list>
         </div>
       </div>
       <div class="btn-group" role="group">
