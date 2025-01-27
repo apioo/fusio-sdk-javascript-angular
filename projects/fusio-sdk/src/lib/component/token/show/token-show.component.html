@@ -4,12 +4,7 @@
   <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
 </div>
 <div class="modal-body">
-  <p>Make sure to copy your personal access token now as you will not be able to see this again.</p>
-  <div class="input-group mb-3">
-    <input type="text" [ngModel]="token.access_token" readonly class="form-control">
-    <button class="btn btn-primary" ngxClipboard [cbContent]="token.access_token">Copy</button>
-  </div>
-  <p class="text-muted">Expires on: {{expires|date:'yyyy-MM-dd'}}</p>
+
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-light" (click)="modal.close()">Close</button>

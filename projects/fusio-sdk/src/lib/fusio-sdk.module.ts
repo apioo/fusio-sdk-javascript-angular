@@ -11,7 +11,6 @@ import {Config, FUSIO_CONFIG} from "./config/config";
 import {EmptyComponent} from "./component/empty/empty.component";
 import {MessageComponent} from "./component/message/message.component";
 import {SearchComponent} from "./component/search/search.component";
-import {SidebarComponent} from "./component/sidebar/sidebar.component";
 import {HelpComponent} from "./component/help/help.component";
 import {BrowserModule} from "@angular/platform-browser";
 import {ScopesComponent} from "./component/scopes/scopes.component";
@@ -28,7 +27,7 @@ import {SecurityComponent} from './component/security/security.component';
 import {SpecificationComponent} from "./component/specification/specification.component";
 import {AppDetailComponent} from './component/app/detail/app-detail.component';
 import {AppListComponent} from './component/app/list/app-list.component';
-import {AppModalComponent} from './component/app/modal/app-modal.component';
+import {AppFormComponent} from './component/app/form/app-form.component';
 import {AccountContainerComponent} from "./component/account-container/account-container.component";
 import {SubscriptionComponent} from './component/subscription/subscription.component';
 import {CallbackComponent} from './component/subscription/callback/callback.component';
@@ -36,13 +35,18 @@ import {NavigationComponent} from "./component/navigation/navigation.component";
 import {BootstrapComponent} from "./component/bootstrap/bootstrap.component";
 import {TokenDetailComponent} from "./component/token/detail/token-detail.component";
 import {TokenListComponent} from "./component/token/list/token-list.component";
-import {TokenModalComponent} from "./component/token/modal/token-modal.component";
+import {TokenFormComponent} from "./component/token/form/token-form.component";
 import {TokenShowComponent} from "./component/token/show/token-show.component";
 import {WebhookDetailComponent} from "./component/webhook/detail/webhook-detail.component";
 import {WebhookListComponent} from "./component/webhook/list/webhook-list.component";
-import {WebhookModalComponent} from "./component/webhook/modal/webhook-modal.component";
+import {WebhookFormComponent} from "./component/webhook/form/webhook-form.component";
 import {LogListComponent} from "./component/log/list/log-list.component";
 import {LogDetailComponent} from "./component/log/detail/log-detail.component";
+import {FormListComponent} from "./component/form/list/form-list.component";
+import {FormMapComponent} from "./component/form/map/form-map.component";
+import {FormCheckboxListComponent} from "./component/form/checkbox-list/form-checkbox-list.component";
+import {FormAutocompleteComponent} from "./component/form/autocomplete/form-autocomplete.component";
+import {FormSelectComponent} from "./component/form/select/form-select.component";
 
 @NgModule({
   declarations: [
@@ -53,7 +57,6 @@ import {LogDetailComponent} from "./component/log/detail/log-detail.component";
     NavigationComponent,
     ScopesComponent,
     SearchComponent,
-    SidebarComponent,
 
     // authorization
     LoginComponent,
@@ -64,13 +67,20 @@ import {LogDetailComponent} from "./component/log/detail/log-detail.component";
     ConfirmComponent,
     ResetComponent,
 
+    // form
+    FormAutocompleteComponent,
+    FormCheckboxListComponent,
+    FormListComponent,
+    FormMapComponent,
+    FormSelectComponent,
+
     // account
     AboutComponent,
     AccountComponent,
     AccountContainerComponent,
     AppDetailComponent,
     AppListComponent,
-    AppModalComponent,
+    AppFormComponent,
     LogListComponent,
     LogDetailComponent,
     SecurityComponent,
@@ -79,11 +89,11 @@ import {LogDetailComponent} from "./component/log/detail/log-detail.component";
     CallbackComponent,
     TokenDetailComponent,
     TokenListComponent,
-    TokenModalComponent,
+    TokenFormComponent,
     TokenShowComponent,
     WebhookDetailComponent,
     WebhookListComponent,
-    WebhookModalComponent,
+    WebhookFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -113,7 +123,6 @@ import {LogDetailComponent} from "./component/log/detail/log-detail.component";
     ScopesComponent,
     SearchComponent,
     SecurityComponent,
-    SidebarComponent,
     SubscriptionComponent,
     CallbackComponent,
   ]

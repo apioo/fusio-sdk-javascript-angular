@@ -17,7 +17,7 @@ export class SubscriptionComponent implements OnInit {
   plans?: Array<ConsumerPlan>
   response?: CommonMessage;
 
-  constructor(private fusio: FusioService, private location: LocationStrategy, private event: EventService, private error: ErrorService, private config: ConfigService) { }
+  constructor(private fusio: FusioService, private location: LocationStrategy, private error: ErrorService, private config: ConfigService) { }
 
   async ngOnInit(): Promise<void> {
     const response = await this.fusio.getClient().consumer().plan().getAll(0, 1024);
@@ -55,8 +55,6 @@ export class SubscriptionComponent implements OnInit {
       });
 
       if (response.approvalUrl) {
-        this.event.dispatchCheckout(plan);
-
         location.href = response.approvalUrl;
       }
     } catch (error) {

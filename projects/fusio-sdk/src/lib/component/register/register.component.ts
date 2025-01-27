@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit {
   response?: CommonMessage;
   loading = false
 
-  constructor(private fusio: FusioService, private event: EventService, private error: ErrorService, private config: ConfigService) {
+  constructor(private fusio: FusioService, private error: ErrorService, private config: ConfigService) {
   }
 
   ngOnInit(): void {
@@ -53,8 +53,6 @@ export class RegisterComponent implements OnInit {
 
       this.response = await this.fusio.getClientAnonymous().consumer().account().register(this.credentials);
       this.loading = false;
-
-      this.event.dispatchRegister(this.credentials.name, this.credentials.email);
 
       this.resetForm();
     } catch (error) {

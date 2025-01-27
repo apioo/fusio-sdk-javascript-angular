@@ -1,29 +1,23 @@
 import {Component} from '@angular/core';
-import {Client, ConsumerToken, ConsumerTokenCollection} from "fusio-sdk";
+import {ConsumerToken} from "fusio-sdk";
 import {List} from "../../../abstract/list";
-import {TokenModalComponent} from "../modal/token-modal.component";
+import {ActivatedRoute, Router} from "@angular/router";
+import {ErrorService} from "../../../service/error.service";
+import {TokenService} from "../../../service/token.service";
 
 @Component({
   selector: 'fusio-token-list',
   templateUrl: './token-list.component.html',
   styleUrls: ['./token-list.component.css']
 })
-export class TokenListComponent extends List<Client, ConsumerToken> {
+export class TokenListComponent extends List<ConsumerToken> {
 
-  protected async getAll(parameters: Array<any>): Promise<ConsumerTokenCollection> {
-    return this.fusio.getClient().consumer().token().getAll(...parameters);
+  constructor(private token: TokenService, route: ActivatedRoute, router: Router, error: ErrorService) {
+    super(route, router, error);
   }
 
-  protected async get(id: string): Promise<ConsumerToken> {
-    return this.fusio.getClient().consumer().token().get('' + id);
-  }
-
-  protected getDetailComponent(): any {
-    return TokenModalComponent;
-  }
-
-  protected getRoute(): any {
-    return '/account/token';
+  protected getService(): TokenService {
+    return this.token;
   }
 
 }

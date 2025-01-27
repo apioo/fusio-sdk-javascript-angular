@@ -1,0 +1,13 @@
+
+<div class="input-group">
+  <ng-container *ngIf="useName">
+    <select [id]="name" [name]="name" [ngModel]="data" (ngModelChange)="changeValue($event)" [disabled]="disabled" class="form-select">
+      <option *ngFor="let entry of entries" [ngValue]="entry.name">{{entry.name}}</option>
+    </select>
+  </ng-container>
+  <ng-container *ngIf="!useName">
+    <select [id]="name" [name]="name" [ngModel]="data" (ngModelChange)="changeValue($event)" [disabled]="disabled" class="form-select">
+      <option *ngFor="let entry of entries" [ngValue]="entry.id">{{entry.name}}</option>
+    </select>
+  </ng-container>
+</div>

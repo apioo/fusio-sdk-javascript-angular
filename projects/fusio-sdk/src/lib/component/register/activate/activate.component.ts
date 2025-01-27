@@ -14,7 +14,7 @@ export class ActivateComponent implements OnInit {
 
   response?: CommonMessage;
 
-  constructor(private fusio: FusioService, private event: EventService, private error: ErrorService, protected route: ActivatedRoute) {
+  constructor(private fusio: FusioService, private error: ErrorService, protected route: ActivatedRoute) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -33,8 +33,6 @@ export class ActivateComponent implements OnInit {
 
     try {
       this.response = await this.fusio.getClientAnonymous().consumer().account().activate(activate);
-
-      this.event.dispatchRegisterActivate();
     } catch (error) {
       this.response = this.error.convert(error);
     }

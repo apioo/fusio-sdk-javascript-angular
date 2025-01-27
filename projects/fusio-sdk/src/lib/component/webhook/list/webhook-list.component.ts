@@ -1,29 +1,23 @@
 import {Component} from '@angular/core';
-import {Client, ConsumerWebhook, ConsumerWebhookCollection} from "fusio-sdk";
+import {ConsumerWebhook} from "fusio-sdk";
 import {List} from "../../../abstract/list";
-import {WebhookModalComponent} from "../modal/webhook-modal.component";
+import {ActivatedRoute, Router} from "@angular/router";
+import {ErrorService} from "../../../service/error.service";
+import {WebhookService} from "../../../service/webhook.service";
 
 @Component({
   selector: 'fusio-webhook-list',
   templateUrl: './webhook-list.component.html',
   styleUrls: ['./webhook-list.component.css']
 })
-export class WebhookListComponent extends List<Client, ConsumerWebhook> {
+export class WebhookListComponent extends List<ConsumerWebhook> {
 
-  protected async getAll(parameters: Array<any>): Promise<ConsumerWebhookCollection> {
-    return this.fusio.getClient().consumer().webhook().getAll(...parameters);
+  constructor(private webhook: WebhookService, route: ActivatedRoute, router: Router, error: ErrorService) {
+    super(route, router, error);
   }
 
-  protected async get(id: string): Promise<ConsumerWebhook> {
-    return this.fusio.getClient().consumer().webhook().get('' + id);
-  }
-
-  protected getDetailComponent(): any {
-    return WebhookModalComponent;
-  }
-
-  protected getRoute(): any {
-    return '/account/webhook';
+  protected getService(): WebhookService {
+    return this.webhook;
   }
 
 }

@@ -17,7 +17,7 @@ export class CallbackComponent implements OnInit {
   plan?: ConsumerPlan;
   response?: CommonMessage;
 
-  constructor(private fusio: FusioService, private event: EventService, private error: ErrorService, private config: ConfigService, private route: ActivatedRoute) { }
+  constructor(private fusio: FusioService, private error: ErrorService, private config: ConfigService, private route: ActivatedRoute) { }
 
   async ngOnInit(): Promise<void> {
     this.homePath = this.config.getHomePath();
@@ -33,8 +33,6 @@ export class CallbackComponent implements OnInit {
   async loadPlan(id: string) {
     try {
       this.plan = await this.fusio.getClient().consumer().plan().get(id);
-
-      this.event.dispatchPurchase(this.plan);
     } catch (error) {
       this.response = this.error.convert(error);
     }
