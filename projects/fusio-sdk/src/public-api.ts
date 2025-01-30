@@ -29,6 +29,8 @@ export * from './lib/component/security/security.component';
 export * from './lib/component/subscription/subscription.component';
 export * from './lib/component/subscription/callback/callback.component';
 
+export * from './lib/config/config';
+
 export * from './lib/guard/authentication.guard';
 
 export * from './lib/service/api.service';
@@ -47,5 +49,6 @@ export * from './lib/service/webhook.service';
 
 export * from './lib/route/account-route';
 export * from './lib/route/authorization-route';
+export * from './lib/route/entity-route';
 
 export * from './lib/fusio-sdk.module';

@@ -1,9 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {
-  Config,
-  EventListener,
-  FUSIO_CONFIG,
-} from "../config/config";
+import {Config, FUSIO_CONFIG,} from "../config/config";
 import {GroupItem, Items} from "./navigation.service";
 
 @Injectable({
@@ -140,14 +136,6 @@ export class ConfigService {
 
   public getHelpUrl(): string|undefined {
     return this.config.helpUrl;
-  }
-
-  public getEventListener(): EventListener {
-    if (this.config.on) {
-      return this.config.on;
-    } else {
-      return {};
-    }
   }
 
   public update(config: Config): void {
