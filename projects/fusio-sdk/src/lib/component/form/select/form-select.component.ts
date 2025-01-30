@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IdAndName, Service} from "../../../abstract/service";
 
 @Component({
-  selector: 'fusio-select',
+  selector: 'fusio-form-select',
   templateUrl: './form-select.component.html',
   styleUrls: ['./form-select.component.css']
 })

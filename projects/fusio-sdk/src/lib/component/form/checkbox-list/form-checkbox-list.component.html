@@ -1,13 +1,13 @@
 
 <ng-container *ngIf="useName">
   <div class="form-check" *ngFor="let entry of entries">
-    <input class="form-check-input" type="checkbox" [value]="entry.id" (change)="scopeSelect($event, entry.name)" [checked]="entry.name && data?.includes(entry.name)" [id]="entry.name">
+    <input class="form-check-input" type="checkbox" [id]="name + '-' + entry.id" [name]="name + '-' + entry.id" [value]="entry.id" (change)="scopeSelect($event, entry.name)" [checked]="entry.name && data?.includes(entry.name)">
     <label class="form-check-label" [for]="entry.name">{{entry.name}}</label>
   </div>
 </ng-container>
 <ng-container *ngIf="!useName">
   <div class="form-check" *ngFor="let entry of entries">
-    <input class="form-check-input" type="checkbox" [value]="entry.id" (change)="scopeSelect($event, entry.id)" [checked]="entry.id && data?.includes(entry.id)" [id]="entry.id">
+    <input class="form-check-input" type="checkbox" [id]="name + '-' + entry.id" [name]="name + '-' + entry.id" [value]="entry.id" (change)="scopeSelect($event, entry.id)" [checked]="entry.id && data?.includes(entry.id)">
     <label class="form-check-label" [for]="entry.id">{{entry.name}}</label>
   </div>
 </ng-container>

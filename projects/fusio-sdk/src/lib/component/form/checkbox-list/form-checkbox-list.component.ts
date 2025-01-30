@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IdAndName, Service} from "../../../abstract/service";
 
 @Component({
-  selector: 'fusio-checkbox-list',
+  selector: 'fusio-form-checkbox-list',
   templateUrl: './form-checkbox-list.component.html',
   styleUrls: ['./form-checkbox-list.component.css']
 })
