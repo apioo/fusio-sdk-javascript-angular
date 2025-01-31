@@ -20,7 +20,7 @@
       <div class="mb-3 row">
         <label for="event" class="col-sm-2 col-form-label fw-bold">Event</label>
         <div class="col-sm-10">
-          <fusio-select id="event" name="event" [service]="event" [data]="entity.event" (dataChange)="entity.event = $event" [disabled]="mode === 3"></fusio-select>
+          <fusio-form-autocomplete id="event" name="event" [service]="event" [data]="entity.event" (dataChange)="entity.event = $event" [disabled]="mode === 3"></fusio-form-autocomplete>
         </div>
       </div>
       <div class="mb-3 row">
