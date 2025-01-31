@@ -125,6 +125,13 @@ import {FormSelectComponent} from "./component/form/select/form-select.component
     SecurityComponent,
     SubscriptionComponent,
     CallbackComponent,
+
+    // form
+    FormAutocompleteComponent,
+    FormCheckboxListComponent,
+    FormListComponent,
+    FormMapComponent,
+    FormSelectComponent,
   ]
 })
 export class FusioSdkModule {
