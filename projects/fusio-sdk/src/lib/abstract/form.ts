@@ -47,7 +47,7 @@ export abstract class Form<T> implements OnInit {
 
   async doCreate(entity: T) {
     try {
-      this.response = await this.getService().create(entity);
+      this.response = await this.getService().create(this.beforeCreate(entity));
 
       this.onSubmit();
     } catch (error) {
@@ -57,7 +57,7 @@ export abstract class Form<T> implements OnInit {
 
   async doUpdate(entity: T) {
     try {
-      this.response = await this.getService().update(entity);
+      this.response = await this.getService().update(this.beforeUpdate(entity));
 
       this.onSubmit();
     } catch (error) {
@@ -67,7 +67,7 @@ export abstract class Form<T> implements OnInit {
 
   async doDelete(entity: T) {
     try {
-      this.response = await this.getService().delete(entity);
+      this.response = await this.getService().delete(this.beforeDelete(entity));
 
       this.onSubmit();
     } catch (error) {
@@ -88,6 +88,21 @@ export abstract class Form<T> implements OnInit {
 
   protected onSubmit(): void
   {
+  }
+
+  protected beforeCreate(entity: T): T
+  {
+    return entity;
+  }
+
+  protected beforeUpdate(entity: T): T
+  {
+    return entity;
+  }
+
+  protected beforeDelete(entity: T): T
+  {
+    return entity;
   }
 }
 
