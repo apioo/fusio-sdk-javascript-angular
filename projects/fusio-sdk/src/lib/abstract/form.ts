@@ -20,10 +20,11 @@ export abstract class Form<T> implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.entity = this.getService().newEntity();
-
     this.route.data.subscribe((data) => {
       this.mode = data['mode'];
+      if (this.mode === Mode.Create) {
+        this.entity = this.getService().newEntity();
+      }
     });
 
     this.route.paramMap.subscribe(async params => {
