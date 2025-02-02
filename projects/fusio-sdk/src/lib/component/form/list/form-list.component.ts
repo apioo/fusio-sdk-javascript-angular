@@ -8,7 +8,8 @@ import {Service} from "../../../abstract/service";
 })
 export class FormListComponent implements OnInit {
 
-  @Input() name: string = 'list';
+  @Input() name!: string;
+  @Input() disabled: boolean = false;
   @Input() type: string = 'text';
   @Input() data: Array<any> = [];
   @Input() service?: Service<any>;
