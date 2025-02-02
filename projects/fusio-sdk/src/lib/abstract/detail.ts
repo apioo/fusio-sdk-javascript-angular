@@ -14,6 +14,7 @@ export abstract class Detail<T> implements OnInit {
 
   public selected?: T;
   public response?: CommonMessage;
+  public jsonView = false;
 
   protected constructor(protected route: ActivatedRoute, public router: Router, protected error: ErrorService) {
   }
