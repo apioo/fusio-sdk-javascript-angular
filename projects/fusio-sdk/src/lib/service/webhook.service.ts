@@ -34,6 +34,7 @@ export class WebhookService extends Service<ConsumerWebhook> {
 
   newEntity(): ConsumerWebhook {
     return {
+      name: '',
       event: '',
       endpoint: '',
     };
