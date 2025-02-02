@@ -52,7 +52,7 @@ export class FormAutocompleteComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     if (this.data) {
-      this.selected = await this.service.getWithIdAndName('' + this.data);
+      this.selected = await this.service.getWithIdAndName((this.useName ? '~' : '') + this.data);
     }
   }
 
