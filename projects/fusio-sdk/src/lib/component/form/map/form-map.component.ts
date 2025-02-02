@@ -8,7 +8,8 @@ import {Service} from "../../../abstract/service";
 })
 export class FormMapComponent implements OnInit {
 
-  @Input() name: string = 'map';
+  @Input() name!: string;
+  @Input() disabled: boolean = false;
   @Input() type: string = 'text';
   @Input() data: Record<string, any> = {};
   @Input() service?: Service<any>;
