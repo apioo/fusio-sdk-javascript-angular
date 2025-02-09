@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {IdAndName, Service} from "../../../abstract/service";
 import {catchError, debounceTime, distinctUntilChanged, map, merge, Observable, of, OperatorFunction, Subject, switchMap, tap} from "rxjs";
 import {fromPromise} from "rxjs/internal/observable/innerFrom";
@@ -16,6 +16,7 @@ export class FormAutocompleteComponent implements OnInit {
   @Input() service!: Service<any>;
   @Input() useName: boolean = false;
   @Output() dataChange = new EventEmitter<string>();
+  @Output() enter = new EventEmitter<void>();
 
   focus$ = new Subject<string>();
 

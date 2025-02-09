@@ -12,6 +12,8 @@
     [editable]="false"
     (ngModelChange)="changeValue()"
     [disabled]="disabled"
+    (keydown.enter)="enter.emit()"
+    placeholder="Type to search ..."
     class="form-control"
   />
   <button class="btn btn-outline-secondary" type="button" disabled *ngIf="searching">

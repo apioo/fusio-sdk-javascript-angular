@@ -13,6 +13,7 @@ export class FormMapComponent implements OnInit {
   @Input() type: string = 'text';
   @Input() data: Record<string, string> = {};
   @Input() service?: Service<any>;
+  @Input() useName: boolean = false;
   @Output() dataChange = new EventEmitter<Record<string, string>>();
 
   local: Array<Entry> = [];
@@ -50,6 +51,11 @@ export class FormMapComponent implements OnInit {
     this.newKey = '';
     this.newValue = '';
     this.dataChange.emit(this.fromLocal());
+
+    const elKey = document.getElementById(this.name + '-newKey');
+    if (elKey instanceof HTMLInputElement) {
+      elKey.focus();
+    }
   }
 
   doRemove(index: number) {
