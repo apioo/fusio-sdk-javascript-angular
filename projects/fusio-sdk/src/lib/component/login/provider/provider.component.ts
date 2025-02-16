@@ -34,8 +34,7 @@ export class ProviderComponent implements OnInit {
         scope: scope || '',
       };
 
-      const store = new SessionTokenStore();
-      store.persist(token);
+      this.fusio.getTokenStore().persist(token);
 
       await this.obtainUserInfo();
     } else {
