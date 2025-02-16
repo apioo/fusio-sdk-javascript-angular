@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CommonMessage, ConsumerIdentity} from "fusio-sdk";
-import axios from "axios";
+import {CommonMessage, CommonMessageException, ConsumerIdentity} from "fusio-sdk";
 import {Router} from "@angular/router";
 import {UserService} from "../../service/user.service";
 import {FusioService} from "../../service/fusio.service";
@@ -59,13 +58,13 @@ export class LoginComponent implements OnInit {
           success: false,
           message: 'Could not authenticate',
         };
-      } else if (axios.isAxiosError(error) && error.response)  {
+      } else if (error instanceof CommonMessageException) {
+        this.response = error;
+      } else {
         this.response = {
           success: false,
-          message: error.response.data.error_description || 'An unknown error occurred',
+          message: String(error),
         };
-      } else {
-        throw error;
       }
     }
   }
