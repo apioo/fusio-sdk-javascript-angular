@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CommonMessage} from "fusio-sdk";
+import {CommonMessage, CommonMessageException} from "fusio-sdk";
 import {AccessToken, SessionTokenStore} from "sdkgen-client";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../../service/user.service";
@@ -47,13 +47,24 @@ export class ProviderComponent implements OnInit {
   }
 
   private async obtainUserInfo() {
-    const response = await this.fusio.getClient().consumer().account().get();
+    try {
+      const response = await this.fusio.getClient().consumer().account().get();
 
-    this.user.login(response);
+      this.user.login(response);
 
-    this.router.navigate([this.config.getHomePath()]).then(() => {
-      location.reload();
-    });
+      this.router.navigate([this.config.getHomePath()]).then(() => {
+        location.reload();
+      });
+    } catch (error) {
+      if (error instanceof CommonMessageException) {
+        this.response = error;
+      } else {
+        this.response = {
+          success: false,
+          message: String(error)
+        };
+      }
+    }
   }
 
 }
