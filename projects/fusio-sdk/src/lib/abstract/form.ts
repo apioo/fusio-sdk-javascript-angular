@@ -80,6 +80,13 @@ export abstract class Form<T> implements OnInit {
     return this.getService().getLink();
   }
 
+  public getDetailLink(id: any): Array<string>
+  {
+    const link = this.getService().getLink();
+    link.push('' + id)
+    return link;
+  }
+
   protected abstract getService(): Service<T>;
 
   protected onLoad(): void
