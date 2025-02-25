@@ -24,6 +24,8 @@ export abstract class Form<T> implements OnInit {
       this.mode = data['mode'];
       if (this.mode === Mode.Create) {
         this.entity = this.getService().newEntity();
+
+        this.onLoad();
       }
     });
 
