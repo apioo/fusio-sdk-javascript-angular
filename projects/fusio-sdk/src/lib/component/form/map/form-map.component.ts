@@ -13,7 +13,7 @@ export class FormMapComponent implements OnInit {
   @Input() type: string = 'text';
   @Input() data: Record<string, string> = {};
   @Input() service?: Service<any>;
-  @Input() useName: boolean = false;
+  @Input() useTilde: boolean = false;
   @Output() dataChange = new EventEmitter<Record<string, string>>();
 
   local: Array<Entry> = [];

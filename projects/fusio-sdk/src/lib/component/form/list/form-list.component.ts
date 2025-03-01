@@ -13,7 +13,7 @@ export class FormListComponent implements OnInit {
   @Input() type: string = 'text';
   @Input() data: Array<string> = [];
   @Input() service?: Service<any>;
-  @Input() useName: boolean = false;
+  @Input() useTilde: boolean = false;
   @Output() dataChange = new EventEmitter<Array<string>>();
 
   local: Array<any> = [];

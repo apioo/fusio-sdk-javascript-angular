@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IdAndName, Service} from "../../../abstract/service";
 import {catchError, debounceTime, distinctUntilChanged, map, merge, Observable, of, OperatorFunction, Subject, switchMap, tap} from "rxjs";
 import {fromPromise} from "rxjs/internal/observable/innerFrom";
@@ -12,10 +12,11 @@ export class FormAutocompleteComponent implements OnInit {
 
   @Input() name!: string;
   @Input() disabled: boolean = false;
-  @Input() data?: string = undefined;
+  @Input() data?: string|number = undefined;
   @Input() service!: Service<any>;
-  @Input() useName: boolean = false;
+  @Input() useTilde: boolean = false;
   @Output() dataChange = new EventEmitter<string>();
+  @Output() dataChangeId = new EventEmitter<number>();
   @Output() enter = new EventEmitter<void>();
 
   focus$ = new Subject<string>();
@@ -53,7 +54,7 @@ export class FormAutocompleteComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     if (this.data) {
-      this.selected = await this.service.getWithIdAndName((this.useName ? '~' : '') + this.data);
+      this.selected = await this.service.getWithIdAndName((this.useTilde ? '~' : '') + this.data);
     }
   }
 
@@ -62,12 +63,15 @@ export class FormAutocompleteComponent implements OnInit {
       return;
     }
 
-    const value = this.useName ? this.selected.name : this.selected.id;
-    if (!value) {
-      return;
+    if (this.dataChange.observed) {
+      if (this.selected.name) {
+        this.dataChange.emit(this.selected.name);
+      }
+    } else if (this.dataChangeId.observed) {
+      if (this.selected.id) {
+        this.dataChangeId.emit(parseInt(this.selected.id));
+      }
     }
-
-    this.dataChange.emit(value);
   }
 
 }
