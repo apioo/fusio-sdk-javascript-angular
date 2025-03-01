@@ -109,6 +109,8 @@ export abstract class List<T> implements OnInit {
     query.push(this.pageSize);
     if (this.search) {
       query.push(this.search);
+    } else {
+      query.push('');
     }
     return query;
   }
