@@ -17,7 +17,7 @@ export class EventService extends Service<ConsumerEvent> {
   }
 
   async get(id: string): Promise<ConsumerEvent> {
-    return {};
+    return this.fusio.getClient().consumer().event().get(id);
   }
 
   async create(entity: ConsumerEvent): Promise<CommonMessage> {
