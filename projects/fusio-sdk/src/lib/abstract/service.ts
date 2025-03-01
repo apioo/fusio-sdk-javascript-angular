@@ -67,12 +67,12 @@ export abstract class Service<E> {
   {
     const id = this.getIdValue(entity);
     if (id === undefined) {
-      throw new Error('Configured id value does not exist, available properties: ' + Object.getOwnPropertyNames(entity).join(','));
+      throw new Error('Configured id value does not exist, got: ' + JSON.stringify(entity));
     }
 
     const name = this.getNameValue(entity);
     if (name === undefined) {
-      throw new Error('Configured name value does not exist, available properties: ' + Object.getOwnPropertyNames(entity).join(','));
+      throw new Error('Configured name value does not exist, got: ' + JSON.stringify(entity));
     }
 
     return {
