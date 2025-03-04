@@ -47,6 +47,7 @@ import {FormMapComponent} from "./component/form/map/form-map.component";
 import {FormCheckboxListComponent} from "./component/form/checkbox-list/form-checkbox-list.component";
 import {FormAutocompleteComponent} from "./component/form/autocomplete/form-autocomplete.component";
 import {FormSelectComponent} from "./component/form/select/form-select.component";
+import {ScopeCategoriesComponent} from "./component/scope-categories/scope-categories.component";
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import {FormSelectComponent} from "./component/form/select/form-select.component
     HelpComponent,
     MessageComponent,
     NavigationComponent,
+    ScopeCategoriesComponent,
     ScopesComponent,
     SearchComponent,
 
@@ -120,6 +122,7 @@ import {FormSelectComponent} from "./component/form/select/form-select.component
     ResetComponent,
     RegisterComponent,
     ActivateComponent,
+    ScopeCategoriesComponent,
     ScopesComponent,
     SearchComponent,
     SecurityComponent,
