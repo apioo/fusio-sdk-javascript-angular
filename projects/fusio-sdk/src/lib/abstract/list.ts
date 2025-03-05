@@ -61,15 +61,12 @@ export abstract class List<T> implements OnInit {
       return;
     }
 
-    if (page !== undefined) {
-      this.page = page;
-    }
-
-    if (search !== undefined) {
-      this.search = search;
-    }
-
-    await this.doList();
+    await this.router.navigate(this.getService().getLink(), {
+      queryParams: {
+        page: page,
+        search: search,
+      }
+    });
   }
 
   public getDetailLink(id: any): Array<string>
