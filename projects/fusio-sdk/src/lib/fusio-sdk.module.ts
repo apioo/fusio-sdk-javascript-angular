@@ -48,6 +48,7 @@ import {FormCheckboxListComponent} from "./component/form/checkbox-list/form-che
 import {FormAutocompleteComponent} from "./component/form/autocomplete/form-autocomplete.component";
 import {FormSelectComponent} from "./component/form/select/form-select.component";
 import {ScopeCategoriesComponent} from "./component/scope-categories/scope-categories.component";
+import {TypeschemaEditorModule} from "ngx-typeschema-editor";
 
 @NgModule({
   declarations: [
@@ -107,6 +108,7 @@ import {ScopeCategoriesComponent} from "./component/scope-categories/scope-categ
     GravatarModule,
     ClipboardModule,
     MarkdownModule.forRoot(),
+    TypeschemaEditorModule,
   ],
   exports: [
     AccountComponent,

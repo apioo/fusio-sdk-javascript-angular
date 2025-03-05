@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FusioService} from "../../service/fusio.service";
+import {ImportService, Specification} from "ngx-typeschema-editor";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'fusio-specification',
@@ -8,18 +10,31 @@ import {FusioService} from "../../service/fusio.service";
 })
 export class SpecificationComponent implements OnInit {
 
-  constructor(private fusio: FusioService) { }
+  spec: Specification = {
+    imports: [],
+    operations: [],
+    types: []
+  };
+
+  constructor(private fusio: FusioService, private importService: ImportService, private httpClient: HttpClient) { }
 
   async ngOnInit(): Promise<void> {
-    this.loadRedoc(await this.getOpenAPILink());
+    const link = await this.getTypeAPILink();
+    if (!link) {
+      return;
+    }
+
+    this.httpClient.get<Specification>(link).subscribe(async (spec) => {
+      this.spec = await this.importService.transform('typeapi', JSON.stringify(spec));
+    });
   }
 
-  private async getOpenAPILink(): Promise<string|undefined> {
+  private async getTypeAPILink(): Promise<string|undefined> {
     const about = await this.fusio.getClientAnonymous().system().meta().getAbout();
 
     let result = undefined;
     about.links?.forEach((link) => {
-      if (link.rel === 'openapi') {
+      if (link.rel === 'typeapi') {
         result = link.href;
       }
     });
@@ -27,36 +42,4 @@ export class SpecificationComponent implements OnInit {
     return result;
   }
 
-  private loadRedoc(url: string|undefined): void {
-    if (!url) {
-      throw new Error('Found no open api url');
-    }
-
-    const el = document.getElementById('redoc-script');
-    if (el === null) {
-      let node = document.createElement('script');
-      node.src = 'https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js';
-      node.type = 'text/javascript';
-      node.async = true;
-      node.id = 'redoc-script';
-      node.onload = function() {
-        SpecificationComponent.initRedoc(url);
-      };
-      document.getElementsByTagName('head')[0].appendChild(node);
-    } else {
-      SpecificationComponent.initRedoc(url);
-    }
-  }
-
-  public static initRedoc(url: string) {
-    const options = {
-      scrollYOffset: 60,
-      hideDownloadButton: true
-    };
-
-    Redoc.init(url, options, document.getElementById('redoc'))
-  }
-
 }
-
-declare var Redoc: any;

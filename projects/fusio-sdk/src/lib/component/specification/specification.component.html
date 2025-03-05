@@ -1,6 +1,4 @@
 
-<div class="row">
-  <div class="col-md-12">
-    <div id="redoc"></div>
-  </div>
+<div *ngIf="spec">
+  <typeschema-editor [specification]="spec" [readonly]="true"></typeschema-editor>
 </div>
