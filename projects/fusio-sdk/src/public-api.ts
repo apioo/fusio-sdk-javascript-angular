@@ -26,6 +26,7 @@ export * from './lib/component/password/confirm/confirm.component';
 export * from './lib/component/password/reset/reset.component';
 export * from './lib/component/register/register.component';
 export * from './lib/component/register/activate/activate.component';
+export * from './lib/component/scope-categories/scope-categories.component';
 export * from './lib/component/scopes/scopes.component';
 export * from './lib/component/search/search.component';
 export * from './lib/component/security/security.component';
