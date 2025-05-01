@@ -8,7 +8,7 @@
       </div>
     </ng-container>
     <ng-container *ngIf="type === 'autocomplete' && service">
-      <fusio-form-autocomplete id="{{name}}-{{property.key}}" name="{{name}}-{{property.key}}" [service]="service" [useTilde]="useTilde" [data]="property.value" (dataChange)="doChange(i, $event)">
+      <fusio-form-autocomplete id="{{name}}-{{property.key}}" name="{{name}}-{{property.key}}" [service]="service" [data]="property.value" (dataChange)="doChange(i, $event)" [useId]="useId" [useTilde]="useTilde">
         <button class="btn btn-danger" type="button" (click)="doRemove(i)"><i class="bi bi-x"></i></button>
       </fusio-form-autocomplete>
     </ng-container>
@@ -26,7 +26,7 @@
       </div>
     </ng-container>
     <ng-container *ngIf="type === 'autocomplete' && service">
-      <fusio-form-autocomplete id="{{name}}-newValue" name="{{name}}-newValue" [service]="service" [useTilde]="useTilde" [data]="newValue" (dataChange)="newValue = $event" (enter)="doAdd()" [disabled]="disabled">
+      <fusio-form-autocomplete id="{{name}}-newValue" name="{{name}}-newValue" [service]="service" [data]="newValue" (dataChange)="newValue = $event" (enter)="doAdd()" [useId]="useId" [useTilde]="useTilde" [disabled]="disabled">
         <button class="btn btn-success" type="button" (click)="doAdd()"><i class="bi bi-plus"></i></button>
       </fusio-form-autocomplete>
     </ng-container>

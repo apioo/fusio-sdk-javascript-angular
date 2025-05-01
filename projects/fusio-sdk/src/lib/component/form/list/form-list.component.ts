@@ -14,6 +14,7 @@ export class FormListComponent implements OnInit {
   @Input() data: Array<string> = [];
   @Input() service?: Service<any>;
   @Input() useTilde: boolean = false;
+  @Input() useId: boolean = false;
   @Output() dataChange = new EventEmitter<Array<string>>();
 
   local: Array<any> = [];

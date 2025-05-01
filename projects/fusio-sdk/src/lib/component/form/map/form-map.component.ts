@@ -14,6 +14,7 @@ export class FormMapComponent implements OnInit {
   @Input() data: Record<string, string> = {};
   @Input() service?: Service<any>;
   @Input() useTilde: boolean = false;
+  @Input() useId: boolean = false;
   @Output() dataChange = new EventEmitter<Record<string, string>>();
 
   local: Array<Entry> = [];
