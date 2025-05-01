@@ -15,6 +15,7 @@ export class FormAutocompleteComponent implements OnInit {
   @Input() data?: string|number = undefined;
   @Input() service!: Service<any>;
   @Input() useTilde: boolean = false;
+  @Input() useId: boolean = false;
   @Output() dataChange = new EventEmitter<string>();
   @Output() dataChangeId = new EventEmitter<number>();
   @Output() enter = new EventEmitter<void>();
@@ -65,7 +66,7 @@ export class FormAutocompleteComponent implements OnInit {
 
     if (this.dataChange.observed) {
       if (this.selected.name) {
-        this.dataChange.emit(this.selected.name);
+        this.dataChange.emit(this.useId ? this.selected.id : this.selected.name);
       }
     } else if (this.dataChangeId.observed) {
       if (this.selected.id) {
