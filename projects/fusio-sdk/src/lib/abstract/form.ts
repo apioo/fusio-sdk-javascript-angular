@@ -44,6 +44,8 @@ export abstract class Form<T> implements OnInit {
       this.onLoad();
     } catch (error) {
       this.response = this.error.convert(error);
+
+      this.onError();
     }
   }
 
@@ -54,6 +56,8 @@ export abstract class Form<T> implements OnInit {
       this.onSubmit();
     } catch (error) {
       this.response = this.error.convert(error);
+
+      this.onError();
     }
   }
 
@@ -64,6 +68,8 @@ export abstract class Form<T> implements OnInit {
       this.onSubmit();
     } catch (error) {
       this.response = this.error.convert(error);
+
+      this.onError();
     }
   }
 
@@ -74,6 +80,8 @@ export abstract class Form<T> implements OnInit {
       this.onSubmit();
     } catch (error) {
       this.response = this.error.convert(error);
+
+      this.onError();
     }
   }
 
@@ -96,6 +104,10 @@ export abstract class Form<T> implements OnInit {
   }
 
   protected onSubmit(): void
+  {
+  }
+
+  protected onError(): void
   {
   }
 

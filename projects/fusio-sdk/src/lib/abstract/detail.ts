@@ -35,6 +35,8 @@ export abstract class Detail<T> implements OnInit {
       this.onLoad();
     } catch (error) {
       this.response = this.error.convert(error);
+
+      this.onError();
     }
   }
 
@@ -62,6 +64,10 @@ export abstract class Detail<T> implements OnInit {
   protected abstract getService(): Service<T>;
 
   protected onLoad(): void
+  {
+  }
+
+  protected onError(): void
   {
   }
 }
