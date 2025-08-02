@@ -2,8 +2,8 @@
 <fusio-message [response]="response"></fusio-message>
 <form *ngIf="entity">
   <div class="mb-3 row">
-    <label for="name" class="col-sm-2 col-form-label fw-bold">Name</label>
-    <div class="col-sm-10">
+    <label for="name" class="col-lg-2 col-form-label fw-bold">Name</label>
+    <div class="col-lg-10">
       <div class="input-group">
         <input type="text" id="name" name="name" [(ngModel)]="entity.name" [disabled]="mode === 3" class="form-control">
         <button class="btn btn-outline-secondary" type="button" [ngbPopover]="nameHelp"><i class="bi bi-question"></i></button>
@@ -12,8 +12,8 @@
     </div>
   </div>
   <div class="mb-3 row">
-    <label for="url" class="col-sm-2 col-form-label fw-bold">Url</label>
-    <div class="col-sm-10">
+    <label for="url" class="col-lg-2 col-form-label fw-bold">Url</label>
+    <div class="col-lg-10">
       <div class="input-group">
         <input type="url" id="url" name="url" [(ngModel)]="entity.url" [disabled]="mode === 3" class="form-control">
         <button class="btn btn-outline-secondary" type="button" [ngbPopover]="urlHelp"><i class="bi bi-question"></i></button>
@@ -22,8 +22,8 @@
     </div>
   </div>
   <div class="mb-3 row">
-    <label class="col-sm-2 col-form-label fw-bold">Scopes</label>
-    <div class="col-sm-10">
+    <label class="col-lg-2 col-form-label fw-bold">Scopes</label>
+    <div class="col-lg-10">
       <fusio-scope-categories [scopes]="entity.scopes" (dataChange)="entity.scopes = $event" [disabled]="mode === 3"></fusio-scope-categories>
     </div>
   </div>

@@ -9,8 +9,8 @@
 </div>
 <form *ngIf="entity">
   <div class="mb-3 row">
-    <label for="name" class="col-sm-2 col-form-label fw-bold">Name</label>
-    <div class="col-sm-10">
+    <label for="name" class="col-lg-2 col-form-label fw-bold">Name</label>
+    <div class="col-lg-10">
       <div class="input-group">
         <input type="text" id="name" name="name" [(ngModel)]="entity.name" [disabled]="mode === 3" class="form-control">
         <button class="btn btn-outline-secondary" type="button" [ngbPopover]="nameHelp"><i class="bi bi-question"></i></button>
@@ -19,8 +19,8 @@
     </div>
   </div>
   <div class="mb-3 row">
-    <label for="name" class="col-sm-2 col-form-label fw-bold">Expires</label>
-    <div class="col-sm-10">
+    <label for="name" class="col-lg-2 col-form-label fw-bold">Expires</label>
+    <div class="col-lg-10">
       <div class="input-group">
         <input type="date" id="expire" name="expire" [(ngModel)]="entity.expire" [disabled]="mode === 3" class="form-control">
         <button class="btn btn-outline-secondary" type="button" [ngbPopover]="expireHelp"><i class="bi bi-question"></i></button>
@@ -29,8 +29,8 @@
     </div>
   </div>
   <div class="mb-3 row" *ngIf="mode === 1">
-    <label class="col-sm-2 col-form-label fw-bold">Scopes</label>
-    <div class="col-sm-10">
+    <label class="col-lg-2 col-form-label fw-bold">Scopes</label>
+    <div class="col-lg-10">
       <fusio-scope-categories [scopes]="entity.scopes" (dataChange)="entity.scopes = $event"></fusio-scope-categories>
     </div>
   </div>
