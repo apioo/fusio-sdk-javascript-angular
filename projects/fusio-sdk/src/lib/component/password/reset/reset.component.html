@@ -5,18 +5,22 @@
       <h1 class="p-3 m-0 lead">Password reset</h1>
     </header>
     <div class="fusio-login-panel-body">
-      <fusio-message [response]="response"></fusio-message>
+      <fusio-message [response]="response()"></fusio-message>
       <form (submit)="doReset()">
         <div class="mb-3">
           <label for="email">Email:</label>
           <input type="email" id="email" name="email" [(ngModel)]="data.email" class="form-control">
         </div>
-        <div class="mb-3" *ngIf="captchaKey">
-          <label>Captcha:</label>
-          <ngx-recaptcha2 #captchaElem [siteKey]="captchaKey" (success)="setCaptcha($event)" [useGlobalDomain]="false"></ngx-recaptcha2>
-        </div>
+        @if (captchaKey) {
+          <div class="mb-3">
+            <label>Captcha:</label>
+            <ngx-recaptcha2 #captchaElem [siteKey]="captchaKey" (success)="setCaptcha($event)" [useGlobalDomain]="false"></ngx-recaptcha2>
+          </div>
+        }
         <button type="submit" class="btn btn-primary" [disabled]="loading">
-          <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          @if (loading) {
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          }
           Change password
         </button>
       </form>

@@ -2,10 +2,16 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IdAndName, Service} from "../../../abstract/service";
 import {catchError, debounceTime, distinctUntilChanged, map, merge, Observable, of, OperatorFunction, Subject, switchMap, tap} from "rxjs";
 import {fromPromise} from "rxjs/internal/observable/innerFrom";
+import {FormsModule} from "@angular/forms";
+import {NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'fusio-form-autocomplete',
   templateUrl: './form-autocomplete.component.html',
+  imports: [
+    FormsModule,
+    NgbTypeahead
+  ],
   styleUrls: ['./form-autocomplete.component.css']
 })
 export class FormAutocompleteComponent implements OnInit {

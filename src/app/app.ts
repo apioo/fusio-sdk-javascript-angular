@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {RouterLink, RouterOutlet} from '@angular/router';
 import {BackendUser} from "fusio-sdk";
 import {UserService} from "../../projects/fusio-sdk/src/lib/service/user.service";
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  imports: [RouterOutlet, RouterLink],
+  templateUrl: './app.html',
+  styleUrl: './app.css'
 })
-export class AppComponent {
-  title = 'fusio-sdk';
+export class App implements OnInit {
+
   user?: BackendUser;
 
   constructor(private userMeta: UserService) { }
@@ -17,4 +19,8 @@ export class AppComponent {
     this.user = this.userMeta.get();
   }
 
+}
+
+declare global {
+  var FUSIO_URL: string | undefined;
 }

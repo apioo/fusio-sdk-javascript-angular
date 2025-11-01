@@ -1,18 +1,22 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {CommonMessage, ConsumerUserActivate} from "fusio-sdk";
 import {FusioService} from "../../../service/fusio.service";
 import {EventService} from "../../../service/event.service";
 import {ErrorService} from "../../../service/error.service";
+import {MessageComponent} from "../../message/message.component";
 
 @Component({
   selector: 'fusio-register-activate',
   templateUrl: './activate.component.html',
+  imports: [
+    MessageComponent
+  ],
   styleUrls: ['./activate.component.css']
 })
 export class ActivateComponent implements OnInit {
 
-  response?: CommonMessage;
+  response = signal<CommonMessage|undefined>(undefined);
 
   constructor(private fusio: FusioService, private error: ErrorService, protected route: ActivatedRoute) {
   }
@@ -32,9 +36,9 @@ export class ActivateComponent implements OnInit {
     };
 
     try {
-      this.response = await this.fusio.getClientAnonymous().consumer().account().activate(activate);
+      this.response.set(await this.fusio.getClientAnonymous().consumer().account().activate(activate));
     } catch (error) {
-      this.response = this.error.convert(error);
+      this.response.set(this.error.convert(error));
     }
   }
 

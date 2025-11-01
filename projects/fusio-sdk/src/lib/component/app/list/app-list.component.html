@@ -1,6 +1,6 @@
 
 <fusio-search
-  [searchTerm]="search"
+  [searchTerm]="search()"
   (search)="doSearch(1, $event)"
   (newClick)="router.navigate(getNewLink())"
   placeholder="app">
@@ -15,29 +15,39 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let entry of entries">
-    <td>
-      <ng-container *ngIf="entry.status === 1"><span class="badge text-bg-primary">Active</span></ng-container>
-      <ng-container *ngIf="entry.status === 2"><span class="badge text-bg-secondary">Pending</span></ng-container>
-      <ng-container *ngIf="entry.status === 3"><span class="badge text-bg-danger">Deactivated</span></ng-container>
-      <ng-container *ngIf="entry.status === 4"><span class="badge text-bg-secondary">Deleted</span></ng-container>
-    </td>
-    <td>{{entry.name}}</td>
-    <td>{{entry.url}}</td>
-    <td>
-      <div class="btn-group" role="group">
-        <a [routerLink]="getDetailLink(entry.id)" class="btn btn-primary"><i class="bi bi-search"></i></a>
-        <a [routerLink]="getEditLink(entry.id)" class="btn btn-secondary"><i class="bi bi-pen"></i></a>
-        <a [routerLink]="getDeleteLink(entry.id)" class="btn btn-danger"><i class="bi bi-x"></i></a>
-      </div>
-    </td>
-  </tr>
+  @for (entry of entries(); track entry.id) {
+    <tr>
+      <td>
+        @if (entry.status === 1) {
+          <span class="badge text-bg-primary">Active</span>
+        }
+        @if (entry.status === 2) {
+          <span class="badge text-bg-secondary">Pending</span>
+        }
+        @if (entry.status === 3) {
+          <span class="badge text-bg-danger">Deactivated</span>
+        }
+        @if (entry.status === 4) {
+          <span class="badge text-bg-secondary">Deleted</span>
+        }
+      </td>
+      <td>{{entry.name}}</td>
+      <td>{{entry.url}}</td>
+      <td>
+        <div class="btn-group" role="group">
+          <a [routerLink]="getDetailLink(entry.id)" class="btn btn-primary"><i class="bi bi-search"></i></a>
+          <a [routerLink]="getEditLink(entry.id)" class="btn btn-secondary"><i class="bi bi-pen"></i></a>
+          <a [routerLink]="getDeleteLink(entry.id)" class="btn btn-danger"><i class="bi bi-x"></i></a>
+        </div>
+      </td>
+    </tr>
+  }
   </tbody>
 </table>
 <ngb-pagination
   [(page)]="page"
-  [pageSize]="pageSize"
-  [collectionSize]="totalResults"
+  [pageSize]="pageSize()"
+  [collectionSize]="totalResults()"
   [maxSize]="4"
   [ellipses]="false"
   (pageChange)="doSearch($event)"></ngb-pagination>

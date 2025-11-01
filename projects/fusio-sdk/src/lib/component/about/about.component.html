@@ -3,11 +3,17 @@
   <div class="col-md-12">
     <dl>
       <dt>API-Version</dt>
-      <dd>{{about?.apiVersion}}</dd>
+      <dd>{{about()?.apiVersion}}</dd>
       <dt>Title</dt>
-      <dd>{{about?.title}}</dd>
+      <dd>{{about()?.title}}</dd>
+      <dt>Description</dt>
+      <dd>{{about()?.description}}</dd>
       <dt>Scopes</dt>
-      <dd><span class="badge text-bg-primary me-1" *ngFor="let scope of about?.scopes">{{scope}}</span></dd>
+      <dd>
+        @for (scope of about()?.scopes; track $index) {
+          <span class="badge text-bg-primary me-1">{{scope}}</span>
+        }
+      </dd>
     </dl>
     <h3>Links</h3>
     <table class="table table-striped">
@@ -18,10 +24,12 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let link of about?.links">
-        <td>{{link.rel}}</td>
-        <td><a href="{{link.href}}">{{link.href}}</a></td>
-      </tr>
+      @for (link of about()?.links; track $index) {
+        <tr>
+          <td>{{link.rel}}</td>
+          <td><a href="{{link.href}}">{{link.href}}</a></td>
+        </tr>
+      }
       </tbody>
     </table>
   </div>

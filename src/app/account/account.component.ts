@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {RouterLink, RouterOutlet} from "@angular/router";
+import {NgClass} from "@angular/common";
 import {
   AccountContainerComponent
 } from "../../../projects/fusio-sdk/src/lib/component/account-container/account-container.component";
@@ -6,8 +8,13 @@ import {
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    NgClass
+  ],
   styleUrls: ['./account.component.css']
 })
-export class AccountComponent extends AccountContainerComponent {
+export class AccountComponent extends AccountContainerComponent{
 
 }

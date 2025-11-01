@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {SystemAbout} from "fusio-sdk";
 import {FusioService} from "../../service/fusio.service";
 
@@ -9,12 +9,12 @@ import {FusioService} from "../../service/fusio.service";
 })
 export class AboutComponent implements OnInit {
 
-  about?: SystemAbout;
+  about = signal<SystemAbout|undefined>(undefined);
 
   constructor(private fusio: FusioService) { }
 
   async ngOnInit(): Promise<void> {
-    this.about = await this.fusio.getClientAnonymous().system().meta().getAbout();
+    this.about.set(await this.fusio.getClientAnonymous().system().meta().getAbout());
   }
 
 }

@@ -1,37 +1,38 @@
-<div *ngIf="selected">
-  <div class="btn-group" role="group">
-    <a [routerLink]="getListLink()" class="btn btn-secondary fusio-btn-back">Back</a>
+
+<div class="btn-group" role="group">
+  <a [routerLink]="getListLink()" class="btn btn-secondary fusio-btn-back">Back</a>
+</div>
+<div class="fusio-detail">
+  <div class="row">
+    <div class="col-lg-2 fw-bold">IP</div>
+    <div class="col-lg-10">{{selected()?.ip}}</div>
   </div>
-  <div class="fusio-detail">
-    <div class="row">
-      <div class="col-lg-2 fw-bold">IP</div>
-      <div class="col-lg-10">{{selected.ip}}</div>
-    </div>
-    <div class="row">
-      <div class="col-lg-2 fw-bold">User-Agent</div>
-      <div class="col-lg-10">{{selected.userAgent}}</div>
-    </div>
-    <div class="row">
-      <div class="col-lg-2 fw-bold">Method</div>
-      <div class="col-lg-10">{{selected.method}}</div>
-    </div>
-    <div class="row">
-      <div class="col-lg-2 fw-bold">Path</div>
-      <div class="col-lg-10">{{selected.path}}</div>
-    </div>
-    <div class="row">
-      <div class="col-lg-2 fw-bold">Headers</div>
-      <div class="col-lg-10"><pre>{{selected.header}}</pre></div>
-    </div>
-    <div class="row">
-      <div class="col-lg-2 fw-bold">Date</div>
-      <div class="col-lg-10">{{selected.date|date:'short'}}</div>
-    </div>
+  <div class="row">
+    <div class="col-lg-2 fw-bold">User-Agent</div>
+    <div class="col-lg-10">{{selected()?.userAgent}}</div>
   </div>
-  <div class="card" style="margin-top:1rem" *ngIf="selected && selected.body">
-    <div class="card-header">Body</div>
-    <div class="card-body">
-      <pre>{{selected.body|json}}</pre>
-    </div>
+  <div class="row">
+    <div class="col-lg-2 fw-bold">Method</div>
+    <div class="col-lg-10">{{selected()?.method}}</div>
+  </div>
+  <div class="row">
+    <div class="col-lg-2 fw-bold">Path</div>
+    <div class="col-lg-10">{{selected()?.path}}</div>
+  </div>
+  <div class="row">
+    <div class="col-lg-2 fw-bold">Headers</div>
+    <div class="col-lg-10"><pre>{{selected()?.header}}</pre></div>
+  </div>
+  <div class="row">
+    <div class="col-lg-2 fw-bold">Date</div>
+    <div class="col-lg-10">{{selected()?.date|date:'short'}}</div>
   </div>
 </div>
+@if (selected()?.body) {
+  <div class="card" style="margin-top:1rem">
+    <div class="card-header">Body</div>
+    <div class="card-body">
+      <pre>{{selected()?.body|json}}</pre>
+    </div>
+  </div>
+}

@@ -1,11 +1,12 @@
 
-<fusio-message [response]="response"></fusio-message>
-<form *ngIf="entity">
+<fusio-message [response]="response()"></fusio-message>
+
+<form>
   <div class="mb-3 row">
     <label for="name" class="col-lg-2 col-form-label fw-bold">Name</label>
     <div class="col-lg-10">
       <div class="input-group">
-        <input type="text" id="name" name="name" [(ngModel)]="entity.name" [disabled]="mode === 3" class="form-control">
+        <input type="text" id="name" name="name" [ngModel]="entity().name" (ngModelChange)="set(entity, 'name', $event)" [disabled]="mode === 3" class="form-control">
         <button class="btn btn-outline-secondary" type="button" [ngbPopover]="nameHelp"><i class="bi bi-question"></i></button>
         <ng-template #nameHelp>Name of the app</ng-template>
       </div>
@@ -15,7 +16,7 @@
     <label for="url" class="col-lg-2 col-form-label fw-bold">Url</label>
     <div class="col-lg-10">
       <div class="input-group">
-        <input type="url" id="url" name="url" [(ngModel)]="entity.url" [disabled]="mode === 3" class="form-control">
+        <input type="url" id="url" name="url" [ngModel]="entity().url" (ngModelChange)="set(entity, 'url', $event)" [disabled]="mode === 3" class="form-control">
         <button class="btn btn-outline-secondary" type="button" [ngbPopover]="urlHelp"><i class="bi bi-question"></i></button>
         <ng-template #urlHelp>Url of the app</ng-template>
       </div>
@@ -24,13 +25,19 @@
   <div class="mb-3 row">
     <label class="col-lg-2 col-form-label fw-bold">Scopes</label>
     <div class="col-lg-10">
-      <fusio-scope-categories [scopes]="entity.scopes" (dataChange)="entity.scopes = $event" [disabled]="mode === 3"></fusio-scope-categories>
+      <fusio-scope-categories [scopes]="entity().scopes" (dataChange)="set(entity, 'scopes', $event)" [disabled]="mode === 3"></fusio-scope-categories>
     </div>
   </div>
   <div class="btn-group" role="group">
-    <ng-container *ngIf="mode === 1"><button type="button" class="btn btn-primary" (click)="doCreate(entity)">Create</button></ng-container>
-    <ng-container *ngIf="mode === 2"><button type="button" class="btn btn-primary" (click)="doUpdate(entity)">Update</button></ng-container>
-    <ng-container *ngIf="mode === 3"><button type="button" class="btn btn-danger" (click)="doDelete(entity)">Delete</button></ng-container>
+    @if (mode === 1) {
+      <button type="button" class="btn btn-primary" (click)="doCreate(entity)">Create</button>
+    }
+    @else if (mode === 2) {
+      <button type="button" class="btn btn-primary" (click)="doUpdate(entity)">Update</button>
+    }
+    @else if (mode === 3) {
+      <button type="button" class="btn btn-danger" (click)="doDelete(entity)">Delete</button>
+    }
     <button type="button" (click)="router.navigate(getListLink())" class="btn btn-light fusio-btn-back">Back</button>
   </div>
 </form>

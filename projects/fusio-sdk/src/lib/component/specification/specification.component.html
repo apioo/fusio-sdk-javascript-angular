@@ -1,4 +1,6 @@
 
-<div *ngIf="spec">
-  <typeschema-editor [specification]="spec" [operationEnabled]="true" [readonly]="true"></typeschema-editor>
-</div>
+<fusio-message [response]="response()"></fusio-message>
+
+@if (spec(); as specification) {
+  <typeschema-editor [specification]="specification" [operationEnabled]="true" [readonly]="true"></typeschema-editor>
+}

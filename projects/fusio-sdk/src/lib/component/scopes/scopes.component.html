@@ -1,2 +1,4 @@
 
-<span *ngFor="let scope of scopes"><span class="badge bg-primary me-1">{{scope}}</span></span>
+@for (scope of scopes; track $index) {
+  <span class="badge bg-primary me-1">{{scope}}</span>
+}

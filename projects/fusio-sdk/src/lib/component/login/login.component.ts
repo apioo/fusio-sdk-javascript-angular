@@ -1,15 +1,23 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {CommonMessage, CommonMessageException, ConsumerIdentity} from "fusio-sdk";
-import {Router} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {UserService} from "../../service/user.service";
 import {FusioService} from "../../service/fusio.service";
 import {ConfigService} from "../../service/config.service";
 import {ClientException} from "sdkgen-client";
 import {LocationStrategy} from "@angular/common";
+import {MessageComponent} from "../message/message.component";
+import {FormsModule} from "@angular/forms";
+import {ErrorService} from "../../service/error.service";
 
 @Component({
   selector: 'fusio-login',
   templateUrl: './login.component.html',
+  imports: [
+    MessageComponent,
+    FormsModule,
+    RouterLink
+  ],
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
@@ -19,14 +27,14 @@ export class LoginComponent implements OnInit {
     password: ''
   }
 
-  response?: CommonMessage;
+  response = signal<CommonMessage|undefined>(undefined);
   loading = false;
 
   logo?: string;
   title: boolean = false;
 
-  identityCount: number = 0;
-  identityCollection: Array<ConsumerIdentity> = [];
+  identityCount = signal<number>(0);
+  identityCollection = signal<Array<ConsumerIdentity>>([]);
 
   constructor(private fusio: FusioService, private router: Router, private location: LocationStrategy, private user: UserService, private config: ConfigService) {
   }
@@ -36,8 +44,9 @@ export class LoginComponent implements OnInit {
     this.title = this.logo === undefined;
 
     const collection = await this.fusio.getClientAnonymous().consumer().identity().getAll(this.config.getAppId(), this.config.getAppKey());
-    this.identityCount = collection.totalResults || 0;
-    this.identityCollection = collection.entry || [];
+
+    this.identityCount.set(collection.totalResults || 0);
+    this.identityCollection.set(collection.entry || []);
   }
 
   async login() {
@@ -54,17 +63,17 @@ export class LoginComponent implements OnInit {
     } catch (error) {
       this.loading = false;
       if (error instanceof ClientException) {
-        this.response = {
+        this.response.set({
           success: false,
           message: 'Could not authenticate',
-        };
+        });
       } else if (error instanceof CommonMessageException) {
-        this.response = error;
+        this.response.set(error);
       } else {
-        this.response = {
+        this.response.set({
           success: false,
           message: String(error),
-        };
+        });
       }
     }
   }

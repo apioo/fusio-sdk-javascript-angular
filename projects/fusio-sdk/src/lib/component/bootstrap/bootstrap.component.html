@@ -5,18 +5,26 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col">
-        <div ngbDropdown class="fusio-header-profile" *ngIf="user">
-          <button type="button" class="btn" id="userMenu" ngbDropdownToggle>{{ user.name }} <i class="bi bi-person"></i></button>
-          <div ngbDropdownMenu aria-labelledby="userMenu">
-            <button ngbDropdownItem routerLink="{{ item.path }}" *ngFor="let item of userMenu">{{ item.title }}</button>
+        @if (user) {
+          <div ngbDropdown class="fusio-header-profile">
+            <button type="button" class="btn" id="userMenu" ngbDropdownToggle>{{ user.name }} <i class="bi bi-person"></i></button>
+            <div ngbDropdownMenu aria-labelledby="userMenu">
+              @for (item of userMenu(); track $index) {
+                <button ngbDropdownItem routerLink="{{ item.path }}">{{ item.title }}</button>
+              }
+            </div>
           </div>
-        </div>
-        <div ngbDropdown class="fusio-header-profile" *ngIf="!user">
-          <button type="button" class="btn" id="anonymousMenu" ngbDropdownToggle>Anonymous <i class="bi bi-person"></i></button>
-          <div ngbDropdownMenu aria-labelledby="anonymousMenu">
-            <button ngbDropdownItem routerLink="{{ item.path }}" *ngFor="let item of anonymousMenu">{{ item.title }}</button>
+        }
+        @if (!user) {
+          <div ngbDropdown class="fusio-header-profile">
+            <button type="button" class="btn" id="anonymousMenu" ngbDropdownToggle>Anonymous <i class="bi bi-person"></i></button>
+            <div ngbDropdownMenu aria-labelledby="anonymousMenu">
+              @for (item of anonymousMenu(); track $index) {
+                <button ngbDropdownItem routerLink="{{ item.path }}">{{ item.title }}</button>
+              }
+            </div>
           </div>
-        </div>
+        }
         <div class="fusio-content">
           <router-outlet></router-outlet>
         </div>

@@ -1,9 +1,15 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {HelpService} from "../../service/help.service";
+import {FormsModule} from "@angular/forms";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'fusio-search',
   templateUrl: './search.component.html',
+  imports: [
+    FormsModule,
+    RouterLink
+  ],
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
@@ -40,7 +46,11 @@ export class SearchComponent implements OnInit {
     this.newClick.emit();
   }
 
-  showHelp(path: string) {
+  showHelp(path?: string) {
+    if (!path) {
+      return;
+    }
+
     this.help.showDialog(path);
   }
 

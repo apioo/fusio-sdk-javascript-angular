@@ -1,3 +1,6 @@
 
-<ngb-alert type="success">Thank you for purchasing {{plan?.name}}!</ngb-alert>
+<fusio-message [response]="response()"></fusio-message>
+
+<ngb-alert type="success">Thank you for purchasing {{plan()?.name}}!</ngb-alert>
+
 <button class="btn btn-primary" [routerLink]="homePath">Home</button>

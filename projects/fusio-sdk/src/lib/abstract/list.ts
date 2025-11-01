@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CommonMessage} from "fusio-sdk";
 import {ErrorService} from "../service/error.service";
@@ -12,12 +12,12 @@ import {Service} from "./service";
 })
 export abstract class List<T> implements OnInit {
 
-  public search: string = '';
-  public totalResults: number = 0;
-  public entries: Array<T> = [];
-  public page: number = 1;
-  public pageSize: number = 16;
-  public response?: CommonMessage;
+  search = signal<string>('');
+  totalResults = signal<number>(0);
+  entries = signal<Array<T>>([]);
+  page = signal<number>(1);
+  pageSize = signal<number>(16);
+  response = signal<CommonMessage|undefined>(undefined);
 
   protected constructor(protected route: ActivatedRoute, public router: Router, protected error: ErrorService) {
   }
@@ -36,8 +36,8 @@ export abstract class List<T> implements OnInit {
         return;
       }
 
-      this.page = page || 1;
-      this.search = search || '';
+      this.page.set(page || 1);
+      this.search.set(search || '');
 
       await this.doList();
     });
@@ -47,12 +47,12 @@ export abstract class List<T> implements OnInit {
     try {
       const response = await this.getService().getAll(this.getCollectionQuery());
 
-      this.totalResults = response.totalResults || 0;
-      this.entries = response.entry || [];
+      this.totalResults.set(response.totalResults || 0);
+      this.entries.set(response.entry || []);
 
       this.onLoad();
     } catch (error) {
-      this.response = this.error.convert(error);
+      this.response.set(this.error.convert(error));
 
       this.onError();
     }
@@ -104,10 +104,11 @@ export abstract class List<T> implements OnInit {
 
   protected getCollectionQuery(): Array<any> {
     let query: Array<any> = [];
-    query.push((this.page - 1) * this.pageSize);
-    query.push(this.pageSize);
-    if (this.search) {
-      query.push(this.search);
+    query.push((this.page() - 1) * this.pageSize());
+    query.push(this.pageSize());
+    const search = this.search();
+    if (search) {
+      query.push(search);
     } else {
       query.push('');
     }
@@ -115,7 +116,7 @@ export abstract class List<T> implements OnInit {
   }
 
   protected hasQueryParamsChange(page?: number, search?: string): boolean {
-    return this.page !== page || this.search !== search;
+    return this.page() !== page || this.search() !== search;
   }
 
   protected abstract getService(): Service<T>;

@@ -1,11 +1,12 @@
 
-<fusio-message [response]="response"></fusio-message>
-<form *ngIf="entity">
+<fusio-message [response]="response()"></fusio-message>
+
+<form>
   <div class="mb-3 row">
     <label for="name" class="col-lg-2 col-form-label fw-bold">Name</label>
     <div class="col-lg-10">
       <div class="input-group">
-        <input type="text" id="name" name="name" [(ngModel)]="entity.name" [disabled]="mode === 3" class="form-control">
+        <input type="text" id="name" name="name" [ngModel]="entity().name" (ngModelChange)="set(entity, 'name', $event)" [disabled]="mode === 3" class="form-control">
         <button class="btn btn-outline-secondary" type="button" [ngbPopover]="nameHelp"><i class="bi bi-question"></i></button>
         <ng-template #nameHelp>The name of the webhook</ng-template>
       </div>
@@ -14,7 +15,7 @@
   <div class="mb-3 row">
     <label for="event" class="col-lg-2 col-form-label fw-bold">Event</label>
     <div class="col-lg-10">
-      <fusio-form-autocomplete id="event" name="event" [service]="event" [useTilde]="true" [data]="entity.event" (dataChange)="entity.event = $event" [disabled]="mode === 3">
+      <fusio-form-autocomplete id="event" name="event" [service]="event" [useTilde]="true" [data]="entity().event" (dataChange)="set(entity, 'event', $event)" [disabled]="mode === 3">
         <button class="btn btn-outline-secondary" type="button" [ngbPopover]="eventHelp"><i class="bi bi-question"></i></button>
         <ng-template #eventHelp>The target event</ng-template>
       </fusio-form-autocomplete>
@@ -24,16 +25,22 @@
     <label for="endpoint" class="col-lg-2 col-form-label fw-bold">Endpoint</label>
     <div class="col-lg-10">
       <div class="input-group">
-        <input type="url" id="endpoint" name="endpoint" [(ngModel)]="entity.endpoint" [disabled]="mode === 3" class="form-control">
+        <input type="url" id="endpoint" name="endpoint" [ngModel]="entity().endpoint" (ngModelChange)="set(entity, 'endpoint', $event)" [disabled]="mode === 3" class="form-control">
         <button class="btn btn-outline-secondary" type="button" [ngbPopover]="endpointHelp"><i class="bi bi-question"></i></button>
         <ng-template #endpointHelp>The endpoint which receives the webhook</ng-template>
       </div>
     </div>
   </div>
   <div class="btn-group" role="group">
-    <ng-container *ngIf="mode === 1"><button type="button" class="btn btn-primary" (click)="doCreate(entity)">Create</button></ng-container>
-    <ng-container *ngIf="mode === 2"><button type="button" class="btn btn-primary" (click)="doUpdate(entity)">Update</button></ng-container>
-    <ng-container *ngIf="mode === 3"><button type="button" class="btn btn-danger" (click)="doDelete(entity)">Delete</button></ng-container>
+    @if (mode === 1) {
+      <button type="button" class="btn btn-primary" (click)="doCreate(entity)">Create</button>
+    }
+    @else if (mode === 2) {
+      <button type="button" class="btn btn-primary" (click)="doUpdate(entity)">Update</button>
+    }
+    @else if (mode === 3) {
+      <button type="button" class="btn btn-danger" (click)="doDelete(entity)">Delete</button>
+    }
     <button type="button" (click)="router.navigate(getListLink())" class="btn btn-light fusio-btn-back">Back</button>
   </div>
 </form>

@@ -1,12 +1,18 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {CommonMessage, ConsumerUserPasswordReset} from "fusio-sdk";
 import {FusioService} from "../../../service/fusio.service";
 import {ErrorService} from "../../../service/error.service";
+import {MessageComponent} from "../../message/message.component";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'fusio-password-confirm',
   templateUrl: './confirm.component.html',
+  imports: [
+    MessageComponent,
+    FormsModule
+  ],
   styleUrls: ['./confirm.component.css']
 })
 export class ConfirmComponent implements OnInit {
@@ -18,7 +24,7 @@ export class ConfirmComponent implements OnInit {
 
   passwordConfirm?: string;
 
-  response?: CommonMessage;
+  response = signal<CommonMessage|undefined>(undefined);
   loading = false
 
   constructor(private fusio: FusioService, private error: ErrorService, protected route: ActivatedRoute) {
@@ -41,11 +47,11 @@ export class ConfirmComponent implements OnInit {
         throw new Error('The provided password does not match with the confirmation password');
       }
 
-      this.response = await this.fusio.getClientAnonymous().consumer().account().executePasswordReset(this.reset);
+      this.response.set(await this.fusio.getClientAnonymous().consumer().account().executePasswordReset(this.reset));
       this.loading = false;
     } catch (error) {
       this.loading = false;
-      this.response = this.error.convert(error);
+      this.response.set(this.error.convert(error));
     }
   }
 

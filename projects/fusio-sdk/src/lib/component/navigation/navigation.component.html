@@ -1,12 +1,18 @@
 
 <div class="fusio-navigation">
   <nav>
-    <h1>{{title}} <span *ngIf="version">({{ version }})</span></h1>
-    <div *ngFor="let item of items">
-      <a class="fusio-navigation-heading" (click)="changeNavHeading(item)" [ngClass]="{'fusio-navigation-heading-active': item.visible}">{{ item.title }}</a>
-      <ul class="nav nav-pills flex-column ng-hide" [hidden]="!item.visible" *ngIf="Array.isArray(item.children)">
-        <li *ngFor="let child of item.children" class="nav-item"><a routerLink="{{ child.path }}" class="nav-link"><i class="bi {{ child.icon }}" aria-hidden="true"></i> {{ child.title }}</a></li>
-      </ul>
-    </div>
+    <h1>{{title}} @if (version) {<span>({{ version }})</span>}</h1>
+    @for (item of items; track $index) {
+      <div>
+        <a class="fusio-navigation-heading" (click)="changeNavHeading(item)" [ngClass]="{'fusio-navigation-heading-active': item.visible}">{{ item.title }}</a>
+        @if (Array.isArray(item.children)) {
+          <ul class="nav nav-pills flex-column ng-hide" [hidden]="!item.visible">
+            @for (child of item.children; track $index) {
+              <li class="nav-item"><a routerLink="{{ child.path }}" class="nav-link"><i class="bi {{ child.icon }}" aria-hidden="true"></i> {{ child.title }}</a></li>
+            }
+          </ul>
+        }
+      </div>
+    }
   </nav>
 </div>

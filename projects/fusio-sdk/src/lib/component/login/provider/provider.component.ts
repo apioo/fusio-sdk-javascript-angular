@@ -6,10 +6,14 @@ import {UserService} from "../../../service/user.service";
 import {FusioService} from "../../../service/fusio.service";
 import {ErrorService} from "../../../service/error.service";
 import {ConfigService} from "../../../service/config.service";
+import {MessageComponent} from "../../message/message.component";
 
 @Component({
   selector: 'fusio-login-provider',
   templateUrl: './provider.component.html',
+  imports: [
+    MessageComponent
+  ],
   styleUrls: ['./provider.component.css']
 })
 export class ProviderComponent implements OnInit {

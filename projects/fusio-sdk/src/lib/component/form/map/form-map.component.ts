@@ -1,9 +1,15 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Service} from "../../../abstract/service";
+import {FormAutocompleteComponent} from "../autocomplete/form-autocomplete.component";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'fusio-form-map',
   templateUrl: './form-map.component.html',
+  imports: [
+    FormAutocompleteComponent,
+    FormsModule
+  ],
   styleUrls: ['./form-map.component.css']
 })
 export class FormMapComponent implements OnInit {

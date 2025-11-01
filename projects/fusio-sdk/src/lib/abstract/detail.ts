@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CommonMessage} from "fusio-sdk";
 import {ErrorService} from "../service/error.service";
@@ -12,9 +12,9 @@ import {Service} from "./service";
 })
 export abstract class Detail<T> implements OnInit {
 
-  public selected?: T;
-  public response?: CommonMessage;
-  public jsonView = false;
+  selected = signal<T|undefined>(undefined);
+  response = signal<CommonMessage|undefined>(undefined);
+  jsonView = false;
 
   protected constructor(protected route: ActivatedRoute, public router: Router, protected error: ErrorService) {
   }
@@ -30,11 +30,11 @@ export abstract class Detail<T> implements OnInit {
 
   async doGet(id: string) {
     try {
-      this.selected = await this.getService().get(id);
+      this.selected.set(await this.getService().get(id));
 
       this.onLoad();
     } catch (error) {
-      this.response = this.error.convert(error);
+      this.response.set(this.error.convert(error));
 
       this.onError();
     }

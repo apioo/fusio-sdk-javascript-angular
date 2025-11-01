@@ -1,22 +1,26 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {FusioService} from "../../service/fusio.service";
-import {ImportService, Specification} from "ngx-typeschema-editor";
+import {ImportService, Specification, TypeschemaEditorModule} from "ngx-typeschema-editor";
 import {HttpClient} from "@angular/common/http";
+import {ErrorService} from "../../service/error.service";
+import {CommonMessage} from "fusio-sdk";
+import {MessageComponent} from "../message/message.component";
 
 @Component({
   selector: 'fusio-specification',
   templateUrl: './specification.component.html',
+  imports: [
+    TypeschemaEditorModule,
+    MessageComponent
+  ],
   styleUrls: ['./specification.component.css']
 })
 export class SpecificationComponent implements OnInit {
 
-  spec: Specification = {
-    imports: [],
-    operations: [],
-    types: []
-  };
+  spec = signal<Specification|undefined>(undefined);
+  response = signal<CommonMessage|undefined>(undefined);
 
-  constructor(private fusio: FusioService, private importService: ImportService, private httpClient: HttpClient) { }
+  constructor(private fusio: FusioService, private importService: ImportService, private httpClient: HttpClient, private error: ErrorService) { }
 
   async ngOnInit(): Promise<void> {
     const link = await this.getTypeAPILink();
@@ -25,7 +29,11 @@ export class SpecificationComponent implements OnInit {
     }
 
     this.httpClient.get<Specification>(link).subscribe(async (spec) => {
-      this.spec = await this.importService.transform('typeapi', JSON.stringify(spec));
+      try {
+        this.spec.set(await this.importService.transform('typeapi', JSON.stringify(spec)));
+      } catch (error) {
+        this.response.set(this.error.convert(error));
+      }
     });
   }
 

@@ -5,11 +5,22 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Form} from "../../../abstract/form";
 import {TokenService} from "../../../service/token.service";
 import {ScopeService} from "../../../service/scope.service";
-import {error} from "ng-packagr/lib/utils/log";
+import {MessageComponent} from "../../message/message.component";
+import {FormsModule} from "@angular/forms";
+import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
+import {ScopeCategoriesComponent} from "../../scope-categories/scope-categories.component";
+import {ClipboardModule} from "ngx-clipboard";
 
 @Component({
   selector: 'fusio-token-form',
   templateUrl: './token-form.component.html',
+  imports: [
+    MessageComponent,
+    FormsModule,
+    NgbPopover,
+    ScopeCategoriesComponent,
+    ClipboardModule
+  ],
   styleUrls: ['./token-form.component.css']
 })
 export class TokenFormComponent extends Form<ConsumerToken> {

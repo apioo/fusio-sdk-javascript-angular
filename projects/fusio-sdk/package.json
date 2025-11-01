@@ -1,6 +1,6 @@
 {
   "name": "ngx-fusio-sdk",
-  "version": "6.2.0",
+  "version": "7.0.0",
   "description": "SDK to integrate Fusio into an Angular app",
   "keywords": [
     "Fusio",
@@ -12,8 +12,8 @@
   "license": "MIT",
   "homepage": "https://www.fusio-project.org/",
   "peerDependencies": {
-    "@angular/common": "^18.2.0",
-    "@angular/core": "^18.2.0"
+    "@angular/common": "^20.3.0",
+    "@angular/core": "^20.3.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"

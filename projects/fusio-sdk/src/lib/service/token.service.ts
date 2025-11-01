@@ -1,6 +1,8 @@
-import {CommonCollection, CommonMessage, ConsumerToken, ConsumerWebhookCreate, ConsumerWebhookUpdate} from "fusio-sdk";
+import {
+  CommonCollection, CommonMessage, ConsumerToken,
+  ConsumerTokenAccessToken, ConsumerWebhookCreate, ConsumerWebhookUpdate
+} from "fusio-sdk";
 import {Injectable} from "@angular/core";
-import {ConsumerTokenAccessToken} from "fusio-sdk/dist";
 import {Service} from "../abstract/service";
 import {FusioService} from "./fusio.service";
 
@@ -9,7 +11,7 @@ import {FusioService} from "./fusio.service";
 })
 export class TokenService extends Service<ConsumerToken> {
 
-  token?: ConsumerTokenAccessToken
+  token?: ConsumerTokenAccessToken;
 
   constructor(private fusio: FusioService) {
     super();

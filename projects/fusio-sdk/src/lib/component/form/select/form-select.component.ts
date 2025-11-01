@@ -1,9 +1,13 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IdAndName, Service} from "../../../abstract/service";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'fusio-form-select',
   templateUrl: './form-select.component.html',
+  imports: [
+    FormsModule
+  ],
   styleUrls: ['./form-select.component.css']
 })
 export class FormSelectComponent implements OnInit {

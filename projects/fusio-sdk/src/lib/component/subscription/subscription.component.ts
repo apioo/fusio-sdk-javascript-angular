@@ -1,14 +1,20 @@
 import {Component, OnInit} from '@angular/core';
 import {CommonMessage, ConsumerPlan} from "fusio-sdk";
 import {FusioService} from "../../service/fusio.service";
-import {LocationStrategy} from "@angular/common";
-import {EventService} from "../../service/event.service";
+import {CurrencyPipe, LocationStrategy} from "@angular/common";
 import {ConfigService} from "../../service/config.service";
 import {ErrorService} from "../../service/error.service";
+import {MessageComponent} from "../message/message.component";
+import {MarkdownComponent} from "ngx-markdown";
 
 @Component({
   selector: 'fusio-subscription',
   templateUrl: './subscription.component.html',
+  imports: [
+    MessageComponent,
+    CurrencyPipe,
+    MarkdownComponent
+  ],
   styleUrls: ['./subscription.component.css']
 })
 export class SubscriptionComponent implements OnInit {

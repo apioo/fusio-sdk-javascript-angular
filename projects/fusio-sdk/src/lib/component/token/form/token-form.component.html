@@ -1,18 +1,20 @@
 
-<fusio-message [response]="response"></fusio-message>
-<div *ngIf="accessToken">
+<fusio-message [response]="response()"></fusio-message>
+
+@if (accessToken) {
   <p>Make sure to copy your personal access token now as you will not be able to see this again.</p>
   <div class="input-group mb-3">
     <input type="text" [ngModel]="accessToken.access_token" readonly class="form-control">
     <button class="btn btn-primary" ngxClipboard [cbContent]="accessToken.access_token">Copy</button>
   </div>
-</div>
-<form *ngIf="entity">
+}
+
+<form>
   <div class="mb-3 row">
     <label for="name" class="col-lg-2 col-form-label fw-bold">Name</label>
     <div class="col-lg-10">
       <div class="input-group">
-        <input type="text" id="name" name="name" [(ngModel)]="entity.name" [disabled]="mode === 3" class="form-control">
+        <input type="text" id="name" name="name" [ngModel]="entity().name" (ngModelChange)="set(entity, 'name', $event)" [disabled]="mode === 3" class="form-control">
         <button class="btn btn-outline-secondary" type="button" [ngbPopover]="nameHelp"><i class="bi bi-question"></i></button>
         <ng-template #nameHelp>The name of the token</ng-template>
       </div>
@@ -22,22 +24,30 @@
     <label for="name" class="col-lg-2 col-form-label fw-bold">Expires</label>
     <div class="col-lg-10">
       <div class="input-group">
-        <input type="date" id="expire" name="expire" [(ngModel)]="entity.expire" [disabled]="mode === 3" class="form-control">
+        <input type="date" id="expire" name="expire" [ngModel]="entity().expire" (ngModelChange)="set(entity, 'expire', $event)" [disabled]="mode === 3" class="form-control">
         <button class="btn btn-outline-secondary" type="button" [ngbPopover]="expireHelp"><i class="bi bi-question"></i></button>
         <ng-template #expireHelp>Date at which the token expires</ng-template>
       </div>
     </div>
   </div>
-  <div class="mb-3 row" *ngIf="mode === 1">
-    <label class="col-lg-2 col-form-label fw-bold">Scopes</label>
-    <div class="col-lg-10">
-      <fusio-scope-categories [scopes]="entity.scopes" (dataChange)="entity.scopes = $event"></fusio-scope-categories>
+  @if (mode === 1) {
+    <div class="mb-3 row">
+      <label class="col-lg-2 col-form-label fw-bold">Scopes</label>
+      <div class="col-lg-10">
+        <fusio-scope-categories [scopes]="entity().scopes" (dataChange)="set(entity, 'scopes', $event)"></fusio-scope-categories>
+      </div>
     </div>
-  </div>
+  }
   <div class="btn-group" role="group">
-    <ng-container *ngIf="mode === 1"><button type="button" class="btn btn-primary" (click)="doCreate(entity)">Create</button></ng-container>
-    <ng-container *ngIf="mode === 2"><button type="button" class="btn btn-primary" (click)="doUpdate(entity)">Update</button></ng-container>
-    <ng-container *ngIf="mode === 3"><button type="button" class="btn btn-danger" (click)="doDelete(entity)">Delete</button></ng-container>
+    @if (mode === 1) {
+      <button type="button" class="btn btn-primary" (click)="doCreate(entity)">Create</button>
+    }
+    @else if (mode === 2) {
+      <button type="button" class="btn btn-primary" (click)="doUpdate(entity)">Update</button>
+    }
+    @else if (mode === 3) {
+      <button type="button" class="btn btn-danger" (click)="doDelete(entity)">Delete</button>
+    }
     <button type="button" (click)="router.navigate(getListLink())" class="btn btn-light fusio-btn-back">Back</button>
   </div>
 </form>

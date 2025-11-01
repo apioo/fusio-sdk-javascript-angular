@@ -7,29 +7,29 @@ import {FusioService} from "./fusio.service";
 })
 export class NavigationService {
 
-  constructor(private backend: FusioService, private config: ConfigService) {
+  constructor(private backend: FusioService, private config: ConfigService, private injector: EnvironmentInjector) {
   }
 
-  async getMainNavigation(injector: EnvironmentInjector): Promise<Array<GroupItem>> {
-    return this.checkPermissions(this.config.getNavigation(), injector);
+  async getMainNavigation(): Promise<Array<GroupItem>> {
+    return this.checkPermissions(this.config.getNavigation());
   }
 
-  async getUserNavigation(injector: EnvironmentInjector): Promise<Array<Item>> {
-    return this.checkPermissionItems(this.config.getUserNavigation(), injector);
+  async getUserNavigation(): Promise<Array<Item>> {
+    return this.checkPermissionItems(this.config.getUserNavigation());
   }
 
-  async getAnonymousNavigation(injector: EnvironmentInjector): Promise<Array<Item>> {
-    return this.checkPermissionItems(this.config.getAnonymousNavigation(), injector);
+  async getAnonymousNavigation(): Promise<Array<Item>> {
+    return this.checkPermissionItems(this.config.getAnonymousNavigation());
   }
 
-  async getAccountNavigation(injector: EnvironmentInjector): Promise<Array<Item>> {
-    return this.checkPermissionItems(this.config.getAccountNavigation(), injector);
+  async getAccountNavigation(): Promise<Array<Item>> {
+    return this.checkPermissionItems(this.config.getAccountNavigation());
   }
 
-  private async checkPermissions(navigation: Array<GroupItem>, injector: EnvironmentInjector): Promise<Array<GroupItem>> {
+  private async checkPermissions(navigation: Array<GroupItem>): Promise<Array<GroupItem>> {
     let result = [];
     for (let i = 0; i < navigation.length; i++) {
-      const children = await this.checkPermissionItems(navigation[i].children, injector);
+      const children = await this.checkPermissionItems(navigation[i].children);
       if (children.length > 0) {
         let menu = navigation[i];
         menu.children = children;
@@ -40,9 +40,9 @@ export class NavigationService {
     return result;
   }
 
-  private async checkPermissionItems(items: Items, injector: EnvironmentInjector): Promise<Array<Item>> {
+  private async checkPermissionItems(items: Items): Promise<Array<Item>> {
     if (items instanceof Function) {
-      items = await runInInjectionContext(injector, items);
+      items = await runInInjectionContext(this.injector, items);
     }
 
     if (!Array.isArray(items)) {

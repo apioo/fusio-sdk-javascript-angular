@@ -1,13 +1,21 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {CommonMessage, ConsumerUserRegister} from "fusio-sdk";
 import {FusioService} from "../../service/fusio.service";
 import {EventService} from "../../service/event.service";
 import {ConfigService} from "../../service/config.service";
 import {ErrorService} from "../../service/error.service";
+import {MessageComponent} from "../message/message.component";
+import {FormsModule} from "@angular/forms";
+import {NgxCaptchaModule} from "ngx-captcha";
 
 @Component({
   selector: 'fusio-register',
   templateUrl: './register.component.html',
+  imports: [
+    MessageComponent,
+    FormsModule,
+    NgxCaptchaModule
+  ],
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
@@ -21,7 +29,7 @@ export class RegisterComponent implements OnInit {
   passwordConfirm?: string;
   captchaKey?: string
 
-  response?: CommonMessage;
+  response = signal<CommonMessage|undefined>(undefined);
   loading = false
 
   constructor(private fusio: FusioService, private error: ErrorService, private config: ConfigService) {
@@ -51,13 +59,13 @@ export class RegisterComponent implements OnInit {
         throw new Error('No captcha provided');
       }
 
-      this.response = await this.fusio.getClientAnonymous().consumer().account().register(this.credentials);
+      this.response.set(await this.fusio.getClientAnonymous().consumer().account().register(this.credentials));
       this.loading = false;
 
       this.resetForm();
     } catch (error) {
       this.loading = false;
-      this.response = this.error.convert(error);
+      this.response.set(this.error.convert(error));
     }
   }
 

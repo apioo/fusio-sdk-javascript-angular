@@ -1,10 +1,16 @@
 import {Component, EnvironmentInjector, OnInit} from '@angular/core';
 import {GroupItem, NavigationService} from "../../service/navigation.service";
 import {ConfigService} from "../../service/config.service";
+import {NgClass} from "@angular/common";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'fusio-navigation',
   templateUrl: './navigation.component.html',
+  imports: [
+    NgClass,
+    RouterLink
+  ],
   styleUrls: ['./navigation.component.css']
 })
 export class NavigationComponent implements OnInit {

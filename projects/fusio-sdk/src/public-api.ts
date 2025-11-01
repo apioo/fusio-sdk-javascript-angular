@@ -54,5 +54,3 @@ export * from './lib/service/webhook.service';
 export * from './lib/route/account-route';
 export * from './lib/route/authorization-route';
 export * from './lib/route/entity-route';
-
-export * from './lib/fusio-sdk.module';

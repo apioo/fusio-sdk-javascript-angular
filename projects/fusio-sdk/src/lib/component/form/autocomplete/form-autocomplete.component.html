@@ -16,9 +16,11 @@
     placeholder="Type to search ..."
     class="form-control"
   />
-  <button class="btn btn-outline-secondary" type="button" disabled *ngIf="searching">
-    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-    <span class="visually-hidden" role="status">Loading...</span>
-  </button>
+  @if (searching) {
+    <button class="btn btn-outline-secondary" type="button" disabled>
+      <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+      <span class="visually-hidden" role="status">Loading...</span>
+    </button>
+  }
   <ng-content></ng-content>
 </div>

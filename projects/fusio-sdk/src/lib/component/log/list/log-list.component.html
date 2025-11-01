@@ -1,6 +1,6 @@
 
 <fusio-search
-  [searchTerm]="search"
+  [searchTerm]="search()"
   (search)="doSearch(1, $event)"
   placeholder="log">
 </fusio-search>
@@ -14,22 +14,24 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let entry of entries">
-    <td><span class="badge text-bg-dark me-1">{{entry.method}}</span></td>
-    <td>{{entry.path}}</td>
-    <td>{{entry.ip}}</td>
-    <td>
-      <div class="btn-group" role="group">
-        <a [routerLink]="getDetailLink(entry.id)" class="btn btn-primary"><i class="bi bi-search"></i></a>
-      </div>
-    </td>
-  </tr>
+  @for (entry of entries(); track entry.id) {
+    <tr>
+      <td><span class="badge text-bg-dark me-1">{{entry.method}}</span></td>
+      <td>{{entry.path}}</td>
+      <td>{{entry.ip}}</td>
+      <td>
+        <div class="btn-group" role="group">
+          <a [routerLink]="getDetailLink(entry.id)" class="btn btn-primary"><i class="bi bi-search"></i></a>
+        </div>
+      </td>
+    </tr>
+  }
   </tbody>
 </table>
 <ngb-pagination
-  [(page)]="page"
-  [pageSize]="pageSize"
-  [collectionSize]="totalResults"
+  [page]="page()"
+  [pageSize]="pageSize()"
+  [collectionSize]="totalResults()"
   [maxSize]="4"
   [ellipses]="false"
   (pageChange)="doSearch($event)"></ngb-pagination>

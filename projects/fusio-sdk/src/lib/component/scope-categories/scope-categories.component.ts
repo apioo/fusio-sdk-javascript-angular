@@ -1,10 +1,18 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, signal} from '@angular/core';
 import {BackendScopeCategory, BackendScopeCategoryScope} from "fusio-sdk";
 import {FusioService} from "../../service/fusio.service";
+import {NgbNav, NgbNavContent, NgbNavItem, NgbNavLink, NgbNavOutlet} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'fusio-scope-categories',
   templateUrl: './scope-categories.component.html',
+  imports: [
+    NgbNav,
+    NgbNavItem,
+    NgbNavLink,
+    NgbNavContent,
+    NgbNavOutlet
+  ],
   styleUrls: ['./scope-categories.component.css']
 })
 export class ScopeCategoriesComponent implements OnInit {
@@ -13,7 +21,8 @@ export class ScopeCategoriesComponent implements OnInit {
   @Input() disabled: boolean = false;
   @Output() dataChange = new EventEmitter<any>();
 
-  categories?: Array<BackendScopeCategory>;
+  categories = signal<Array<BackendScopeCategory>>([]);
+
   selected: Array<string> = [];
   selectedCategory: number = 1;
   toggleScope: boolean = true;
@@ -23,7 +32,10 @@ export class ScopeCategoriesComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     const response = await this.fusio.getClient().consumer().scope().getCategories();
-    this.categories = response.categories;
+    if (response.categories) {
+      this.categories.set(response.categories);
+    }
+
     if (this.scopes) {
       this.selected = this.scopes;
     }

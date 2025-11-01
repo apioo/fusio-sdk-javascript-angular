@@ -5,20 +5,28 @@
 
 <hr>
 
-<div class="card float-start" style="width:16rem;margin-right:1rem;margin-bottom:1rem" *ngFor="let plan of plans">
-  <h5 class="card-header">{{plan.name}}</h5>
-  <div class="card-body">
-    <div class="text-center mb-3">
-      <h1 class="card-title">{{ plan.price | currency : currencyCode }}</h1>
-      <div *ngIf="plan.points && plan.points > 0" class="text-muted">Points: {{plan.points}}</div>
-      <span *ngIf="plan.period === 0" class="badge text-bg-primary">one-time</span>
-      <span *ngIf="plan.period === 1" class="badge text-bg-primary">subscription</span>
-    </div>
-    <markdown [data]="plan.description"></markdown>
-    <div class="btn-group w-100" role="group">
-      <a (click)="doPurchase(plan)" class="btn btn-primary">Purchase</a>
+@for (plan of plans; track plan.id) {
+  <div class="card float-start" style="width:16rem;margin-right:1rem;margin-bottom:1rem">
+    <h5 class="card-header">{{plan.name}}</h5>
+    <div class="card-body">
+      <div class="text-center mb-3">
+        <h1 class="card-title">{{ plan.price | currency : currencyCode }}</h1>
+        @if (plan.points && plan.points > 0) {
+          <div class="text-muted">Points: {{plan.points}}</div>
+        }
+        @if (plan.period === 0) {
+          <span class="badge text-bg-primary">one-time</span>
+        }
+        @if (plan.period === 1) {
+          <span class="badge text-bg-primary">subscription</span>
+        }
+      </div>
+      <markdown [data]="plan.description"></markdown>
+      <div class="btn-group w-100" role="group">
+        <a (click)="doPurchase(plan)" class="btn btn-primary">Purchase</a>
+      </div>
     </div>
   </div>
-</div>
+}
 
 <div style="clear:both"></div>

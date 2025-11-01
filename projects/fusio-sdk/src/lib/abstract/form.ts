@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Signal, signal, WritableSignal} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CommonMessage} from "fusio-sdk";
 import {ErrorService} from "../service/error.service";
@@ -12,19 +12,19 @@ import {Service} from "./service";
 })
 export abstract class Form<T> implements OnInit {
 
-  public entity?: T;
-  public response?: CommonMessage;
-  public mode: Mode = Mode.Create;
+  entity!: WritableSignal<T>;
+  response = signal<CommonMessage|undefined>(undefined);
+  mode: Mode = Mode.Create;
 
   protected constructor(protected route: ActivatedRoute, public router: Router, protected error: ErrorService) {
   }
 
   async ngOnInit(): Promise<void> {
+    this.entity = signal<T>(this.getService().newEntity());
+
     this.route.data.subscribe((data) => {
       this.mode = data['mode'];
       if (this.mode === Mode.Create) {
-        this.entity = this.getService().newEntity();
-
         this.onLoad();
       }
     });
@@ -39,47 +39,53 @@ export abstract class Form<T> implements OnInit {
 
   async doGet(id: string) {
     try {
-      this.entity = await this.getService().get(id);
+      this.entity.set(await this.getService().get(id));
 
       this.onLoad();
     } catch (error) {
-      this.response = this.error.convert(error);
+      this.response.set(this.error.convert(error));
 
       this.onError();
     }
   }
 
-  async doCreate(entity: T) {
+  async doCreate(entity: T|Signal<T>) {
     try {
-      this.response = await this.getService().create(this.beforeCreate(entity));
+      const payload = entity instanceof Function ? entity() : entity;
+
+      this.response.set(await this.getService().create(this.beforeCreate(payload)));
 
       this.onSubmit();
     } catch (error) {
-      this.response = this.error.convert(error);
+      this.response.set(this.error.convert(error));
 
       this.onError();
     }
   }
 
-  async doUpdate(entity: T) {
+  async doUpdate(entity: T|Signal<T>) {
     try {
-      this.response = await this.getService().update(this.beforeUpdate(entity));
+      const payload = entity instanceof Function ? entity() : entity;
+
+      this.response.set(await this.getService().update(this.beforeUpdate(payload)));
 
       this.onSubmit();
     } catch (error) {
-      this.response = this.error.convert(error);
+      this.response.set(this.error.convert(error));
 
       this.onError();
     }
   }
 
-  async doDelete(entity: T) {
+  async doDelete(entity: T|Signal<T>) {
     try {
-      this.response = await this.getService().delete(this.beforeDelete(entity));
+      const payload = entity instanceof Function ? entity() : entity;
+
+      this.response.set(await this.getService().delete(this.beforeDelete(payload)));
 
       this.onSubmit();
     } catch (error) {
-      this.response = this.error.convert(error);
+      this.response.set(this.error.convert(error));
 
       this.onError();
     }
@@ -95,6 +101,14 @@ export abstract class Form<T> implements OnInit {
     const link = this.getService().getLink();
     link.push('' + id)
     return link;
+  }
+
+  public set(entity: WritableSignal<T>, key: keyof T, propertyValue: any) {
+    entity.update((entity: T) => {
+      entity[key] = propertyValue;
+
+      return entity;
+    });
   }
 
   protected abstract getService(): Service<T>;
