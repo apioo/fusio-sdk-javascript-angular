@@ -9,22 +9,15 @@ import {ConfigService} from "./config.service";
 })
 export class UserService {
 
-  private user?: ConsumerUserAccount;
-
   constructor(private fusio: FusioService, private config: ConfigService) { }
 
   public login(user: ConsumerUserAccount): void {
-    this.user = user;
     sessionStorage.setItem(this.getKey(), JSON.stringify(user));
   }
 
   public get(): ConsumerUserAccount|undefined {
-    if (!this.fusio.hasValidToken()) {
+    if (!this.isAuthenticated()) {
       return undefined;
-    }
-
-    if (this.user) {
-      return this.user;
     }
 
     const rawData = sessionStorage.getItem(this.getKey());
@@ -35,8 +28,11 @@ export class UserService {
     return JSON.parse(rawData);
   }
 
+  public isAuthenticated(): boolean {
+    return this.fusio.hasValidToken();
+  }
+
   public logout(): void {
-    this.user = undefined;
     sessionStorage.removeItem(this.getKey());
     this.fusio.logout();
   }
