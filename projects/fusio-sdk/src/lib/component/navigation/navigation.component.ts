@@ -21,13 +21,13 @@ export class NavigationComponent implements OnInit {
 
   protected readonly Array = Array;
 
-  constructor(private navigation: NavigationService, private config: ConfigService, private injector: EnvironmentInjector) {
+  constructor(private navigation: NavigationService, private config: ConfigService) {
   }
 
   async ngOnInit(): Promise<void> {
     this.title = this.config.getTitle() || 'Fusio';
     this.version = this.config.getVersion();
-    this.items = await this.navigation.getMainNavigation(this.injector);
+    this.items = await this.navigation.getMainNavigation();
   }
 
   changeNavHeading(item: GroupItem): void {
