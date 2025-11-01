@@ -7,6 +7,7 @@ import {ApiService} from "./api.service";
 import {routes} from './app.routes';
 import {ConfigBuilder} from "./config-builder";
 import {FUSIO_CONFIG} from "../../projects/fusio-sdk/src/lib/config/config";
+import {provideMarkdown} from "ngx-markdown";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +15,7 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideRouter(routes),
     provideHttpClient(withFetch()),
+    provideMarkdown(),
     {
       provide: SDK,
       useExisting: ApiService

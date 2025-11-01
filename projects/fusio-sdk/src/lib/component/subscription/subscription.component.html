@@ -1,11 +1,11 @@
 
-<fusio-message [response]="response"></fusio-message>
+<fusio-message [response]="response()"></fusio-message>
 
 <button class="btn btn-primary" (click)="doBillingPortal()">Billing portal</button>
 
 <hr>
 
-@for (plan of plans; track plan.id) {
+@for (plan of plans(); track plan.id) {
   <div class="card float-start" style="width:16rem;margin-right:1rem;margin-bottom:1rem">
     <h5 class="card-header">{{plan.name}}</h5>
     <div class="card-body">

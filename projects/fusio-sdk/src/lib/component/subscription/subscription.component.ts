@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {CommonMessage, ConsumerPlan} from "fusio-sdk";
 import {FusioService} from "../../service/fusio.service";
 import {CurrencyPipe, LocationStrategy} from "@angular/common";
@@ -13,21 +13,21 @@ import {MarkdownComponent} from "ngx-markdown";
   imports: [
     MessageComponent,
     CurrencyPipe,
-    MarkdownComponent
+    MarkdownComponent,
   ],
   styleUrls: ['./subscription.component.css']
 })
 export class SubscriptionComponent implements OnInit {
 
   currencyCode: string = 'EUR';
-  plans?: Array<ConsumerPlan>
-  response?: CommonMessage;
+  plans = signal<Array<ConsumerPlan>>([]);
+  response = signal<CommonMessage|undefined>(undefined);
 
   constructor(private fusio: FusioService, private location: LocationStrategy, private error: ErrorService, private config: ConfigService) { }
 
   async ngOnInit(): Promise<void> {
     const response = await this.fusio.getClient().consumer().plan().getAll(0, 1024);
-    this.plans = response.entry;
+    this.plans.set(response.entry || []);
     this.currencyCode = this.config.getPaymentCurrency();
   }
 
@@ -46,7 +46,7 @@ export class SubscriptionComponent implements OnInit {
         throw new Error('You can only visit the billing portal once you have successfully purchased a subscription');
       }
     } catch (error) {
-      this.response = this.error.convert(error);
+      this.response.set(this.error.convert(error));
     }
   }
 
@@ -64,7 +64,7 @@ export class SubscriptionComponent implements OnInit {
         location.href = response.approvalUrl;
       }
     } catch (error) {
-      this.response = this.error.convert(error);
+      this.response.set(this.error.convert(error));
     }
   }
 
