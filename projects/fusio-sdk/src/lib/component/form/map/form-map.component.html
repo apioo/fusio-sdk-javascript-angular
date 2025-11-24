@@ -1,34 +1,35 @@
 
-@for (property of local; track $index; let i = $index) {
+@for (property of local(); track $index) {
   <div class="mb-3 row">
-    <label for="{{name}}-{{property.key}}" class="col-lg-2 col-form-label fw-bold">{{property.key}}</label>
+    <label for="{{name()}}-{{property.key}}" class="col-lg-2 col-form-label fw-bold">{{property.key}}</label>
     <div class="col-lg-10">
-      @if (type !== 'autocomplete') {
+      @if (type() !== 'autocomplete') {
         <div class="input-group">
-          <input type="{{type}}" id="{{name}}-{{property.key}}" name="{{name}}-{{property.key}}" [ngModel]="property.value" (ngModelChange)="doChange(i, $event)" [disabled]="disabled" class="form-control">
+          <input type="{{type()}}" id="{{name()}}-{{property.key}}" name="{{name()}}-{{property.key}}" [ngModel]="property.value" (ngModelChange)="doChange($index, $event)" [disabled]="disabled()" class="form-control">
         </div>
       }
-      @if (type === 'autocomplete' && service) {
-        <fusio-form-autocomplete id="{{name}}-{{property.key}}" name="{{name}}-{{property.key}}" [service]="service" [data]="property.value" (dataChange)="doChange(i, $event)" [useId]="useId" [useTilde]="useTilde" [disabled]="disabled">
+      @else if (service) {
+        <fusio-form-autocomplete id="{{name()}}-{{property.key}}" name="{{name()}}-{{property.key}}" [service]="service" [data]="property.value" (dataChange)="doChange($index, $event)" [useId]="useId()" [useTilde]="useTilde()" [disabled]="disabled()">
           <button class="btn btn-danger" type="button" (click)="doRemove(i)"><i class="bi bi-x"></i></button>
         </fusio-form-autocomplete>
       }
     </div>
   </div>
 }
+
 <div class="mb-3 row">
   <div class="col-lg-2">
-    <input type="text" id="{{name}}-newKey" name="{{name}}-newKey" [(ngModel)]="newKey" placeholder="Enter key" class="form-control">
+    <input type="text" id="{{name()}}-newKey" name="{{name()}}-newKey" [ngModel]="newKey()" (ngModelChange)="newKey.set($event)" placeholder="Enter key" class="form-control">
   </div>
   <div class="col-lg-10">
-    @if (type !== 'autocomplete') {
+    @if (type() !== 'autocomplete') {
       <div class="input-group">
-        <input type="{{type}}" id="{{name}}-newValue" name="{{name}}-newValue" [(ngModel)]="newValue" (keydown.enter)="doAdd()" placeholder="Enter value" class="form-control">
+        <input type="{{type()}}" id="{{name()}}-newValue" name="{{name()}}-newValue" [ngModel]="newValue()" (ngModelChange)="newValue.set($event)" (keydown.enter)="doAdd()" placeholder="Enter value" class="form-control">
         <button class="btn btn-success" type="button" (click)="doAdd()"><i class="bi bi-plus"></i></button>
       </div>
     }
-    @if (type === 'autocomplete' && service) {
-      <fusio-form-autocomplete id="{{name}}-newValue" name="{{name}}-newValue" [service]="service" [data]="newValue" (dataChange)="newValue = $event" (enter)="doAdd()" [useId]="useId" [useTilde]="useTilde" [disabled]="disabled">
+    @else if (service) {
+      <fusio-form-autocomplete id="{{name()}}-newValue" name="{{name()}}-newValue" [service]="service" [data]="newValue()" (dataChange)="newValue.set($event)" (enter)="doAdd()" [useId]="useId()" [useTilde]="useTilde()" [disabled]="disabled()">
         <button class="btn btn-success" type="button" (click)="doAdd()"><i class="bi bi-plus"></i></button>
       </fusio-form-autocomplete>
     }
