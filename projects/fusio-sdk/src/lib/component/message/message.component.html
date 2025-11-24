@@ -1,8 +1,10 @@
 
-@if (response && response.success === true && response.message) {
-  <ngb-alert type="success" [dismissible]="true">{{response.message}}</ngb-alert>
-}
+@if (response(); as response) {
+  @if (response.success === true && response.message) {
+    <ngb-alert type="success" [dismissible]="true">{{response.message}}</ngb-alert>
+  }
 
-@if (response && response.success === false && response.message) {
-  <ngb-alert type="danger" [dismissible]="true">{{response.message}}</ngb-alert>
+  @if (response.success === false && response.message) {
+    <ngb-alert type="danger" [dismissible]="true">{{response.message}}</ngb-alert>
+  }
 }
