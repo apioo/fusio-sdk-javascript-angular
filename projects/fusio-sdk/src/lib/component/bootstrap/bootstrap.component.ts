@@ -21,14 +21,15 @@ import {RouterLink, RouterOutlet} from "@angular/router";
   styleUrls: ['./bootstrap.component.css']
 })
 export class BootstrapComponent implements OnInit {
-  user?: BackendUser;
+
+  user = signal<BackendUser|undefined>(undefined);
   userMenu = signal<Array<Item>>([]);
   anonymousMenu = signal<Array<Item>>([]);
 
   constructor(private userMeta: UserService, private navigation: NavigationService) { }
 
   async ngOnInit(): Promise<void> {
-    this.user = this.userMeta.get();
+    this.user.set(this.userMeta.get());
     this.userMenu.set(await this.navigation.getUserNavigation());
     this.anonymousMenu.set(await this.navigation.getAnonymousNavigation());
   }
