@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {BackendAccountChangePassword, CommonMessage} from "fusio-sdk";
 import {FusioService} from "../../service/fusio.service";
 import {ErrorService} from "../../service/error.service";
@@ -14,7 +14,7 @@ import {FormsModule} from "@angular/forms";
   ],
   styleUrls: ['./security.component.css']
 })
-export class SecurityComponent implements OnInit {
+export class SecurityComponent {
 
   credentials: BackendAccountChangePassword = {
     oldPassword: '',
@@ -25,9 +25,6 @@ export class SecurityComponent implements OnInit {
   response = signal<CommonMessage|undefined>(undefined);
 
   constructor(private fusio: FusioService, private error: ErrorService) { }
-
-  ngOnInit(): void {
-  }
 
   async doSave() {
     try {
