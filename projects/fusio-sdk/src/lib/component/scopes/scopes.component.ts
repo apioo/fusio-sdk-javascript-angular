@@ -1,17 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, input} from '@angular/core';
 
 @Component({
   selector: 'fusio-scopes',
   templateUrl: './scopes.component.html',
   styleUrls: ['./scopes.component.css']
 })
-export class ScopesComponent implements OnInit {
+export class ScopesComponent {
 
-  @Input() scopes?: Array<string>;
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+  scopes = input<Array<string>|undefined>(undefined);
 
 }

@@ -1,4 +1,6 @@
 
-@for (scope of scopes; track $index) {
-  <span class="badge bg-primary me-1">{{scope}}</span>
+@if (scopes(); as scopes) {
+  @for (scope of scopes; track $index) {
+    <span class="badge bg-primary me-1">{{scope}}</span>
+  }
 }
