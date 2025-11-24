@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, input, OnInit, Output, signal} from '@angular/core';
 import {IdAndName, Service} from "../../../abstract/service";
 import {FormsModule} from "@angular/forms";
 
@@ -12,18 +12,19 @@ import {FormsModule} from "@angular/forms";
 })
 export class FormSelectComponent implements OnInit {
 
-  @Input() name!: string;
-  @Input() disabled: boolean = false;
-  @Input() data?: string = undefined;
+  name = input.required<string>();
+  data = input.required<string|undefined>();
+  disabled = input<boolean>(false);
+  useName= input<boolean>(true);
+
   @Input() service!: Service<any>;
-  @Input() useName: boolean = true;
   @Output() dataChange = new EventEmitter<string>();
 
-  entries?: Array<IdAndName<any>>
+  entries = signal<Array<IdAndName<any>>>([]);
 
   async ngOnInit(): Promise<void> {
     const response = await this.service.getAllWithIdAndName([0, 1024]);
-    this.entries = response.entry;
+    this.entries.set(response.entry || []);
   }
 
   changeValue(value: string) {

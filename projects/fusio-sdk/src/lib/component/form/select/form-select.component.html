@@ -1,15 +1,15 @@
 
 <div class="input-group">
-  @if (useName) {
-    <select [id]="name" [name]="name" [ngModel]="data" (ngModelChange)="changeValue($event)" [disabled]="disabled" class="form-select">
-      @for (entry of entries; track entry.id) {
+  @if (useName()) {
+    <select [id]="name()" [name]="name()" [ngModel]="data()" (ngModelChange)="changeValue($event)" [disabled]="disabled()" class="form-select">
+      @for (entry of entries(); track entry.id) {
         <option [ngValue]="entry.name">{{entry.name}}</option>
       }
     </select>
   }
-  @if (!useName) {
-    <select [id]="name" [name]="name" [ngModel]="data" (ngModelChange)="changeValue($event)" [disabled]="disabled" class="form-select">
-      @for (entry of entries; track entry.id) {
+  @else {
+    <select [id]="name()" [name]="name()" [ngModel]="data()" (ngModelChange)="changeValue($event)" [disabled]="disabled()" class="form-select">
+      @for (entry of entries(); track entry.id) {
         <option [ngValue]="entry.id">{{entry.name}}</option>
       }
     </select>
