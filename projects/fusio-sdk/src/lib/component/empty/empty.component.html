@@ -1,5 +1,5 @@
 
-@if (loading) {
+@if (loading()) {
   <div class="card">
     <div class="card-header">&nbsp;</div>
     <div class="card-body" style="height:400px;">
@@ -9,15 +9,13 @@
     </div>
   </div>
 }
-
-@if (!loading) {
+@else {
   <div class="card">
     <div class="card-header">Not found</div>
     <div class="card-body">
       <h4 class="text-center font-monospace text-muted fw-bold mt-5 mb-5">
-        No entries available @if (hasNew) {, please click the <button (click)="doClick()" type="button" class="btn btn-primary"><i class="bi bi-plus"></i></button> button to create a new entry}
+        No entries available @if (newClick.observed) {, please click the <button (click)="doClick()" type="button" class="btn btn-primary"><i class="bi bi-plus"></i></button> button to create a new entry}
       </h4>
     </div>
   </div>
 }
-
