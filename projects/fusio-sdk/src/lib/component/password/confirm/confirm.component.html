@@ -15,8 +15,8 @@
           <label for="confirmPassword">Confirm password:</label>
           <input type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="passwordConfirm" class="form-control">
         </div>
-        <button type="submit" class="btn btn-primary" [disabled]="loading">
-          @if (loading) {
+        <button type="submit" class="btn btn-primary" [disabled]="loading()">
+          @if (loading()) {
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
           }
           Change password

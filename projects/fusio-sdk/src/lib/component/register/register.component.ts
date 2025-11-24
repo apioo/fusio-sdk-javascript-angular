@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
   captchaKey?: string
 
   response = signal<CommonMessage|undefined>(undefined);
-  loading = false
+  loading = signal<boolean>(false);
 
   constructor(private fusio: FusioService, private error: ErrorService, private config: ConfigService) {
   }
@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit {
   }
 
   async register() {
-    this.loading = true;
+    this.loading.set(true);
 
     try {
       if (this.credentials.password !== this.passwordConfirm) {
@@ -60,11 +60,11 @@ export class RegisterComponent implements OnInit {
       }
 
       this.response.set(await this.fusio.getClientAnonymous().consumer().account().register(this.credentials));
-      this.loading = false;
+      this.loading.set(false);
 
       this.resetForm();
     } catch (error) {
-      this.loading = false;
+      this.loading.set(false);
       this.response.set(this.error.convert(error));
     }
   }

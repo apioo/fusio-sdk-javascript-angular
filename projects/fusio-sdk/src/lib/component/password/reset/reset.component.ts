@@ -27,7 +27,7 @@ export class ResetComponent implements OnInit {
   captchaKey?: string
 
   response = signal<CommonMessage|undefined>(undefined);
-  loading = false
+  loading = signal<boolean>(false);
 
   constructor(private fusio: FusioService, private error: ErrorService, private config: ConfigService, protected route: ActivatedRoute) {
   }
@@ -37,7 +37,7 @@ export class ResetComponent implements OnInit {
   }
 
   public async doReset() {
-    this.loading = true;
+    this.loading.set(true);
 
     try {
       if (this.captchaKey && !this.data.captcha) {
@@ -45,9 +45,9 @@ export class ResetComponent implements OnInit {
       }
 
       this.response.set(await this.fusio.getClientAnonymous().consumer().account().requestPasswordReset(this.data));
-      this.loading = false;
+      this.loading.set(false);
     } catch (error) {
-      this.loading = false;
+      this.loading.set(false);
       this.response.set(this.error.convert(error));
     }
   }

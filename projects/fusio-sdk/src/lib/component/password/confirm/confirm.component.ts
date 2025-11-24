@@ -25,7 +25,7 @@ export class ConfirmComponent implements OnInit {
   passwordConfirm?: string;
 
   response = signal<CommonMessage|undefined>(undefined);
-  loading = false
+  loading = signal<boolean>(false)
 
   constructor(private fusio: FusioService, private error: ErrorService, protected route: ActivatedRoute) {
   }
@@ -40,7 +40,7 @@ export class ConfirmComponent implements OnInit {
   }
 
   public async doReset() {
-    this.loading = true;
+    this.loading.set(true);
 
     try {
       if (this.reset.newPassword !== this.passwordConfirm) {
@@ -48,9 +48,9 @@ export class ConfirmComponent implements OnInit {
       }
 
       this.response.set(await this.fusio.getClientAnonymous().consumer().account().executePasswordReset(this.reset));
-      this.loading = false;
+      this.loading.set(false);
     } catch (error) {
-      this.loading = false;
+      this.loading.set(false);
       this.response.set(this.error.convert(error));
     }
   }
