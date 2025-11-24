@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, effect, EventEmitter, input, Input, Output, signal} from '@angular/core';
 import {Service} from "../../../abstract/service";
 import {FormAutocompleteComponent} from "../autocomplete/form-autocomplete.component";
 import {FormsModule} from "@angular/forms";
@@ -12,52 +12,66 @@ import {FormsModule} from "@angular/forms";
   ],
   styleUrls: ['./form-list.component.css']
 })
-export class FormListComponent implements OnInit {
+export class FormListComponent {
 
-  @Input() name!: string;
-  @Input() disabled: boolean = false;
-  @Input() type: string = 'text';
-  @Input() data: Array<string> = [];
+  name = input.required<string>();
+  disabled = input<boolean>(false);
+  type = input<string>('text');
+  data = input<Array<string>>([]);
+  useTilde = input<boolean>(false);
+  useId = input<boolean>(false);
+
   @Input() service?: Service<any>;
-  @Input() useTilde: boolean = false;
-  @Input() useId: boolean = false;
   @Output() dataChange = new EventEmitter<Array<string>>();
 
-  local: Array<any> = [];
-  newValue: any = '';
+  local = signal<Array<any>>([]);
+  newValue = signal<any>('');
 
-  constructor() { }
-
-  ngOnInit(): void {
-    if (this.data) {
-      this.local = this.toLocal(this.data);
-    }
+  constructor() {
+    effect(async () => {
+      this.local.set(this.toLocal(this.data()));
+    });
   }
 
   doChange(index: number, value?: any) {
-    this.local[index].value = value;
+    this.local.update((entries) => {
+      entries[index].value = value;
+      return entries;
+    });
+
     this.dataChange.emit(this.fromLocal());
   }
 
   doAdd() {
-    if (!this.newValue) {
+    let newValue = this.newValue();
+    if (!newValue) {
       return;
     }
 
-    let newValue = this.newValue;
-    if (this.type === 'number') {
+    if (this.type() === 'number') {
       newValue = parseInt(newValue);
     }
 
-    this.local.push({
-      value: newValue
+    this.local.update((entries) => {
+      entries.push({
+        value: newValue
+      });
+
+      return entries;
     });
-    this.newValue = '';
+
+    this.newValue.set('');
+
     this.dataChange.emit(this.fromLocal());
   }
 
   doRemove(index: number) {
-    this.local.splice(index, 1);
+    this.local.update((entries) => {
+      entries.splice(index, 1);
+
+      return entries;
+    });
+
     this.dataChange.emit(this.fromLocal());
   }
 
@@ -73,7 +87,7 @@ export class FormListComponent implements OnInit {
 
   fromLocal(): Array<any> {
     let data: Array<any> = [];
-    this.local.forEach((entry: Entry) => {
+    this.local().forEach((entry: Entry) => {
       data.push(entry.value);
     });
     return data;
