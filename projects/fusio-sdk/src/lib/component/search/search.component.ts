@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, input, Output} from '@angular/core';
 import {HelpService} from "../../service/help.service";
 import {FormsModule} from "@angular/forms";
 import {RouterLink} from "@angular/router";
@@ -12,30 +12,18 @@ import {RouterLink} from "@angular/router";
   ],
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent {
 
-  @Input()
-  searchTerm?: string;
+  @Input() searchTerm?: string;
+  @Input() helpPath?: string;
 
-  @Input()
-  helpPath?: string;
+  placeholder = input<string>('');
+  buttons = input<Array<Button>>([]);
 
-  @Input()
-  placeholder!: string;
-
-  @Input()
-  buttons: Array<Button> = [];
-
-  @Output()
-  search: EventEmitter<string> = new EventEmitter<string>();
-
-  @Output()
-  newClick: EventEmitter<void> = new EventEmitter<void>();
+  @Output() search: EventEmitter<string> = new EventEmitter<string>();
+  @Output() newClick: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(protected help: HelpService) {
-  }
-
-  ngOnInit(): void {
   }
 
   doSearch(search?: string): void {
