@@ -1,4 +1,14 @@
-import {Component, EventEmitter, Input, OnInit, Output, signal} from '@angular/core';
+import {
+  AfterContentChecked,
+  Component,
+  effect,
+  EventEmitter,
+  input,
+  Input,
+  OnInit,
+  Output,
+  signal
+} from '@angular/core';
 import {BackendScopeCategory, BackendScopeCategoryScope} from "fusio-sdk";
 import {FusioService} from "../../service/fusio.service";
 import {NgbNav, NgbNavContent, NgbNavItem, NgbNavLink, NgbNavOutlet} from "@ng-bootstrap/ng-bootstrap";
@@ -17,27 +27,30 @@ import {NgbNav, NgbNavContent, NgbNavItem, NgbNavLink, NgbNavOutlet} from "@ng-b
 })
 export class ScopeCategoriesComponent implements OnInit {
 
-  @Input() scopes?: Array<string>;
-  @Input() disabled: boolean = false;
+  scopes = input<Array<string>|undefined>(undefined);
+  disabled = input<boolean>(false);
+
   @Output() dataChange = new EventEmitter<any>();
 
   categories = signal<Array<BackendScopeCategory>>([]);
+  selected = signal<Array<string>>([]);
 
-  selected: Array<string> = [];
   selectedCategory: number = 1;
   toggleScope: boolean = true;
 
   constructor(private fusio: FusioService) {
+    effect(async () => {
+      const scopes = this.scopes();
+      if (scopes) {
+        this.selected.set(scopes);
+      }
+    });
   }
 
   async ngOnInit(): Promise<void> {
     const response = await this.fusio.getClient().consumer().scope().getCategories();
     if (response.categories) {
       this.categories.set(response.categories);
-    }
-
-    if (this.scopes) {
-      this.selected = this.scopes;
     }
   }
 
@@ -53,7 +66,7 @@ export class ScopeCategoriesComponent implements OnInit {
       this.removeScope(scope);
     }
 
-    this.dataChange.emit(this.selected)
+    this.dataChange.emit(this.selected())
   }
 
   toggleScopes(scopes?: Array<BackendScopeCategoryScope>) {
@@ -72,17 +85,23 @@ export class ScopeCategoriesComponent implements OnInit {
       }
     });
 
-    this.dataChange.emit(this.selected)
+    this.dataChange.emit(this.selected())
     this.toggleScope = !this.toggleScope;
   }
 
   private addScope(scope: string) {
-    this.selected.push(scope)
+    this.selected.update((entries) => {
+      entries.push(scope);
+      return entries;
+    });
   }
 
   private removeScope(scope: string) {
-    this.selected = this.selected.filter((value) => {
-      return value !== scope;
+    this.selected.update((entries) => {
+      entries = entries.filter((value) => {
+        return value !== scope;
+      });
+      return entries;
     });
   }
 }
