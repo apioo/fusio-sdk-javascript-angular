@@ -2,22 +2,22 @@
 <div class="input-group">
   <input
     type="text"
-    [id]="name"
-    [name]="name"
-    [(ngModel)]="selected"
+    [id]="name()"
+    [name]="name()"
+    [ngModel]="selected()"
     [ngbTypeahead]="objectSearch"
     (focus)="focus$.next($any($event).target.value)"
     [inputFormatter]="objectFormatter"
     [resultFormatter]="objectFormatter"
     [editable]="false"
-    (ngModelChange)="changeValue()"
-    [disabled]="disabled"
+    (ngModelChange)="selected.set($event);changeValue()"
+    [disabled]="disabled()"
     (keydown.enter)="enter.emit()"
     placeholder="Type to search ..."
     class="form-control"
   />
-  @if (searching) {
-    <button class="btn btn-outline-secondary" type="button" disabled>
+  @if (searching()) {
+    <button class="btn btn-outline-secondary" [ngClass]="{'btn-outline-danger': searchFailed()}" type="button" disabled>
       <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
       <span class="visually-hidden" role="status">Loading...</span>
     </button>

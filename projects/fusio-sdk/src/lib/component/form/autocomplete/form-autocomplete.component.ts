@@ -1,37 +1,52 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, effect, EventEmitter, input, Input, Output, signal} from '@angular/core';
 import {IdAndName, Service} from "../../../abstract/service";
-import {catchError, debounceTime, distinctUntilChanged, map, merge, Observable, of, OperatorFunction, Subject, switchMap, tap} from "rxjs";
+import {
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  merge,
+  Observable,
+  of,
+  OperatorFunction,
+  Subject,
+  switchMap,
+  tap
+} from "rxjs";
 import {fromPromise} from "rxjs/internal/observable/innerFrom";
 import {FormsModule} from "@angular/forms";
 import {NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'fusio-form-autocomplete',
   templateUrl: './form-autocomplete.component.html',
   imports: [
     FormsModule,
-    NgbTypeahead
+    NgbTypeahead,
+    NgClass
   ],
   styleUrls: ['./form-autocomplete.component.css']
 })
-export class FormAutocompleteComponent implements OnInit {
+export class FormAutocompleteComponent {
 
-  @Input() name!: string;
-  @Input() disabled: boolean = false;
-  @Input() data?: string|number = undefined;
   @Input() service!: Service<any>;
-  @Input() useTilde: boolean = false;
-  @Input() useId: boolean = false;
   @Output() dataChange = new EventEmitter<string>();
   @Output() dataChangeId = new EventEmitter<number>();
   @Output() enter = new EventEmitter<void>();
 
   focus$ = new Subject<string>();
 
-  searching = false;
-  searchFailed = false;
+  name = input.required<string>();
+  disabled = input<boolean>(false);
+  data = input<string|number|undefined>();
+  useTilde = input<boolean>(false);
+  useId = input<boolean>(false);
 
-  selected?: IdAndName<any>
+  searching = signal<boolean>(false);
+  searchFailed = signal<boolean>(false);
+
+  selected = signal<IdAndName<any>|undefined>(undefined)
 
   objectFormatter = (object: IdAndName<any>): string => {
     return object.name;
@@ -42,41 +57,47 @@ export class FormAutocompleteComponent implements OnInit {
     const inputFocus$ = this.focus$;
 
     return merge(debouncedText$, inputFocus$).pipe(
-      tap(() => (this.searching = true)),
+      tap(() => (this.searching.set(true))),
       switchMap((term) =>
         fromPromise(this.service.getAllWithIdAndName([0, 16, term])).pipe(
           map((response) => {
             return response.entry ? response.entry : [];
           }),
-          tap(() => (this.searchFailed = false)),
+          tap(() => (this.searchFailed.set(false))),
           catchError(() => {
-            this.searchFailed = true;
+            this.searchFailed.set(true);
             return of([]);
           }),
         ),
       ),
-      tap(() => (this.searching = false)),
+      tap(() => (this.searching.set(false))),
     );
   }
 
-  async ngOnInit(): Promise<void> {
-    if (this.data) {
-      this.selected = await this.service.getWithIdAndName((this.useTilde ? '~' : '') + this.data);
-    }
+  constructor() {
+    effect(async () => {
+      const data = this.data();
+      if (data) {
+        this.selected.set(await this.service.getWithIdAndName((this.useTilde() ? '~' : '') + data));
+      }
+    });
   }
 
   changeValue() {
-    if (this.disabled || !this.selected) {
+    const selected = this.selected();
+    if (this.disabled() || !selected) {
       return;
     }
 
     if (this.dataChange.observed) {
-      if (this.selected.name) {
-        this.dataChange.emit(this.useId ? this.selected.id : this.selected.name);
+      if (this.useId() && selected.id) {
+        this.dataChange.emit(selected.id);
+      } else if (selected.name) {
+        this.dataChange.emit(selected.name);
       }
     } else if (this.dataChangeId.observed) {
-      if (this.selected.id) {
-        this.dataChangeId.emit(parseInt(this.selected.id));
+      if (selected.id) {
+        this.dataChangeId.emit(parseInt(selected.id));
       }
     }
   }
