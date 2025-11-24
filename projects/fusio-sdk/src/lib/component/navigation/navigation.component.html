@@ -1,8 +1,8 @@
 
 <div class="fusio-navigation">
   <nav>
-    <h1>{{title}} @if (version) {<span>({{ version }})</span>}</h1>
-    @for (item of items; track $index) {
+    <h1>{{title()}} @if (version(); as version) {<span>({{ version }})</span>}</h1>
+    @for (item of items(); track $index) {
       <div>
         <a class="fusio-navigation-heading" (click)="changeNavHeading(item)" [ngClass]="{'fusio-navigation-heading-active': item.visible}">{{ item.title }}</a>
         @if (Array.isArray(item.children)) {

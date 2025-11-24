@@ -1,4 +1,4 @@
-import {Component, EnvironmentInjector, OnInit} from '@angular/core';
+import {Component, EnvironmentInjector, OnInit, signal} from '@angular/core';
 import {GroupItem, NavigationService} from "../../service/navigation.service";
 import {ConfigService} from "../../service/config.service";
 import {NgClass} from "@angular/common";
@@ -15,9 +15,9 @@ import {RouterLink} from "@angular/router";
 })
 export class NavigationComponent implements OnInit {
 
-  title?: string;
-  version?: string;
-  items: Array<GroupItem> = [];
+  title = signal<string|undefined>(undefined);
+  version = signal<string|undefined>(undefined);
+  items = signal<Array<GroupItem>>([]);
 
   protected readonly Array = Array;
 
@@ -25,14 +25,18 @@ export class NavigationComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.title = this.config.getTitle() || 'Fusio';
-    this.version = this.config.getVersion();
-    this.items = await this.navigation.getMainNavigation();
+    this.title.set(this.config.getTitle() || 'Fusio');
+    this.version.set(this.config.getVersion());
+    this.items.set(await this.navigation.getMainNavigation());
   }
 
   changeNavHeading(item: GroupItem): void {
-    for (let i = 0; i < this.items.length; i++) {
-      this.items[i].visible = this.items[i].title === item.title
+    const items = this.items();
+    for (let i = 0; i < items.length; i++) {
+      this.items.update((entries) => {
+        entries[i].visible = entries[i].title === item.title
+        return entries;
+      })
     }
   }
 
