@@ -101,7 +101,6 @@ export abstract class Service<E> implements ServiceInterface<E> {
     const me = this;
 
     return new Promise<ServiceInterface<E>>((resolve, reject) => {
-      debugger;
       me.configurationResolve = resolve;
       me.configurationReject = reject;
     });
