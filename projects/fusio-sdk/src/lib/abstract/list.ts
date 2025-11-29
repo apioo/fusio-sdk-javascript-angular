@@ -46,10 +46,6 @@ export abstract class List<T> implements OnInit {
         search = params['search'];
       }
 
-      if (!this.hasQueryParamsChange(page, search)) {
-        return;
-      }
-
       this.page.set(page || 1);
       this.search.set(search || '');
 
@@ -75,10 +71,6 @@ export abstract class List<T> implements OnInit {
   }
 
   async doSearch(page?: number, search?: string) {
-    if (!this.hasQueryParamsChange(page, search)) {
-      return;
-    }
-
     this.getService().onReady().then((service) => {
       this.router.navigate(service.getLink(), {
         queryParams: {
@@ -130,10 +122,6 @@ export abstract class List<T> implements OnInit {
 
       this.router.navigate(link);
     });
-  }
-
-  protected hasQueryParamsChange(page?: number, search?: string): boolean {
-    return this.page() !== page || this.search() !== search;
   }
 
   protected abstract getService(): Service<T>;
