@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ActivatedRoute, Router, RouterLink} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ConsumerApp} from "fusio-sdk";
 import {List} from "../../../abstract/list";
 import {ErrorService} from "../../../service/error.service";
@@ -12,7 +12,6 @@ import {NgbPagination} from "@ng-bootstrap/ng-bootstrap";
   templateUrl: './app-list.component.html',
   imports: [
     SearchComponent,
-    RouterLink,
     NgbPagination
   ],
   styleUrls: ['./app-list.component.css']

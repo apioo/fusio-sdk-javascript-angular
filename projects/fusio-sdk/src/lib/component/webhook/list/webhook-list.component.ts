@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {ConsumerWebhook} from "fusio-sdk";
 import {List} from "../../../abstract/list";
-import {ActivatedRoute, Router, RouterLink} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ErrorService} from "../../../service/error.service";
 import {WebhookService} from "../../../service/webhook.service";
 import {SearchComponent} from "../../search/search.component";
@@ -12,7 +12,6 @@ import {NgbPagination} from "@ng-bootstrap/ng-bootstrap";
   templateUrl: './webhook-list.component.html',
   imports: [
     SearchComponent,
-    RouterLink,
     NgbPagination
   ],
   styleUrls: ['./webhook-list.component.css']

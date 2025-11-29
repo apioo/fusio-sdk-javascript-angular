@@ -1,8 +1,8 @@
 
 <div class="btn-group" role="group">
-  <a [routerLink]="getListLink()" class="btn btn-secondary fusio-btn-back">Back</a>
-  <a [routerLink]="getEditLink(selected()?.id)" class="btn btn-primary fusio-btn-update">Update</a>
-  <a [routerLink]="getDeleteLink(selected()?.id)" class="btn btn-danger fusio-btn-delete">Delete</a>
+  <a (click)="doList()" class="btn btn-secondary fusio-btn-back">Back</a>
+  <a (click)="doEdit(selected()?.id)" class="btn btn-primary fusio-btn-update">Update</a>
+  <a (click)="doDelete(selected()?.id)" class="btn btn-danger fusio-btn-delete">Delete</a>
 </div>
 <div class="fusio-detail">
   <div class="row">

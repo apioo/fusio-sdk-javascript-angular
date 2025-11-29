@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {ConsumerToken} from "fusio-sdk";
 import {Detail} from "../../../abstract/detail";
-import {ActivatedRoute, Router, RouterLink} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ErrorService} from "../../../service/error.service";
 import {TokenService} from "../../../service/token.service";
 import {ScopesComponent} from "../../scopes/scopes.component";
@@ -11,7 +11,6 @@ import {DatePipe} from "@angular/common";
   selector: 'fusio-token-detail',
   templateUrl: './token-detail.component.html',
   imports: [
-    RouterLink,
     ScopesComponent,
     DatePipe
   ],

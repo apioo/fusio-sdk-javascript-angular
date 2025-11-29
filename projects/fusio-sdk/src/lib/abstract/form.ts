@@ -25,6 +25,7 @@ export abstract class Form<T> implements OnInit {
     this.route.data.subscribe((data) => {
       this.mode = data['mode'];
       if (this.mode === Mode.Create) {
+        // invoke onload since we dont use the doGet method
         this.onLoad();
       }
     });
@@ -38,77 +39,82 @@ export abstract class Form<T> implements OnInit {
   }
 
   async doGet(id: string) {
-    try {
-      this.getService().onConfigurationCompleted().then(async (service) => {
+    this.getService().onReady().then(async (service) => {
+      try {
         this.entity.set(await service.get(id));
 
         this.onLoad();
-      });
-    } catch (error) {
-      this.response.set(this.error.convert(error));
+      } catch (error) {
+        this.response.set(this.error.convert(error));
 
-      this.onError();
-    }
+        this.onError();
+      }
+    });
   }
 
   async doCreate(entity: T|Signal<T>) {
-    try {
-      this.getService().onConfigurationCompleted().then(async (service) => {
+    this.getService().onReady().then(async (service) => {
+      try {
         const payload = entity instanceof Function ? entity() : entity;
 
         this.response.set(await service.create(this.beforeCreate(payload)));
 
         this.onSubmit();
-      });
-    } catch (error) {
-      this.response.set(this.error.convert(error));
+      } catch (error) {
+        this.response.set(this.error.convert(error));
 
-      this.onError();
-    }
+        this.onError();
+      }
+    });
   }
 
   async doUpdate(entity: T|Signal<T>) {
-    try {
-      this.getService().onConfigurationCompleted().then(async (service) => {
+    this.getService().onReady().then(async (service) => {
+      try {
         const payload = entity instanceof Function ? entity() : entity;
 
         this.response.set(await service.update(this.beforeUpdate(payload)));
 
         this.onSubmit();
-      });
-    } catch (error) {
-      this.response.set(this.error.convert(error));
+      } catch (error) {
+        this.response.set(this.error.convert(error));
 
-      this.onError();
-    }
+        this.onError();
+      }
+    });
   }
 
   async doDelete(entity: T|Signal<T>) {
-    try {
-      this.getService().onConfigurationCompleted().then(async (service) => {
+    this.getService().onReady().then(async (service) => {
+      try {
         const payload = entity instanceof Function ? entity() : entity;
 
         this.response.set(await service.delete(this.beforeDelete(payload)));
 
         this.onSubmit();
-      });
-    } catch (error) {
-      this.response.set(this.error.convert(error));
+      } catch (error) {
+        this.response.set(this.error.convert(error));
 
-      this.onError();
-    }
+        this.onError();
+      }
+    });
   }
 
-  public getListLink(): Array<string>
+  public doList(): void
   {
-    return this.getService().getLink();
+    this.getService().onReady().then((service) => {
+      this.router.navigate(service.getLink());
+    });
   }
 
-  public getDetailLink(id: any): Array<string>
+  public doDetail(id: any): void
   {
-    const link = this.getService().getLink();
-    link.push('' + id)
-    return link;
+    this.getService().onReady().then((service) => {
+      const link = service.getLink();
+      link.push('' + id)
+
+      this.router.navigate(link);
+    });
   }
 
   public set(entity: WritableSignal<T>, key: keyof T, propertyValue: any) {

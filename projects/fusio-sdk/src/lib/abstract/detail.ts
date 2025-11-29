@@ -14,7 +14,7 @@ export abstract class Detail<T> implements OnInit {
 
   selected = signal<T|undefined>(undefined);
   response = signal<CommonMessage|undefined>(undefined);
-  jsonView = false;
+  jsonView = signal(false);
 
   protected constructor(protected route: ActivatedRoute, public router: Router, protected error: ErrorService) {
   }
@@ -29,38 +29,46 @@ export abstract class Detail<T> implements OnInit {
   }
 
   async doGet(id: string) {
-    try {
-      this.getService().onConfigurationCompleted().then(async (service) => {
+    this.getService().onReady().then(async (service) => {
+      try {
         this.selected.set(await service.get(id));
 
         this.onLoad();
-      });
-    } catch (error) {
-      this.response.set(this.error.convert(error));
+      } catch (error) {
+        this.response.set(this.error.convert(error));
 
-      this.onError();
-    }
+        this.onError();
+      }
+    });
   }
 
-  public getListLink(): Array<string>
+  public doList(): void
   {
-    return this.getService().getLink();
+    this.getService().onReady().then((service) => {
+      this.router.navigate(service.getLink());
+    });
   }
 
-  public getEditLink(id: any): Array<string>
+  public doEdit(id: any): void
   {
-    const link = this.getService().getLink();
-    link.push('' + id)
-    link.push('edit')
-    return link;
+    this.getService().onReady().then((service) => {
+      const link = service.getLink();
+      link.push('' + id);
+      link.push('edit');
+
+      this.router.navigate(link);
+    });
   }
 
-  public getDeleteLink(id: any): Array<string>
+  public doDelete(id: any): void
   {
-    const link = this.getService().getLink();
-    link.push('' + id)
-    link.push('delete')
-    return link;
+    this.getService().onReady().then((service) => {
+      const link = service.getLink();
+      link.push('' + id);
+      link.push('delete');
+
+      this.router.navigate(link);
+    });
   }
 
   protected abstract getService(): Service<T>;

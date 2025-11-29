@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, computed, OnInit, signal} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CommonMessage} from "fusio-sdk";
 import {ErrorService} from "../service/error.service";
@@ -18,6 +18,20 @@ export abstract class List<T> implements OnInit {
   page = signal<number>(1);
   pageSize = signal<number>(16);
   response = signal<CommonMessage|undefined>(undefined);
+
+  collectionQuery = computed<Array<any>>(() => {
+    let query: Array<any> = [];
+    query.push((this.page() - 1) * this.pageSize());
+    query.push(this.pageSize());
+    const search = this.search();
+    if (search) {
+      query.push(search);
+    } else {
+      query.push('');
+    }
+
+    return query;
+  });
 
   protected constructor(protected route: ActivatedRoute, public router: Router, protected error: ErrorService) {
   }
@@ -44,20 +58,20 @@ export abstract class List<T> implements OnInit {
   }
 
   async doList() {
-    try {
-      this.getService().onConfigurationCompleted().then(async (service) => {
-        const response = await service.getAll(this.getCollectionQuery());
+    this.getService().onReady().then(async (service) => {
+      try {
+        const response = await service.getAll(this.collectionQuery());
 
         this.totalResults.set(response.totalResults || 0);
         this.entries.set(response.entry || []);
 
         this.onLoad();
-      });
-    } catch (error) {
-      this.response.set(this.error.convert(error));
+      } catch (error) {
+        this.response.set(this.error.convert(error));
 
-      this.onError();
-    }
+        this.onError();
+      }
+    });
   }
 
   async doSearch(page?: number, search?: string) {
@@ -65,56 +79,57 @@ export abstract class List<T> implements OnInit {
       return;
     }
 
-    await this.router.navigate(this.getService().getLink(), {
-      queryParams: {
-        page: page,
-        search: search,
-      }
+    this.getService().onReady().then((service) => {
+      this.router.navigate(service.getLink(), {
+        queryParams: {
+          page: page,
+          search: search,
+        }
+      });
     });
   }
 
-  public getDetailLink(id: any): Array<string>
+  public doDetail(id: any): void
   {
-    const link = this.getService().getLink();
-    link.push('' + id)
-    return link;
+    this.getService().onReady().then((service) => {
+      const link = service.getLink();
+      link.push('' + id);
+
+      this.router.navigate(link);
+    });
   }
 
-  public getNewLink(): Array<string>
+  public doNew(): void
   {
-    const link = this.getService().getLink();
-    link.push('-')
-    link.push('new')
-    return link;
+    this.getService().onReady().then((service) => {
+      const link = service.getLink();
+      link.push('-');
+      link.push('new');
+
+      this.router.navigate(link);
+    });
   }
 
-  public getEditLink(id: any): Array<string>
+  public doEdit(id: any): void
   {
-    const link = this.getService().getLink();
-    link.push('' + id)
-    link.push('edit')
-    return link;
+    this.getService().onReady().then((service) => {
+      const link = service.getLink();
+      link.push('' + id);
+      link.push('edit');
+
+      this.router.navigate(link);
+    });
   }
 
-  public getDeleteLink(id: any): Array<string>
+  public doDelete(id: any): void
   {
-    const link = this.getService().getLink();
-    link.push('' + id)
-    link.push('delete')
-    return link;
-  }
+    this.getService().onReady().then((service) => {
+      const link = service.getLink();
+      link.push('' + id);
+      link.push('delete');
 
-  protected getCollectionQuery(): Array<any> {
-    let query: Array<any> = [];
-    query.push((this.page() - 1) * this.pageSize());
-    query.push(this.pageSize());
-    const search = this.search();
-    if (search) {
-      query.push(search);
-    } else {
-      query.push('');
-    }
-    return query;
+      this.router.navigate(link);
+    });
   }
 
   protected hasQueryParamsChange(page?: number, search?: string): boolean {

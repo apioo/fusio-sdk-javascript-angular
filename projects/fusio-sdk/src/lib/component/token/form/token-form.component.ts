@@ -1,8 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {ConsumerToken, ConsumerTokenAccessToken} from "fusio-sdk";
 import {ErrorService} from "../../../service/error.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Form} from "../../../abstract/form";
+import {Form, Mode} from "../../../abstract/form";
 import {TokenService} from "../../../service/token.service";
 import {ScopeService} from "../../../service/scope.service";
 import {MessageComponent} from "../../message/message.component";
@@ -25,7 +25,7 @@ import {ClipboardModule} from "ngx-clipboard";
 })
 export class TokenFormComponent extends Form<ConsumerToken> {
 
-  accessToken?: ConsumerTokenAccessToken;
+  accessToken = signal<ConsumerTokenAccessToken|undefined>(undefined);
 
   constructor(private token: TokenService, public scope: ScopeService, route: ActivatedRoute, router: Router, error: ErrorService) {
     super(route, router, error);
@@ -36,7 +36,11 @@ export class TokenFormComponent extends Form<ConsumerToken> {
   }
 
   protected override onSubmit() {
-    this.accessToken = this.token.getToken();
+    if (this.mode === Mode.Create || this.mode === Mode.Update) {
+      this.accessToken.set(this.token.getToken());
+    } else {
+      this.accessToken.set(undefined);
+    }
   }
 
 }

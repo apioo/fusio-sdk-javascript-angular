@@ -85,7 +85,7 @@ export abstract class Service<E> implements ServiceInterface<E> {
   /**
    * Returns a promise which gets resolved in case the configuration is completed
    */
-  public onConfigurationCompleted(): Promise<ServiceInterface<E>>
+  public onReady(): Promise<ServiceInterface<E>>
   {
     if (this.isConfigured()) {
       return new Promise<ServiceInterface<E>>((resolve) => {
@@ -176,6 +176,8 @@ interface ServiceInterface<E> {
   update(entity: E): Promise<CommonMessage>;
 
   delete(entity: E): Promise<CommonMessage>;
+
+  getLink(): Array<string>;
 }
 
 export interface IdAndName<T> {

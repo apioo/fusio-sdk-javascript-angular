@@ -1,11 +1,11 @@
 
 <fusio-message [response]="response()"></fusio-message>
 
-@if (accessToken) {
+@if (accessToken(); as token) {
   <p>Make sure to copy your personal access token now as you will not be able to see this again.</p>
   <div class="input-group mb-3">
-    <input type="text" [ngModel]="accessToken.access_token" readonly class="form-control">
-    <button class="btn btn-primary" ngxClipboard [cbContent]="accessToken.access_token">Copy</button>
+    <input type="text" [ngModel]="token.access_token" readonly class="form-control">
+    <button class="btn btn-primary" ngxClipboard [cbContent]="token.access_token">Copy</button>
   </div>
 }
 
@@ -48,6 +48,6 @@
     @else if (mode === 3) {
       <button type="button" class="btn btn-danger" (click)="doDelete(entity)">Delete</button>
     }
-    <button type="button" (click)="router.navigate(getListLink())" class="btn btn-light fusio-btn-back">Back</button>
+    <button type="button" (click)="doList()" class="btn btn-light fusio-btn-back">Back</button>
   </div>
 </form>
