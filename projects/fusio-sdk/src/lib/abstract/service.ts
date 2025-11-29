@@ -3,7 +3,17 @@ import {CommonCollection, CommonMessage} from "fusio-sdk";
 /**
  * A general service to access CRUD operations, this service can be reused at different components
  */
-export abstract class Service<E> {
+export abstract class Service<E> implements ServiceInterface<E> {
+
+  /**
+   * @internal
+   */
+  private configurationResolve?: Function|undefined;
+
+  /**
+   * @internal
+   */
+  private configurationReject?: Function|undefined;
 
   abstract getAll(parameters: Array<any>): Promise<CommonCollection<E>>;
 
@@ -63,6 +73,50 @@ export abstract class Service<E> {
     return 'name';
   }
 
+  /**
+   * In case you service needs other parameters from the url to execute the list query you can overwrite this method
+   * and only return true in case every parameter is available, by default it is always true
+   */
+  public isConfigured(): boolean
+  {
+    return true;
+  }
+
+  /**
+   * Returns a promise which gets resolved in case the configuration is completed
+   */
+  public onConfigurationCompleted(): Promise<ServiceInterface<E>>
+  {
+    if (this.isConfigured()) {
+      return new Promise<ServiceInterface<E>>((resolve) => {
+        resolve(this);
+      });
+    }
+
+    // if we have already a promise reject the existing
+    if (this.configurationReject !== undefined) {
+      this.configurationReject(this);
+    }
+
+    const me = this;
+
+    return new Promise<ServiceInterface<E>>((resolve, reject) => {
+      debugger;
+      me.configurationResolve = resolve;
+      me.configurationReject = reject;
+    });
+  }
+
+  /**
+   * Must be called by every setter which sets a required parameter
+   */
+  protected checkConfiguration(): void
+  {
+    if (this.configurationResolve !== undefined && this.isConfigured()) {
+      this.configurationResolve(this);
+    }
+  }
+
   private convert(entity: E): IdAndName<E>
   {
     const id = this.getIdValue(entity);
@@ -110,6 +164,18 @@ export abstract class Service<E> {
     return undefined;
   }
 
+}
+
+interface ServiceInterface<E> {
+  getAll(parameters: Array<any>): Promise<CommonCollection<E>>;
+
+  get(id: string): Promise<E>;
+
+  create(entity: E): Promise<CommonMessage>;
+
+  update(entity: E): Promise<CommonMessage>;
+
+  delete(entity: E): Promise<CommonMessage>;
 }
 
 export interface IdAndName<T> {

@@ -45,12 +45,14 @@ export abstract class List<T> implements OnInit {
 
   async doList() {
     try {
-      const response = await this.getService().getAll(this.getCollectionQuery());
+      this.getService().onConfigurationCompleted().then(async (service) => {
+        const response = await service.getAll(this.getCollectionQuery());
 
-      this.totalResults.set(response.totalResults || 0);
-      this.entries.set(response.entry || []);
+        this.totalResults.set(response.totalResults || 0);
+        this.entries.set(response.entry || []);
 
-      this.onLoad();
+        this.onLoad();
+      });
     } catch (error) {
       this.response.set(this.error.convert(error));
 

@@ -30,9 +30,11 @@ export abstract class Detail<T> implements OnInit {
 
   async doGet(id: string) {
     try {
-      this.selected.set(await this.getService().get(id));
+      this.getService().onConfigurationCompleted().then(async (service) => {
+        this.selected.set(await service.get(id));
 
-      this.onLoad();
+        this.onLoad();
+      });
     } catch (error) {
       this.response.set(this.error.convert(error));
 

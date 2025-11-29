@@ -39,9 +39,11 @@ export abstract class Form<T> implements OnInit {
 
   async doGet(id: string) {
     try {
-      this.entity.set(await this.getService().get(id));
+      this.getService().onConfigurationCompleted().then(async (service) => {
+        this.entity.set(await service.get(id));
 
-      this.onLoad();
+        this.onLoad();
+      });
     } catch (error) {
       this.response.set(this.error.convert(error));
 
@@ -51,11 +53,13 @@ export abstract class Form<T> implements OnInit {
 
   async doCreate(entity: T|Signal<T>) {
     try {
-      const payload = entity instanceof Function ? entity() : entity;
+      this.getService().onConfigurationCompleted().then(async (service) => {
+        const payload = entity instanceof Function ? entity() : entity;
 
-      this.response.set(await this.getService().create(this.beforeCreate(payload)));
+        this.response.set(await service.create(this.beforeCreate(payload)));
 
-      this.onSubmit();
+        this.onSubmit();
+      });
     } catch (error) {
       this.response.set(this.error.convert(error));
 
@@ -65,11 +69,13 @@ export abstract class Form<T> implements OnInit {
 
   async doUpdate(entity: T|Signal<T>) {
     try {
-      const payload = entity instanceof Function ? entity() : entity;
+      this.getService().onConfigurationCompleted().then(async (service) => {
+        const payload = entity instanceof Function ? entity() : entity;
 
-      this.response.set(await this.getService().update(this.beforeUpdate(payload)));
+        this.response.set(await service.update(this.beforeUpdate(payload)));
 
-      this.onSubmit();
+        this.onSubmit();
+      });
     } catch (error) {
       this.response.set(this.error.convert(error));
 
@@ -79,11 +85,13 @@ export abstract class Form<T> implements OnInit {
 
   async doDelete(entity: T|Signal<T>) {
     try {
-      const payload = entity instanceof Function ? entity() : entity;
+      this.getService().onConfigurationCompleted().then(async (service) => {
+        const payload = entity instanceof Function ? entity() : entity;
 
-      this.response.set(await this.getService().delete(this.beforeDelete(payload)));
+        this.response.set(await service.delete(this.beforeDelete(payload)));
 
-      this.onSubmit();
+        this.onSubmit();
+      });
     } catch (error) {
       this.response.set(this.error.convert(error));
 
