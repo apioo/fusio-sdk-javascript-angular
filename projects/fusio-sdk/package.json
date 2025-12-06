@@ -1,6 +1,6 @@
 {
   "name": "ngx-fusio-sdk",
-  "version": "7.0.7",
+  "version": "7.0.8",
   "description": "SDK to integrate Fusio into an Angular app",
   "keywords": [
     "Fusio",
