@@ -1,15 +1,5 @@
-import {
-  AfterContentChecked,
-  Component,
-  effect,
-  EventEmitter,
-  input,
-  Input,
-  OnInit,
-  Output,
-  signal
-} from '@angular/core';
-import {BackendScopeCategory, BackendScopeCategoryScope} from "fusio-sdk";
+import {Component, effect, EventEmitter, input, Output, resource, signal} from '@angular/core';
+import {BackendScopeCategoryScope, ConsumerScopeCategory} from "fusio-sdk";
 import {FusioService} from "../../service/fusio.service";
 import {NgbNav, NgbNavContent, NgbNavItem, NgbNavLink, NgbNavOutlet} from "@ng-bootstrap/ng-bootstrap";
 
@@ -25,14 +15,20 @@ import {NgbNav, NgbNavContent, NgbNavItem, NgbNavLink, NgbNavOutlet} from "@ng-b
   ],
   styleUrls: ['./scope-categories.component.css']
 })
-export class ScopeCategoriesComponent implements OnInit {
+export class ScopeCategoriesComponent {
 
   scopes = input<Array<string>|undefined>(undefined);
   disabled = input<boolean>(false);
 
   @Output() dataChange = new EventEmitter<any>();
 
-  categories = signal<Array<BackendScopeCategory>>([]);
+  categories = resource({
+    loader: async (): Promise<Array<ConsumerScopeCategory>> => {
+      const response = await this.fusio.getClient().consumer().scope().getCategories();
+      return response.categories || [];
+    },
+  });
+
   selected = signal<Array<string>>([]);
 
   selectedCategory: number = 1;
@@ -45,13 +41,6 @@ export class ScopeCategoriesComponent implements OnInit {
         this.selected.set(scopes);
       }
     });
-  }
-
-  async ngOnInit(): Promise<void> {
-    const response = await this.fusio.getClient().consumer().scope().getCategories();
-    if (response.categories) {
-      this.categories.set(response.categories);
-    }
   }
 
   scopeSelect(event: any, scope?: string) {

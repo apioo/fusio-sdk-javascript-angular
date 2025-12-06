@@ -1,7 +1,6 @@
 import {Component, OnInit, signal} from '@angular/core';
 import {CommonMessage, ConsumerUserRegister} from "fusio-sdk";
 import {FusioService} from "../../service/fusio.service";
-import {EventService} from "../../service/event.service";
 import {ConfigService} from "../../service/config.service";
 import {ErrorService} from "../../service/error.service";
 import {MessageComponent} from "../message/message.component";

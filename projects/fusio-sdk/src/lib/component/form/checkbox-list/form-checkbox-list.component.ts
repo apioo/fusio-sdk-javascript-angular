@@ -1,4 +1,4 @@
-import {Component, effect, EventEmitter, input, Input, OnInit, Output, signal} from '@angular/core';
+import {Component, effect, EventEmitter, input, Input, Output, resource, signal} from '@angular/core';
 import {IdAndName, Service} from "../../../abstract/service";
 
 @Component({
@@ -6,7 +6,7 @@ import {IdAndName, Service} from "../../../abstract/service";
   templateUrl: './form-checkbox-list.component.html',
   styleUrls: ['./form-checkbox-list.component.css']
 })
-export class FormCheckboxListComponent implements OnInit {
+export class FormCheckboxListComponent {
 
   name = input.required<string>();
   disabled = input<boolean>(false);
@@ -17,17 +17,18 @@ export class FormCheckboxListComponent implements OnInit {
   @Output() dataChange = new EventEmitter<Array<string>>();
 
   local = signal<Array<string>>([]);
-  entries = signal<Array<IdAndName<any>>>([]);
+
+  entries = resource({
+    loader: async (): Promise<Array<IdAndName<any>>> => {
+      const response = await this.service.getAllWithIdAndName([0, 1024]);
+      return response.entry || [];
+    },
+  });
 
   constructor() {
     effect(async () => {
       this.local.set(this.data() || []);
     });
-  }
-
-  async ngOnInit(): Promise<void> {
-    const response = await this.service.getAllWithIdAndName([0, 1024]);
-    this.entries.set(response.entry || []);
   }
 
   scopeSelect(event: any, scope?: string) {

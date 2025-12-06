@@ -1,18 +1,20 @@
 
-<div class="input-group">
-  @if (useName()) {
-    <select [id]="name()" [name]="name()" [ngModel]="data()" (ngModelChange)="changeValue($event)" [disabled]="disabled()" class="form-select">
-      @for (entry of entries(); track entry.id) {
-        <option [ngValue]="entry.name">{{entry.name}}</option>
-      }
-    </select>
-  }
-  @else {
-    <select [id]="name()" [name]="name()" [ngModel]="data()" (ngModelChange)="changeValue($event)" [disabled]="disabled()" class="form-select">
-      @for (entry of entries(); track entry.id) {
-        <option [ngValue]="entry.id">{{entry.name}}</option>
-      }
-    </select>
-  }
-  <ng-content></ng-content>
-</div>
+@if (entries.hasValue()) {
+  <div class="input-group">
+    @if (useName()) {
+      <select [id]="name()" [name]="name()" [ngModel]="data()" (ngModelChange)="changeValue($event)" [disabled]="disabled()" class="form-select">
+        @for (entry of entries.value(); track entry.id) {
+          <option [ngValue]="entry.name">{{entry.name}}</option>
+        }
+      </select>
+    }
+    @else {
+      <select [id]="name()" [name]="name()" [ngModel]="data()" (ngModelChange)="changeValue($event)" [disabled]="disabled()" class="form-select">
+        @for (entry of entries.value(); track entry.id) {
+          <option [ngValue]="entry.id">{{entry.name}}</option>
+        }
+      </select>
+    }
+    <ng-content></ng-content>
+  </div>
+}

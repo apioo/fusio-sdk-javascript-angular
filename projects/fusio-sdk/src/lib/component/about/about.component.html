@@ -1,36 +1,38 @@
 
 <div class="row">
   <div class="col-md-12">
-    <dl>
-      <dt>API-Version</dt>
-      <dd>{{about()?.apiVersion}}</dd>
-      <dt>Title</dt>
-      <dd>{{about()?.title}}</dd>
-      <dt>Description</dt>
-      <dd>{{about()?.description}}</dd>
-      <dt>Scopes</dt>
-      <dd>
-        @for (scope of about()?.scopes; track $index) {
-          <span class="badge text-bg-primary me-1">{{scope}}</span>
-        }
-      </dd>
-    </dl>
-    <h3>Links</h3>
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th>Relationship</th>
-        <th>Link</th>
-      </tr>
-      </thead>
-      <tbody>
-      @for (link of about()?.links; track $index) {
+    @if (about.hasValue()) {
+      <dl>
+        <dt>API-Version</dt>
+        <dd>{{about.value()?.apiVersion}}</dd>
+        <dt>Title</dt>
+        <dd>{{about.value()?.title}}</dd>
+        <dt>Description</dt>
+        <dd>{{about.value()?.description}}</dd>
+        <dt>Scopes</dt>
+        <dd>
+          @for (scope of about.value()?.scopes; track $index) {
+            <span class="badge text-bg-primary me-1">{{scope}}</span>
+          }
+        </dd>
+      </dl>
+      <h3>Links</h3>
+      <table class="table table-striped">
+        <thead>
         <tr>
-          <td>{{link.rel}}</td>
-          <td><a href="{{link.href}}">{{link.href}}</a></td>
+          <th>Relationship</th>
+          <th>Link</th>
         </tr>
-      }
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          @for (link of about.value()?.links; track $index) {
+            <tr>
+              <td>{{link.rel}}</td>
+              <td><a href="{{link.href}}">{{link.href}}</a></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
   </div>
 </div>
