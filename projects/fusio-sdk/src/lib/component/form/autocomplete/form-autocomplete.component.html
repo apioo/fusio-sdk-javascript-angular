@@ -10,7 +10,7 @@
     [inputFormatter]="objectFormatter"
     [resultFormatter]="objectFormatter"
     [editable]="false"
-    (ngModelChange)="selected.set($event);changeValue()"
+    (selectItem)="onSelect($event)"
     [disabled]="disabled()"
     (keydown.enter)="enter.emit()"
     placeholder="Type to search ..."

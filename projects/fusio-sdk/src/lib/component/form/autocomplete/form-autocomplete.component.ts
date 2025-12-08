@@ -15,7 +15,7 @@ import {
 } from "rxjs";
 import {fromPromise} from "rxjs/internal/observable/innerFrom";
 import {FormsModule} from "@angular/forms";
-import {NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
+import {NgbTypeahead, NgbTypeaheadSelectItemEvent} from "@ng-bootstrap/ng-bootstrap";
 import {NgClass} from "@angular/common";
 
 @Component({
@@ -79,12 +79,16 @@ export class FormAutocompleteComponent {
       const data = this.data();
       if (data) {
         this.selected.set(await this.service.getWithIdAndName((this.useTilde() ? '~' : '') + data));
+      } else {
+        this.selected.set(undefined);
       }
     });
   }
 
-  changeValue() {
-    const selected = this.selected();
+  onSelect(event: NgbTypeaheadSelectItemEvent) {
+    event.preventDefault();
+
+    const selected = event.item;
     if (this.disabled() || !selected) {
       return;
     }
