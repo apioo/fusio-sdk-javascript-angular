@@ -60,9 +60,9 @@ export class FormListComponent {
       return entries;
     });
 
-    this.newValue.set('');
-
     this.dataChange.emit(this.fromLocal());
+
+    this.newValue.set('');
   }
 
   doRemove(index: number) {
