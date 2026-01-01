@@ -1,6 +1,6 @@
 {
   "name": "ngx-fusio-sdk",
-  "version": "7.0.9",
+  "version": "7.1.0",
   "description": "SDK to integrate Fusio into an Angular app",
   "keywords": [
     "Fusio",
@@ -11,6 +11,7 @@
   "author": "Christoph Kappestein",
   "license": "MIT",
   "homepage": "https://www.fusio-project.org/",
+  "repository": "github:apioo/fusio-sdk-javascript-angular",
   "peerDependencies": {
     "@angular/common": "^20.3.0",
     "@angular/core": "^20.3.0"
