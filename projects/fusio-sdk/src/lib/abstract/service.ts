@@ -135,7 +135,7 @@ export abstract class Service<E> implements ServiceInterface<E> {
     };
   }
 
-  private getIdValue(entity: E): string|undefined
+  public getIdValue(entity: E): string|undefined
   {
     if (typeof entity === 'object' && entity && entity.hasOwnProperty(this.getIdKey())) {
       const id = (entity as any)[this.getIdKey()];
@@ -177,6 +177,8 @@ interface ServiceInterface<E> {
   delete(entity: E): Promise<CommonMessage>;
 
   getLink(): Array<string>;
+
+  getIdValue(entity: E): string|undefined;
 }
 
 export interface IdAndName<T> {

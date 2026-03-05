@@ -39,82 +39,82 @@ export abstract class Form<T> implements OnInit {
   }
 
   async doGet(id: string) {
-    this.getService().onReady().then(async (service) => {
-      try {
-        this.entity.set(await service.get(id));
+    const service = await this.getService().onReady();
 
-        this.onLoad();
-      } catch (error) {
-        this.response.set(this.error.convert(error));
+    try {
+      this.entity.set(await service.get(id));
 
-        this.onError();
-      }
-    });
+      this.onLoad();
+    } catch (error) {
+      this.response.set(this.error.convert(error));
+
+      this.onError();
+    }
   }
 
   async doCreate(entity: T|Signal<T>) {
-    this.getService().onReady().then(async (service) => {
-      try {
-        const payload = entity instanceof Function ? entity() : entity;
+    const service = await this.getService().onReady();
 
-        this.response.set(await service.create(this.beforeCreate(payload)));
+    try {
+      const payload = entity instanceof Function ? entity() : entity;
 
-        this.onSubmit();
-      } catch (error) {
-        this.response.set(this.error.convert(error));
+      this.response.set(await service.create(this.beforeCreate(payload)));
 
-        this.onError();
-      }
-    });
+      this.onSubmit();
+    } catch (error) {
+      this.response.set(this.error.convert(error));
+
+      this.onError();
+    }
   }
 
   async doUpdate(entity: T|Signal<T>) {
-    this.getService().onReady().then(async (service) => {
-      try {
-        const payload = entity instanceof Function ? entity() : entity;
+    const service = await this.getService().onReady();
 
-        this.response.set(await service.update(this.beforeUpdate(payload)));
+    try {
+      const payload = entity instanceof Function ? entity() : entity;
 
-        this.onSubmit();
-      } catch (error) {
-        this.response.set(this.error.convert(error));
+      this.response.set(await service.update(this.beforeUpdate(payload)));
 
-        this.onError();
-      }
-    });
+      this.onSubmit();
+    } catch (error) {
+      this.response.set(this.error.convert(error));
+
+      this.onError();
+    }
   }
 
   async doDelete(entity: T|Signal<T>) {
-    this.getService().onReady().then(async (service) => {
-      try {
-        const payload = entity instanceof Function ? entity() : entity;
+    const service = await this.getService().onReady();
 
-        this.response.set(await service.delete(this.beforeDelete(payload)));
+    try {
+      const payload = entity instanceof Function ? entity() : entity;
 
-        this.onSubmit();
-      } catch (error) {
-        this.response.set(this.error.convert(error));
+      this.response.set(await service.delete(this.beforeDelete(payload)));
 
-        this.onError();
-      }
-    });
+      this.onSubmit();
+    } catch (error) {
+      this.response.set(this.error.convert(error));
+
+      this.onError();
+    }
   }
 
-  public doList(): void
+  public async doList(): Promise<void>
   {
-    this.getService().onReady().then((service) => {
-      this.router.navigate(service.getLink());
-    });
+    const service = await this.getService().onReady();
+
+    await this.router.navigate(service.getLink());
   }
 
-  public doDetail(id: any): void
+  public async doDetail(id: any): Promise<void>
   {
-    this.getService().onReady().then((service) => {
-      const link = service.getLink();
-      link.push('' + id)
+    const service = await this.getService().onReady();
 
-      this.router.navigate(link);
-    });
+    const link = service.getLink();
+    link.push('' + id)
+
+    await this.router.navigate(link);
   }
 
   public set(entity: WritableSignal<T>, key: keyof T, propertyValue: any) {

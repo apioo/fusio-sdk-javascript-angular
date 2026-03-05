@@ -29,46 +29,46 @@ export abstract class Detail<T> implements OnInit {
   }
 
   async doGet(id: string) {
-    this.getService().onReady().then(async (service) => {
-      try {
-        this.selected.set(await service.get(id));
+    const service = await this.getService().onReady();
 
-        this.onLoad();
-      } catch (error) {
-        this.response.set(this.error.convert(error));
+    try {
+      this.selected.set(await service.get(id));
 
-        this.onError();
-      }
-    });
+      this.onLoad();
+    } catch (error) {
+      this.response.set(this.error.convert(error));
+
+      this.onError();
+    }
   }
 
-  public doList(): void
+  public async doList(): Promise<void>
   {
-    this.getService().onReady().then((service) => {
-      this.router.navigate(service.getLink());
-    });
+    const service = await this.getService().onReady();
+
+    await this.router.navigate(service.getLink());
   }
 
-  public doEdit(id: any): void
+  public async doEdit(id: any): Promise<void>
   {
-    this.getService().onReady().then((service) => {
-      const link = service.getLink();
-      link.push('' + id);
-      link.push('edit');
+    const service = await this.getService().onReady();
 
-      this.router.navigate(link);
-    });
+    const link = service.getLink();
+    link.push('' + id);
+    link.push('edit');
+
+    await this.router.navigate(link);
   }
 
-  public doDelete(id: any): void
+  public async doDelete(id: any): Promise<void>
   {
-    this.getService().onReady().then((service) => {
-      const link = service.getLink();
-      link.push('' + id);
-      link.push('delete');
+    const service = await this.getService().onReady();
 
-      this.router.navigate(link);
-    });
+    const link = service.getLink();
+    link.push('' + id);
+    link.push('delete');
+
+    await this.router.navigate(link);
   }
 
   protected abstract getService(): Service<T>;

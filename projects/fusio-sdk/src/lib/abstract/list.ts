@@ -33,6 +33,9 @@ export abstract class List<T> implements OnInit {
     return query;
   });
 
+  selectAll = signal<boolean>(false);
+  selected = signal<Record<string, boolean>>({});
+
   protected constructor(protected route: ActivatedRoute, public router: Router, protected error: ErrorService) {
   }
 
@@ -54,74 +57,103 @@ export abstract class List<T> implements OnInit {
   }
 
   async doList() {
-    this.getService().onReady().then(async (service) => {
-      try {
-        const response = await service.getAll(this.collectionQuery());
+    const service = await this.getService().onReady();
 
-        this.totalResults.set(response.totalResults || 0);
-        this.entries.set(response.entry || []);
+    try {
+      const response = await service.getAll(this.collectionQuery());
 
-        this.onLoad();
-      } catch (error) {
-        this.response.set(this.error.convert(error));
+      this.totalResults.set(response.totalResults || 0);
+      this.entries.set(response.entry || []);
+      this.selected.set(await this.getSelectedValues(false));
 
-        this.onError();
+      this.onLoad();
+    } catch (error) {
+      this.response.set(this.error.convert(error));
+
+      this.onError();
+    }
+  }
+
+  async doSearch(page?: number, search?: string) {
+    const service = await this.getService().onReady();
+
+    await this.router.navigate(service.getLink(), {
+      queryParams: {
+        page: page,
+        search: search,
       }
     });
   }
 
-  async doSearch(page?: number, search?: string) {
-    this.getService().onReady().then((service) => {
-      this.router.navigate(service.getLink(), {
-        queryParams: {
-          page: page,
-          search: search,
-        }
-      });
+  public async doDetail(id: any): Promise<void>
+  {
+    const service = await this.getService().onReady();
+
+    const link = service.getLink();
+    link.push('' + id);
+
+    await this.router.navigate(link);
+  }
+
+  public async doNew(): Promise<void>
+  {
+    const service = await this.getService().onReady();
+
+    const link = service.getLink();
+    link.push('-');
+    link.push('new');
+
+    await this.router.navigate(link);
+  }
+
+  public async doEdit(id: any): Promise<void>
+  {
+    const service = await this.getService().onReady();
+
+    const link = service.getLink();
+    link.push('' + id);
+    link.push('edit');
+
+    await this.router.navigate(link);
+  }
+
+  public async doDelete(id: any): Promise<void>
+  {
+    const service = await this.getService().onReady();
+
+    const link = service.getLink();
+    link.push('' + id);
+    link.push('delete');
+
+    await this.router.navigate(link);
+  }
+
+  async doSelect(entry: T) {
+    const service = await this.getService().onReady();
+    const id = service.getIdValue(entry);
+    if (!id) {
+      return;
+    }
+
+    this.selected.update((selected) => {
+      selected[id] = !selected[id];
+      return selected;
     });
   }
 
-  public doDetail(id: any): void
-  {
-    this.getService().onReady().then((service) => {
-      const link = service.getLink();
-      link.push('' + id);
-
-      this.router.navigate(link);
-    });
+  async toggleSelectAll() {
+    this.selectAll.set(!this.selectAll());
+    this.selected.set(await this.getSelectedValues(this.selectAll()));
   }
 
-  public doNew(): void
-  {
-    this.getService().onReady().then((service) => {
-      const link = service.getLink();
-      link.push('-');
-      link.push('new');
+  batchDisabled(): boolean {
+    for (const value of Object.values(this.selected())) {
+      if (value) {
+        return false;
+      }
+    }
 
-      this.router.navigate(link);
-    });
-  }
-
-  public doEdit(id: any): void
-  {
-    this.getService().onReady().then((service) => {
-      const link = service.getLink();
-      link.push('' + id);
-      link.push('edit');
-
-      this.router.navigate(link);
-    });
-  }
-
-  public doDelete(id: any): void
-  {
-    this.getService().onReady().then((service) => {
-      const link = service.getLink();
-      link.push('' + id);
-      link.push('delete');
-
-      this.router.navigate(link);
-    });
+    return true;
   }
 
   protected abstract getService(): Service<T>;
@@ -132,5 +164,19 @@ export abstract class List<T> implements OnInit {
 
   protected onError(): void
   {
+  }
+
+  private async getSelectedValues(value: boolean): Promise<Record<string, boolean>> {
+    const service = await this.getService().onReady();
+
+    const selected: Record<string, boolean> = {};
+    this.entries().forEach((entry) => {
+      const id = service.getIdValue(entry);
+      if (id) {
+        selected[id] = value;
+      }
+    });
+
+    return selected;
   }
 }
