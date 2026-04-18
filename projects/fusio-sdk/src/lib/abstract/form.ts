@@ -14,6 +14,7 @@ export abstract class Form<T> implements OnInit {
 
   entity!: WritableSignal<T>;
   response = signal<CommonMessage|undefined>(undefined);
+  loading = signal<boolean>(false);
   mode: Mode = Mode.Create;
 
   protected constructor(protected route: ActivatedRoute, public router: Router, protected error: ErrorService) {
@@ -55,6 +56,8 @@ export abstract class Form<T> implements OnInit {
   async doCreate(entity: T|Signal<T>) {
     const service = await this.getService().onReady();
 
+    this.loading.set(true);
+
     try {
       const payload = entity instanceof Function ? entity() : entity;
 
@@ -66,10 +69,14 @@ export abstract class Form<T> implements OnInit {
 
       this.onError();
     }
+
+    this.loading.set(false);
   }
 
   async doUpdate(entity: T|Signal<T>) {
     const service = await this.getService().onReady();
+
+    this.loading.set(true);
 
     try {
       const payload = entity instanceof Function ? entity() : entity;
@@ -82,10 +89,14 @@ export abstract class Form<T> implements OnInit {
 
       this.onError();
     }
+
+    this.loading.set(false);
   }
 
   async doDelete(entity: T|Signal<T>) {
     const service = await this.getService().onReady();
+
+    this.loading.set(true);
 
     try {
       const payload = entity instanceof Function ? entity() : entity;
@@ -98,6 +109,8 @@ export abstract class Form<T> implements OnInit {
 
       this.onError();
     }
+
+    this.loading.set(false);
   }
 
   public async doList(): Promise<void>
