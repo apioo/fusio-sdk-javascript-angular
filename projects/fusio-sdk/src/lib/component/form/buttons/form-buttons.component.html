@@ -1,0 +1,19 @@
+
+<div class="btn-group mb-5" role="group">
+  @if (mode() === 1) {
+    <fusio-form-button type="primary" title="Create" titleLoading="Creating" (onAction)="onCreate.emit()" [loading]="loading()"></fusio-form-button>
+  }
+  @else if (mode() === 2) {
+    <fusio-form-button type="primary" title="Update" titleLoading="Updating" (onAction)="onUpdate.emit()" [loading]="loading()"></fusio-form-button>
+  }
+  @else if (mode() === 3) {
+    <fusio-form-button type="danger" title="Delete" titleLoading="Deleting" (onAction)="onDelete.emit()" [loading]="loading()"></fusio-form-button>
+  }
+
+  @if (onBack.observed) {
+    <button type="button" class="btn btn-light fusio-btn-back" (click)="onBack.emit()">Back</button>
+  }
+  @if (onHelp.observed) {
+    <button type="button" class="btn btn-light" (click)="onHelp.emit()">Help</button>
+  }
+</div>
