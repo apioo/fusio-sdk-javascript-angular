@@ -1,8 +1,8 @@
 import {Component, computed, inject, input, resource, signal} from '@angular/core';
 import {AgentItem, BackendAgent, BackendAgentMessage, CommonMessage} from "fusio-sdk";
 import {Agent, BackendAgentContent, ExecutionIndicator, Message} from "../../abstract/agent";
-import {FusioService} from "../../service/fusio.service";
 import {ErrorService} from "../../service/error.service";
+import {AgentInterface, AgentService} from "../../service/agent.service";
 
 @Component({
   selector: 'fusio-agent-chat-abstract',
@@ -21,14 +21,14 @@ export abstract class ChatAbstract<TModel, TOptions = undefined> {
   executeMessages = signal<Array<Message>>([]);
   response = signal<CommonMessage|undefined>(undefined);
 
-  messagesResource = resource<Array<BackendAgentMessage>, { agent: BackendAgent, chatId: string, output: AgentItem|undefined }>({
+  messagesResource = resource<Array<BackendAgentMessage>, MessagesResourceParams>({
     params: () => ({
       agent: this.agent(),
       chatId: this.chatId(),
       output: this.output(),
     }),
     loader: async (params) => {
-      const collection = await this.api.getClient().backend().agent().message().getAll('' + params.params.agent.id, params.params.chatId);
+      const collection = await this.service.getAll(params.params);
       const entries = collection.entry || [];
 
       let lastMessage: BackendAgentMessage|undefined;
@@ -57,7 +57,7 @@ export abstract class ChatAbstract<TModel, TOptions = undefined> {
     return undefined;
   });
 
-  protected api = inject(FusioService);
+  protected service: AgentInterface = inject(AgentService);
   protected error = inject(ErrorService);
 
   abstract getAgent(): Agent<TModel, TOptions>;
@@ -153,4 +153,10 @@ export abstract class ChatAbstract<TModel, TOptions = undefined> {
     }, 500);
   }
 
+}
+
+export interface MessagesResourceParams {
+  agent: BackendAgent
+  chatId: string
+  output: AgentItem|undefined
 }

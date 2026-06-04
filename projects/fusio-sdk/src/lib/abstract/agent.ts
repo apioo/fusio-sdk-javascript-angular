@@ -6,11 +6,10 @@ import {
   AgentItemObject,
   AgentItemText,
   AgentItemToolCall,
-  AgentOutput,
   CommonMessage
 } from "fusio-sdk";
 import {inject} from "@angular/core";
-import {FusioService} from "../service/fusio.service";
+import {AgentInterface, AgentService} from "../service/agent.service";
 
 export interface Agent<TModel, TOptions = undefined> {
 
@@ -33,7 +32,7 @@ export interface Agent<TModel, TOptions = undefined> {
 
 export abstract class AgentAbstract<TModel, TOptions = undefined> implements Agent<TModel, TOptions> {
 
-  protected api = inject(FusioService);
+  protected service: AgentInterface = inject(AgentService);
 
   async prompt(agentId: number, prompt: string, chatId?: string): Promise<BackendAgentContent|undefined> {
     const input: AgentInput = {
@@ -44,15 +43,13 @@ export abstract class AgentAbstract<TModel, TOptions = undefined> implements Age
       }
     };
 
-    const output = await this.submit(agentId, input);
+    const output = await this.service.submit(agentId, input);
     if (!output.item) {
       return;
     }
 
     return output.item;
   }
-
-  abstract submit(agentId: number, input: AgentInput): Promise<AgentOutput>;
 
   abstract transform(content: BackendAgentContent): TModel|undefined;
 
