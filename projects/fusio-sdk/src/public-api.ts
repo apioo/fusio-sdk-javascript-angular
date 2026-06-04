@@ -2,6 +2,7 @@
  * Public API Surface of fusio-sdk
  */
 
+export * from './lib/abstract/agent';
 export * from './lib/abstract/detail';
 export * from './lib/abstract/form';
 export * from './lib/abstract/list';
@@ -9,6 +10,10 @@ export * from './lib/abstract/service';
 
 export * from './lib/component/account/account.component';
 export * from './lib/component/account-container/account-container.component';
+export * from './lib/component/agent/chat-abstract';
+export * from './lib/component/agent/input/input';
+export * from './lib/component/agent/row/row';
+export * from './lib/component/agent/type/type';
 export * from './lib/component/bootstrap/bootstrap.component';
 export * from './lib/component/empty/empty.component';
 export * from './lib/component/form/autocomplete/form-autocomplete.component';
