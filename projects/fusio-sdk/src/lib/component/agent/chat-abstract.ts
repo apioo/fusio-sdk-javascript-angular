@@ -2,7 +2,7 @@ import {Component, computed, inject, input, resource, signal} from '@angular/cor
 import {AgentItem, BackendAgent, BackendAgentMessage, CommonMessage} from "fusio-sdk";
 import {Agent, AgentContent, ExecutionIndicator, Message} from "../../abstract/agent";
 import {ErrorService} from "../../service/error.service";
-import {AgentInterface, AgentService} from "../../service/agent.service";
+import {AgentConnectionInterface, AgentConnectionService} from "../../service/agent/agent-connection.service";
 
 @Component({
   selector: 'fusio-agent-chat-abstract',
@@ -28,7 +28,7 @@ export abstract class ChatAbstract<TModel, TOptions = undefined> {
       output: this.output(),
     }),
     loader: async (params) => {
-      const collection = await this.service.getMessages(params.params);
+      const collection = await this.agentConnection.getMessages(params.params);
       const entries = collection.entry || [];
 
       let lastMessage: BackendAgentMessage|undefined;
@@ -57,7 +57,7 @@ export abstract class ChatAbstract<TModel, TOptions = undefined> {
     return undefined;
   });
 
-  protected service: AgentInterface = inject(AgentService);
+  protected agentConnection: AgentConnectionInterface = inject(AgentConnectionService);
   protected error = inject(ErrorService);
 
   abstract getAgent(): Agent<TModel, TOptions>;

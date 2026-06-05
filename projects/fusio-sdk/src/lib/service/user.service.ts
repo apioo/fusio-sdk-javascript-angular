@@ -1,7 +1,6 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {ConsumerUserAccount} from "fusio-sdk";
 import {FusioService} from "./fusio.service";
-import {EventService} from "./event.service";
 import {ConfigService} from "./config.service";
 
 @Injectable({
@@ -9,7 +8,8 @@ import {ConfigService} from "./config.service";
 })
 export class UserService {
 
-  constructor(private fusio: FusioService, private config: ConfigService) { }
+  private fusio = inject(FusioService);
+  private config = inject(ConfigService);
 
   public login(user: ConsumerUserAccount): void {
     sessionStorage.setItem(this.getKey(), JSON.stringify(user));

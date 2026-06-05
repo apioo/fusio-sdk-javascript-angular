@@ -1,4 +1,4 @@
-import {EnvironmentInjector, Injectable, runInInjectionContext} from '@angular/core';
+import {EnvironmentInjector, inject, Injectable, runInInjectionContext} from '@angular/core';
 import {ConfigService} from "./config.service";
 import {FusioService} from "./fusio.service";
 
@@ -7,8 +7,9 @@ import {FusioService} from "./fusio.service";
 })
 export class NavigationService {
 
-  constructor(private backend: FusioService, private config: ConfigService, private injector: EnvironmentInjector) {
-  }
+  private backend = inject(FusioService);
+  private config = inject(ConfigService);
+  private injector = inject(EnvironmentInjector);
 
   async getMainNavigation(): Promise<Array<GroupItem>> {
     return this.checkPermissions(this.config.getNavigation());

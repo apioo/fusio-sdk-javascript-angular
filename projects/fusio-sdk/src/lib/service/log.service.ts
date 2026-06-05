@@ -1,5 +1,5 @@
 import {CommonCollection, CommonMessage, ConsumerLog} from "fusio-sdk";
-import {Injectable} from "@angular/core";
+import {inject, Injectable} from "@angular/core";
 import {Service} from "../abstract/service";
 import {FusioService} from "./fusio.service";
 
@@ -8,9 +8,7 @@ import {FusioService} from "./fusio.service";
 })
 export class LogService extends Service<ConsumerLog> {
 
-  constructor(private fusio: FusioService) {
-    super();
-  }
+  private fusio = inject(FusioService);
 
   async getAll(parameters: Array<any>): Promise<CommonCollection<ConsumerLog>> {
     return this.fusio.getClient().consumer().log().getAll(...parameters);

@@ -9,7 +9,7 @@ import {
   CommonMessage
 } from "fusio-sdk";
 import {inject} from "@angular/core";
-import {AgentInterface, AgentService} from "../service/agent.service";
+import {AgentConnectionInterface, AgentConnectionService} from "../service/agent/agent-connection.service";
 
 export interface Agent<TModel, TOptions = undefined> {
 
@@ -32,7 +32,7 @@ export interface Agent<TModel, TOptions = undefined> {
 
 export abstract class AgentAbstract<TModel, TOptions = undefined> implements Agent<TModel, TOptions> {
 
-  protected service: AgentInterface = inject(AgentService);
+  protected agentConnection: AgentConnectionInterface = inject(AgentConnectionService);
 
   async prompt(agentId: number, prompt: string, chatId?: string): Promise<AgentContent|undefined> {
     const input: AgentInput = {
@@ -43,7 +43,7 @@ export abstract class AgentAbstract<TModel, TOptions = undefined> implements Age
       }
     };
 
-    const output = await this.service.submit('' + agentId, input);
+    const output = await this.agentConnection.submit('' + agentId, input);
     if (!output.item) {
       return;
     }

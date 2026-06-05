@@ -1,15 +1,14 @@
 import {AgentInput, AgentOutput, ConsumerAgent, ConsumerAgentMessageCollection} from "fusio-sdk";
-import {Injectable} from "@angular/core";
-import {FusioService} from "./fusio.service";
-import {MessagesResourceParams} from "../component/agent/chat-abstract";
+import {inject, Injectable} from "@angular/core";
+import {FusioService} from "../fusio.service";
+import {MessagesResourceParams} from "../../component/agent/chat-abstract";
 
 @Injectable({
   providedIn: 'root'
 })
-export class AgentService implements AgentInterface {
+export class AgentConnectionService implements AgentConnectionInterface {
 
-  constructor(private fusio: FusioService) {
-  }
+  private fusio = inject(FusioService);
 
   async getMessages(params: MessagesResourceParams): Promise<ConsumerAgentMessageCollection> {
     return this.fusio.getClient().consumer().agent().message().getAll('' + params.agent.id, params.chatId);
@@ -29,7 +28,7 @@ export class AgentService implements AgentInterface {
 
 }
 
-export interface AgentInterface {
+export interface AgentConnectionInterface {
 
   getMessages(params: MessagesResourceParams): Promise<ConsumerAgentMessageCollection>;
 

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {CommonCollection, CommonMessage, ConsumerEvent} from "fusio-sdk";
 import {FusioService} from "./fusio.service";
 import {Service} from "../abstract/service";
@@ -8,9 +8,7 @@ import {Service} from "../abstract/service";
 })
 export class EventService extends Service<ConsumerEvent> {
 
-  constructor(private fusio: FusioService) {
-    super();
-  }
+  private fusio = inject(FusioService);
 
   async getAll(parameters: Array<any>): Promise<CommonCollection<ConsumerEvent>> {
     return this.fusio.getClient().consumer().event().getAll(...parameters);

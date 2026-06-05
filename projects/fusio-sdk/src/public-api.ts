@@ -45,7 +45,7 @@ export * from './lib/config/config';
 
 export * from './lib/guard/authentication.guard';
 
-export * from './lib/service/agent.service';
+export * from './lib/service/agent/agent-connection.service';
 export * from './lib/service/api.service';
 export * from './lib/service/app.service';
 export * from './lib/service/config.service';

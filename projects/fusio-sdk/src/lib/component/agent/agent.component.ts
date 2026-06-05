@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {CommonMessage, ConsumerAgent} from "fusio-sdk";
 import {FusioService} from "../../service/fusio.service";
 import {ErrorService} from "../../service/error.service";
@@ -21,7 +21,8 @@ export class AgentComponent implements OnInit {
   agents = signal<Array<ConsumerAgent>>([]);
   response = signal<CommonMessage|undefined>(undefined);
 
-  constructor(private fusio: FusioService, private error: ErrorService) { }
+  private fusio = inject(FusioService);
+  private error = inject(ErrorService);
 
   async ngOnInit(): Promise<void> {
     try {

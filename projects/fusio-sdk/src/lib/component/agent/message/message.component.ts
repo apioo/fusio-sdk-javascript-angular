@@ -1,12 +1,13 @@
-import {Component, computed, OnInit, signal} from '@angular/core';
+import {Component, computed, inject, OnInit, signal} from '@angular/core';
 import {AgentInput, BackendAgentMessage, CommonMessage, ConsumerAgent} from "fusio-sdk";
-import {AgentService} from "../../../service/agent.service";
+import {AgentConnectionInterface, AgentConnectionService} from "../../../service/agent/agent-connection.service";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {ErrorService} from "../../../service/error.service";
 import {Input} from "../input/input";
 import {General} from "./general/general";
 import {MessageComponent as ResponseComponent} from "../../message/message.component";
 import {NgClass} from "@angular/common";
+import {FusioService} from "../../../service/fusio.service";
 
 @Component({
   selector: 'fusio-agent-message',
@@ -38,13 +39,15 @@ export class MessageComponent implements OnInit {
     return result;
   });
 
-  constructor(private agentService: AgentService, private route: ActivatedRoute, private router: Router, protected error: ErrorService) {
-  }
+  private agentConnection: AgentConnectionInterface = inject(AgentConnectionService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private error = inject(ErrorService);
 
   ngOnInit(): void {
     this.route.params.subscribe(async (params) => {
       if (params['id']) {
-        const agent = await this.agentService.get(params['id']);
+        const agent = await this.agentConnection.get(params['id']);
         if (agent) {
           this.agent.set(agent);
           this.loadChats();
@@ -65,7 +68,7 @@ export class MessageComponent implements OnInit {
     }
 
     try {
-      const collection = await this.agentService.getChats('' + agentId);
+      const collection = await this.agentConnection.getChats('' + agentId);
 
       this.loading.set(false);
       this.chats.set(collection.entry || []);
@@ -101,7 +104,7 @@ export class MessageComponent implements OnInit {
     this.loading.set(true);
 
     try {
-      const output = await this.agentService.submit('' + agentId, payload);
+      const output = await this.agentConnection.submit('' + agentId, payload);
 
       this.loading.set(false);
 
