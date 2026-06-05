@@ -4,7 +4,6 @@ import {AgentService} from "../../../service/agent.service";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {ErrorService} from "../../../service/error.service";
 import {Input} from "../input/input";
-import {Type} from "../type/type";
 import {General} from "./general/general";
 import {MessageComponent as ResponseComponent} from "../../message/message.component";
 import {NgClass} from "@angular/common";
@@ -13,7 +12,6 @@ import {NgClass} from "@angular/common";
   selector: 'fusio-agent-message',
   imports: [
     Input,
-    Type,
     General,
     ResponseComponent,
     RouterLink,

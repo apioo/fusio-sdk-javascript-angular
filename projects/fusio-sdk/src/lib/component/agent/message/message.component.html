@@ -15,12 +15,11 @@
     </div>
     <div class="col-xl-10">
       @if (chatId(); as selected) {
-        <app-agent-message-general [agent]="agent" [chatId]="selected"></app-agent-message-general>
+        <fusio-agent-message-general [agent]="agent" [chatId]="selected"></fusio-agent-message-general>
       }
       @else {
         <div class="text-center p-4 fw-bold">
           {{ agent.description }}<br>
-          <fusio-agent-message-type [value]="0"></fusio-agent-message-type>
         </div>
         <div id="messages-bottom"></div>
         <fusio-agent-message-input [loading]="loading()" (send)="doSend($event)"></fusio-agent-message-input>
