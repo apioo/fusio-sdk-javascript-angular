@@ -95,6 +95,10 @@ export class ConfigService {
       path: '/account/subscription',
       scope: 'consumer.payment',
     }, {
+      title: 'Agent',
+      path: '/account/agent',
+      scope: 'consumer.agent',
+    }, {
       title: 'Webhook',
       path: '/account/webhook',
       scope: 'consumer.webhook',

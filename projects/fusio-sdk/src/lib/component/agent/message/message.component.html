@@ -1,0 +1,30 @@
+
+<fusio-message [response]="response()"></fusio-message>
+
+@if (agent(); as agent) {
+  <div class="row">
+    <div class="col-xl-2">
+      <button type="button" class="btn btn-success mb-3" [routerLink]="['/', 'account', 'agent', agent?.id, 'message']">New Chat</button>
+      <div class="list-group">
+        @for (chat of chats(); track chat.id) {
+          @if (chat.item && chat.item.type === 'text' && chat.item && 'content' in chat.item) {
+            <button type="button" class="list-group-item list-group-item-action overflow-hidden text-nowrap text-truncate" [ngClass]="{'active': chat.chatId === chatId()}" [title]="chat.item.content" (click)="loadChat(chat)">{{ chat.item.content }}</button>
+          }
+        }
+      </div>
+    </div>
+    <div class="col-xl-10">
+      @if (chatId(); as selected) {
+        <app-agent-message-general [agent]="agent" [chatId]="selected"></app-agent-message-general>
+      }
+      @else {
+        <div class="text-center p-4 fw-bold">
+          {{ agent.description }}<br>
+          <fusio-agent-message-type [value]="0"></fusio-agent-message-type>
+        </div>
+        <div id="messages-bottom"></div>
+        <fusio-agent-message-input [loading]="loading()" (send)="doSend($event)"></fusio-agent-message-input>
+      }
+    </div>
+  </div>
+}

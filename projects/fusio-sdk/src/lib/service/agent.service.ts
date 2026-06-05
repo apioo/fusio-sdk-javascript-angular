@@ -1,4 +1,4 @@
-import {AgentInput, AgentOutput, BackendAgentMessageCollection} from "fusio-sdk";
+import {AgentInput, AgentOutput, ConsumerAgent, ConsumerAgentMessageCollection} from "fusio-sdk";
 import {Injectable} from "@angular/core";
 import {FusioService} from "./fusio.service";
 import {MessagesResourceParams} from "../component/agent/chat-abstract";
@@ -11,20 +11,32 @@ export class AgentService implements AgentInterface {
   constructor(private fusio: FusioService) {
   }
 
-  async getAll(params: MessagesResourceParams): Promise<BackendAgentMessageCollection> {
-    return this.fusio.getClient().backend().agent().message().getAll('' + params.agent.id, params.chatId);
+  async getMessages(params: MessagesResourceParams): Promise<ConsumerAgentMessageCollection> {
+    return this.fusio.getClient().consumer().agent().message().getAll('' + params.agent.id, params.chatId);
   }
 
-  async submit(agentId: number, input: AgentInput): Promise<AgentOutput> {
-    return this.fusio.getClient().backend().agent().message().submit('' + agentId, input);
+  async getChats(agentId: string): Promise<ConsumerAgentMessageCollection> {
+    return this.fusio.getClient().consumer().agent().message().getAll(agentId);
+  }
+
+  async get(agentId: string): Promise<ConsumerAgent> {
+    return this.fusio.getClient().consumer().agent().get(agentId);
+  }
+
+  async submit(agentId: string, input: AgentInput): Promise<AgentOutput> {
+    return this.fusio.getClient().consumer().agent().message().submit(agentId, input);
   }
 
 }
 
 export interface AgentInterface {
 
-  getAll(params: MessagesResourceParams): Promise<BackendAgentMessageCollection>;
+  getMessages(params: MessagesResourceParams): Promise<ConsumerAgentMessageCollection>;
 
-  submit(agentId: number, input: AgentInput): Promise<AgentOutput>;
+  getChats(agentId: string): Promise<ConsumerAgentMessageCollection>;
+
+  get(agentId: string): Promise<ConsumerAgent>;
+
+  submit(agentId: string, input: AgentInput): Promise<AgentOutput>;
 
 }

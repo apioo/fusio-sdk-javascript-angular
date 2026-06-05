@@ -1,0 +1,16 @@
+
+<fusio-message [response]="response()"></fusio-message>
+
+@for (agent of agents(); track agent.id) {
+  <div class="card float-start" style="width:24rem;margin-right:1rem;margin-bottom:1rem">
+    <h5 class="card-header">{{agent.name}}</h5>
+    <div class="card-body">
+      <markdown [data]="agent.description"></markdown>
+        <div class="btn-group w-100" role="group">
+        <a [routerLink]="['/', 'account', 'agent', agent.id, 'message']" class="btn btn-primary">Messages</a>
+      </div>
+    </div>
+  </div>
+}
+
+<div style="clear:both"></div>

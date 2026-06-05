@@ -1,6 +1,6 @@
 import {Component, computed, inject, input, resource, signal} from '@angular/core';
 import {AgentItem, BackendAgent, BackendAgentMessage, CommonMessage} from "fusio-sdk";
-import {Agent, BackendAgentContent, ExecutionIndicator, Message} from "../../abstract/agent";
+import {Agent, AgentContent, ExecutionIndicator, Message} from "../../abstract/agent";
 import {ErrorService} from "../../service/error.service";
 import {AgentInterface, AgentService} from "../../service/agent.service";
 
@@ -28,7 +28,7 @@ export abstract class ChatAbstract<TModel, TOptions = undefined> {
       output: this.output(),
     }),
     loader: async (params) => {
-      const collection = await this.service.getAll(params.params);
+      const collection = await this.service.getMessages(params.params);
       const entries = collection.entry || [];
 
       let lastMessage: BackendAgentMessage|undefined;
@@ -89,7 +89,7 @@ export abstract class ChatAbstract<TModel, TOptions = undefined> {
     this.loading.set(false);
   }
 
-  load(content?: BackendAgentContent): void {
+  load(content?: AgentContent): void {
     if (!content) {
       return;
     }

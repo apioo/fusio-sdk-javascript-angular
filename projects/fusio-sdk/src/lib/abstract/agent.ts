@@ -21,7 +21,7 @@ export interface Agent<TModel, TOptions = undefined> {
   /**
    * Transforms the agent content into a model
    */
-  transform(content: BackendAgentContent): TModel|undefined;
+  transform(content: AgentContent): TModel|undefined;
 
   /**
    * Executes the provided model, mostly this means that we create or update the model
@@ -34,7 +34,7 @@ export abstract class AgentAbstract<TModel, TOptions = undefined> implements Age
 
   protected service: AgentInterface = inject(AgentService);
 
-  async prompt(agentId: number, prompt: string, chatId?: string): Promise<BackendAgentContent|undefined> {
+  async prompt(agentId: number, prompt: string, chatId?: string): Promise<AgentContent|undefined> {
     const input: AgentInput = {
       previousId: chatId,
       item: {
@@ -43,7 +43,7 @@ export abstract class AgentAbstract<TModel, TOptions = undefined> implements Age
       }
     };
 
-    const output = await this.service.submit(agentId, input);
+    const output = await this.service.submit('' + agentId, input);
     if (!output.item) {
       return;
     }
@@ -51,11 +51,11 @@ export abstract class AgentAbstract<TModel, TOptions = undefined> implements Age
     return output.item;
   }
 
-  abstract transform(content: BackendAgentContent): TModel|undefined;
+  abstract transform(content: AgentContent): TModel|undefined;
 
   abstract execute(model: TModel, indicator: ExecutionIndicator, options?: TOptions): Promise<CommonMessage|undefined>;
 
-  protected getText(content: BackendAgentContent): string|undefined {
+  protected getText(content: AgentContent): string|undefined {
     if (content.type === 'text' && content.content) {
       return content.content;
     }
@@ -63,7 +63,7 @@ export abstract class AgentAbstract<TModel, TOptions = undefined> implements Age
     return;
   }
 
-  protected getJson(content: BackendAgentContent): object|undefined {
+  protected getJson(content: AgentContent): object|undefined {
     if (content.type === 'object' && content.payload) {
       return content.payload;
     }
@@ -120,4 +120,4 @@ export interface Message
 
 export type Level = 'info'|'danger'|'success';
 
-export type BackendAgentContent = AgentItemBinary | AgentItemChoice | AgentItemObject | AgentItemText | AgentItemToolCall;
+export type AgentContent = AgentItemBinary | AgentItemChoice | AgentItemObject | AgentItemText | AgentItemToolCall;
