@@ -9,7 +9,7 @@ import {ChatAbstract} from "../../chat-abstract";
 import {MessageComponent} from "../../../message/message.component";
 
 @Component({
-  selector: 'app-agent-message-general',
+  selector: 'fusio-agent-message-general',
   imports: [
     FormsModule,
     ReactiveFormsModule,
