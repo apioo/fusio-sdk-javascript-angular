@@ -10,10 +10,10 @@ export * from './lib/abstract/service';
 
 export * from './lib/component/account/account.component';
 export * from './lib/component/account-container/account-container.component';
-export * from './lib/component/agent/chat-abstract';
 export * from './lib/component/agent/input/input';
 export * from './lib/component/agent/row/row';
 export * from './lib/component/agent/type/type';
+export * from './lib/component/agent/chat-abstract';
 export * from './lib/component/bootstrap/bootstrap.component';
 export * from './lib/component/empty/empty.component';
 export * from './lib/component/form/autocomplete/form-autocomplete.component';
@@ -45,6 +45,7 @@ export * from './lib/config/config';
 
 export * from './lib/guard/authentication.guard';
 
+export * from './lib/service/agent.service';
 export * from './lib/service/api.service';
 export * from './lib/service/app.service';
 export * from './lib/service/config.service';
