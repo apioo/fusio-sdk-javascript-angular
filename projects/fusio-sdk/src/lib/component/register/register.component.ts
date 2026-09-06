@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, signal} from '@angular/core';
 import {CommonMessage, ConsumerUserRegister} from "fusio-sdk";
 import {FusioService} from "../../service/fusio.service";
 import {ConfigService} from "../../service/config.service";
@@ -6,6 +6,7 @@ import {ErrorService} from "../../service/error.service";
 import {MessageComponent} from "../message/message.component";
 import {FormsModule} from "@angular/forms";
 import {NgxCaptchaModule} from "ngx-captcha";
+import {Captcha} from "../captcha/captcha";
 
 @Component({
   selector: 'fusio-register',
@@ -13,7 +14,8 @@ import {NgxCaptchaModule} from "ngx-captcha";
   imports: [
     MessageComponent,
     FormsModule,
-    NgxCaptchaModule
+    NgxCaptchaModule,
+    Captcha
   ],
   styleUrls: ['./register.component.css']
 })

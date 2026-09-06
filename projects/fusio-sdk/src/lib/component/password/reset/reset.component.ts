@@ -7,6 +7,7 @@ import {ConfigService} from "../../../service/config.service";
 import {MessageComponent} from "../../message/message.component";
 import {FormsModule} from "@angular/forms";
 import {NgxCaptchaModule} from "ngx-captcha";
+import {Captcha} from "../../captcha/captcha";
 
 @Component({
   selector: 'fusio-password-reset',
@@ -14,7 +15,8 @@ import {NgxCaptchaModule} from "ngx-captcha";
   imports: [
     MessageComponent,
     FormsModule,
-    NgxCaptchaModule
+    NgxCaptchaModule,
+    Captcha
   ],
   styleUrls: ['./reset.component.css']
 })

@@ -1,0 +1,53 @@
+<div class="card shadow-sm border rounded p-3 mb-3" style="background-color: #f9f9f9;">
+  <div class="d-flex align-items-center justify-content-between">
+
+    <!-- Left Section: Interactive State / Checkbox -->
+    <div class="d-flex align-items-center gap-3">
+
+      <!-- Verified State -->
+      @if (status() === 'verified') {
+        <div class="d-flex align-items-center justify-content-center bg-success text-white rounded-circle" style="width: 28px; height: 28px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+          </svg>
+        </div>
+        <span class="fw-medium text-dark small">Success!</span>
+      }
+
+      <!-- Loading / Solving State -->
+      @else if (status() === 'loading' || status() === 'solving') {
+        <div class="spinner-border spinner-border-sm text-primary" role="status" style="width: 24px; height: 24px;">
+          <span class="visually-hidden">Verifying ...</span>
+        </div>
+        <span class="text-muted small">Verifying ...</span>
+      }
+
+      <!-- Error State -->
+      @else if (status() === 'error') {
+        <div class="d-flex align-items-center justify-content-center bg-danger text-white rounded-circle" style="width: 28px; height: 28px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+          </svg>
+        </div>
+        <button type="button" (click)="solve()" class="btn btn-link btn-sm text-danger p-0 text-decoration-underline align-baseline">
+          Failed. Retry?
+        </button>
+      }
+
+      <!-- Manual Trigger State (if auto=false) -->
+      @else {
+        <div class="form-check m-0">
+          <input
+            class="form-check-input custom-captcha-checkbox"
+            type="checkbox"
+            id="captchaCheck"
+            (change)="solve()"
+            style="width: 22px; height: 22px; cursor: pointer;">
+          <label class="form-check-label ms-2 text-dark small align-middle" for="captchaCheck" style="cursor: pointer;">
+            I am human
+          </label>
+        </div>
+      }
+    </div>
+  </div>
+</div>
