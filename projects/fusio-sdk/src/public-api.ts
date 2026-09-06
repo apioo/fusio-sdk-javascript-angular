@@ -15,6 +15,7 @@ export * from './lib/component/agent/row/row';
 export * from './lib/component/agent/type/type';
 export * from './lib/component/agent/chat-abstract';
 export * from './lib/component/bootstrap/bootstrap.component';
+export * from './lib/component/captcha/captcha';
 export * from './lib/component/empty/empty.component';
 export * from './lib/component/form/autocomplete/form-autocomplete.component';
 export * from './lib/component/form/breadcrump/form-breadcrumb.component';
