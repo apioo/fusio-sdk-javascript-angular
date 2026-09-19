@@ -45,6 +45,8 @@ export abstract class ChatAbstract<TModel, TOptions = undefined> {
 
       if (lastMessage && lastMessage.item) {
         this.load(lastMessage.item);
+      } else {
+        this.onEmpty();
       }
 
       return messages;
@@ -134,6 +136,9 @@ export abstract class ChatAbstract<TModel, TOptions = undefined> {
   }
 
   protected onLoad(): void {
+  }
+
+  protected onEmpty(): void {
   }
 
   protected onSend(): void {
