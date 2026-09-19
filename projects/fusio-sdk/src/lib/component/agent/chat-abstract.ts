@@ -12,6 +12,7 @@ export abstract class ChatAbstract<TModel, TOptions = undefined> {
 
   agent = input.required<BackendAgent>();
   chatId = input.required<string>();
+  refId = input<number>(0);
 
   model = signal<TModel|undefined>(undefined);
 
@@ -25,6 +26,7 @@ export abstract class ChatAbstract<TModel, TOptions = undefined> {
     params: () => ({
       agent: this.agent(),
       chatId: this.chatId(),
+      refId: this.refId(),
       output: this.output(),
     }),
     loader: async (params) => {
@@ -157,6 +159,7 @@ export abstract class ChatAbstract<TModel, TOptions = undefined> {
 
 export interface MessagesResourceParams {
   agent: BackendAgent
+  refId: number
   chatId: string
   output: AgentItem|undefined
 }

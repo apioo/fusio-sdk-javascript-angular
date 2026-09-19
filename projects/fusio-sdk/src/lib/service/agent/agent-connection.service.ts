@@ -11,7 +11,7 @@ export class AgentConnectionService implements AgentConnectionInterface {
   private fusio = inject(FusioService);
 
   async getMessages(params: MessagesResourceParams): Promise<ConsumerAgentMessageCollection> {
-    return this.fusio.getClient().consumer().agent().message().getAll('' + params.agent.id, params.chatId);
+    return this.fusio.getClient().consumer().agent().message().getAll('' + params.agent.id, params.refId, params.chatId);
   }
 
   async getChats(agentId: string): Promise<ConsumerAgentMessageCollection> {
