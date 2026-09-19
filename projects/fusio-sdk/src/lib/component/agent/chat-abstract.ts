@@ -43,10 +43,14 @@ export abstract class ChatAbstract<TModel, TOptions = undefined> {
         }
       });
 
-      if (lastMessage && lastMessage.item) {
-        this.load(lastMessage.item);
-      } else {
-        this.onEmpty();
+      try {
+        if (lastMessage && lastMessage.item) {
+          this.load(lastMessage.item);
+        } else {
+          this.onEmpty();
+        }
+      } catch (error) {
+        this.response.set(this.error.convert(error));
       }
 
       return messages;
