@@ -11,11 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: '22'
+          node-version: '24'
           registry-url: 'https://registry.npmjs.org'
-      - run: npm install -g npm@~11.10.0
       - run: npm ci
       - run: npm run build --if-present
       - run: cd dist/fusio-sdk && npm version ${{ github.ref_name }} --no-git-tag-version --allow-same-version
