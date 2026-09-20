@@ -74,12 +74,20 @@ export class Container implements OnInit {
     };
   });
 
-  private registry = inject(FUSIO_AGENT_CHAT_REGISTRY, { optional: true });
+  private registry = inject(FUSIO_AGENT_CHAT_REGISTRY);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private error = inject(ErrorService);
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(async (params) => {
+      if (params['ref_id']) {
+        this.refId.set(parseInt(params['ref_id']));
+      } else {
+        this.refId.set(0);
+      }
+    });
+
     this.route.params.subscribe(async (params) => {
       if (params['id']) {
         const agent = await this.connection().get(params['id']);
