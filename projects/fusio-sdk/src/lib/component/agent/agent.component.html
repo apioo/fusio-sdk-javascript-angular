@@ -6,7 +6,7 @@
     <h5 class="card-header">{{agent.name}}</h5>
     <div class="card-body">
       <markdown [data]="agent.description"></markdown>
-        <div class="btn-group w-100" role="group">
+      <div class="btn-group w-100" role="group">
         <a [routerLink]="['/', 'account', 'agent', agent.id, 'message']" class="btn btn-primary">Messages</a>
       </div>
     </div>
