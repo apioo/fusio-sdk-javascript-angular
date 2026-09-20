@@ -3,11 +3,11 @@ import {AgentChatRegistry, FUSIO_AGENT_CHAT_REGISTRY} from '../service/agent/age
 import {Chat} from "../abstract/agent/chat";
 import {General} from "../component/agent/chat/general/general";
 
-export const DEFAULT_AGENT_CHAT_TYPES: [number, Type<Chat<any>>][] = [
+export const DEFAULT_AGENT_CHAT_TYPES: [number, Type<Chat<any, any>>][] = [
   [0, General],
 ];
 
-export function provideAgentChatTypes(customTypes: [number, Type<Chat<any>>][] = []): Provider {
+export function provideAgentChatTypes(customTypes: [number, Type<Chat<any, any>>][] = []): Provider {
   return {
     provide: FUSIO_AGENT_CHAT_REGISTRY,
     useFactory: () => {
