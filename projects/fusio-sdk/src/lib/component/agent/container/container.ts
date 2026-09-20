@@ -1,4 +1,4 @@
-import {Component, computed, inject, input, OnInit, signal} from '@angular/core';
+import {Component, computed, inject, input, OnInit, output, signal} from '@angular/core';
 import {AgentInput, CommonMessage, ConsumerAgent, ConsumerAgentMessage} from "fusio-sdk";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ErrorService} from "../../../service/error.service";
@@ -33,6 +33,9 @@ export class Container implements OnInit {
 
   refId = signal<number>(0);
   chatId = signal<string|undefined>(undefined);
+
+  agentLoad = output<ConsumerAgent>();
+
   selected = computed<ConsumerAgentMessage|undefined>((): ConsumerAgentMessage|undefined => {
     let result = undefined;
     this.chats().forEach((chat) => {
@@ -81,6 +84,7 @@ export class Container implements OnInit {
         const agent = await this.connection().get(params['id']);
         if (agent) {
           this.agent.set(agent);
+          this.agentLoad.emit(agent);
           this.loadChats();
         }
       }
