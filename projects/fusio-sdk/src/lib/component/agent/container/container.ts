@@ -61,7 +61,8 @@ export class Container implements OnInit {
     if (type === undefined || !this.registry) {
       return null;
     }
-    return this.registry.get(type) ?? null;
+
+    return this.registry.get(type)?.type;
   });
 
   componentInputs = computed(() => {

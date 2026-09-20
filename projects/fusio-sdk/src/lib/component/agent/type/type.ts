@@ -10,7 +10,7 @@ import {FUSIO_AGENT_CHAT_REGISTRY} from "../../../service/agent/agent-chat-regis
 })
 export class Type {
 
-  private registry = inject(FUSIO_AGENT_CHAT_REGISTRY, { optional: true });
+  private registry = inject(FUSIO_AGENT_CHAT_REGISTRY);
 
   value = input.required<number|undefined>()
 
@@ -25,7 +25,7 @@ export class Type {
       return 'Unknown';
     }
 
-    return type.name;
+    return type.label;
   });
 
 }
