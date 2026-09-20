@@ -2,7 +2,7 @@ import {Component, OnInit, signal} from '@angular/core';
 import {RouterLink, RouterOutlet} from "@angular/router";
 import {Item, NavigationService} from "../../service/navigation.service";
 import {AccountComponent as AccComponent} from "../account/account.component";
-import {AgentComponent} from "../agent/agent.component";
+import {List as AgentList} from "../agent/list/list";
 import {SecurityComponent} from "../security/security.component";
 import {AppListComponent} from "../app/list/app-list.component";
 import {SubscriptionComponent} from "../subscription/subscription.component";
@@ -43,7 +43,7 @@ export class AccountContainerComponent implements OnInit {
       this.active.set('Apps');
     } else if (component instanceof SubscriptionComponent) {
       this.active.set('Subscription');
-    } else if (component instanceof AgentComponent) {
+    } else if (component instanceof AgentList) {
       this.active.set('Agent');
     } else if (component instanceof WebhookListComponent) {
       this.active.set('Webhook');

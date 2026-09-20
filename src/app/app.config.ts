@@ -8,6 +8,7 @@ import {routes} from './app.routes';
 import {ConfigBuilder} from "./config-builder";
 import {FUSIO_CONFIG} from "../../projects/fusio-sdk/src/lib/config/config";
 import {provideMarkdown} from "ngx-markdown";
+import {provideAgentChatTypes} from "../../projects/fusio-sdk/src/lib/provider/agent-chat-registry.provider";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,6 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideRouter(routes),
     provideHttpClient(withFetch()),
+    provideAgentChatTypes(),
     provideMarkdown(),
     {
       provide: SDK,

@@ -4,7 +4,7 @@
     @if (message.item) {
       @if (message.item.type === 'text' && 'content' in message.item && message.item.content) {
         @if (message.role === 'user') {
-          <pre class="agent-user-message">{{ message.item.content }}</pre>
+          <pre class="agent-user-message text-wrap">{{ message.item.content }}</pre>
         }
         @else {
           <markdown emoji katex [katexOptions]="katexOptions" [data]="message.item.content"></markdown>

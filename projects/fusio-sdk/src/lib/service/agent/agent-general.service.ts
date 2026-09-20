@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {CommonMessage} from "fusio-sdk";
 import {AgentAbstract, AgentContent, ExecutionIndicator} from "../../abstract/agent";
+import {Connection} from "../../abstract/agent/connection";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class AgentGeneralService extends AgentAbstract<AgentContent> {
     return content;
   }
 
-  async execute(model: AgentContent, indicator: ExecutionIndicator): Promise<CommonMessage|undefined> {
+  async execute(connection: Connection, model: AgentContent, indicator: ExecutionIndicator): Promise<CommonMessage|undefined> {
     return {
       success: true,
       message: 'Nothing to execute'

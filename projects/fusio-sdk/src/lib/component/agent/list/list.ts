@@ -1,22 +1,23 @@
 import {Component, inject, OnInit, signal} from '@angular/core';
 import {CommonMessage, ConsumerAgent} from "fusio-sdk";
-import {FusioService} from "../../service/fusio.service";
-import {ErrorService} from "../../service/error.service";
-import {MessageComponent} from "../message/message.component";
+import {FusioService} from "../../../service/fusio.service";
+import {ErrorService} from "../../../service/error.service";
+import {MessageComponent} from "../../message/message.component";
 import {MarkdownComponent} from "ngx-markdown";
 import {RouterLink} from "@angular/router";
 
 @Component({
-  selector: 'fusio-agent',
-  templateUrl: './agent.component.html',
+  selector: 'fusio-agent-list',
+  templateUrl: './list.html',
   imports: [
     MessageComponent,
     MarkdownComponent,
     RouterLink,
+
   ],
-  styleUrls: ['./agent.component.css']
+  styleUrls: ['./list.css']
 })
-export class AgentComponent implements OnInit {
+export class List implements OnInit {
 
   agents = signal<Array<ConsumerAgent>>([]);
   response = signal<CommonMessage|undefined>(undefined);

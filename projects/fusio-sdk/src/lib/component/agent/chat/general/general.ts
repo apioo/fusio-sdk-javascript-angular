@@ -5,7 +5,7 @@ import {Row} from "../../row/row";
 import {Input} from "../../input/input";
 import {Agent, AgentContent} from "../../../../abstract/agent";
 import {AgentGeneralService} from "../../../../service/agent/agent-general.service";
-import {ChatAbstract} from "../../chat-abstract";
+import {Chat} from "../../../../abstract/agent/chat";
 import {MessageComponent} from "../../../message/message.component";
 
 @Component({
@@ -23,11 +23,13 @@ import {MessageComponent} from "../../../message/message.component";
   templateUrl: './general.html',
   styleUrl: './general.css',
 })
-export class General extends ChatAbstract<AgentContent> {
+export class General extends Chat<AgentContent> {
 
   generalAgent = inject(AgentGeneralService);
 
   getAgent(): Agent<AgentContent> {
+    this.connection
+
     return this.generalAgent;
   }
 

@@ -3,6 +3,8 @@
  */
 
 export * from './lib/abstract/agent';
+export * from './lib/abstract/agent/chat';
+export * from './lib/abstract/agent/connection';
 export * from './lib/abstract/detail';
 export * from './lib/abstract/form';
 export * from './lib/abstract/list';
@@ -10,10 +12,10 @@ export * from './lib/abstract/service';
 
 export * from './lib/component/account/account.component';
 export * from './lib/component/account-container/account-container.component';
+export * from './lib/component/agent/container/container';
 export * from './lib/component/agent/input/input';
 export * from './lib/component/agent/row/row';
 export * from './lib/component/agent/type/type';
-export * from './lib/component/agent/chat-abstract';
 export * from './lib/component/bootstrap/bootstrap.component';
 export * from './lib/component/captcha/captcha';
 export * from './lib/component/empty/empty.component';
@@ -46,7 +48,12 @@ export * from './lib/config/config';
 
 export * from './lib/guard/authentication.guard';
 
-export * from './lib/service/agent/agent-connection.service';
+export * from './lib/provider/agent-chat-registry.provider';
+
+export * from './lib/service/agent/agent-backend-connection.service';
+export * from './lib/service/agent/agent-chat-registry';
+export * from './lib/service/agent/agent-consumer-connection.service';
+export * from './lib/service/agent/agent-general.service';
 export * from './lib/service/api.service';
 export * from './lib/service/app.service';
 export * from './lib/service/config.service';

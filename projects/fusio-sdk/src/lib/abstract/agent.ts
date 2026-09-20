@@ -8,15 +8,14 @@ import {
   AgentItemToolCall,
   CommonMessage
 } from "fusio-sdk";
-import {inject} from "@angular/core";
-import {AgentConnectionInterface, AgentConnectionService} from "../service/agent/agent-connection.service";
+import {Connection} from "./agent/connection";
 
 export interface Agent<TModel, TOptions = undefined> {
 
   /**
    * Sends a prompt to a specific agent and returns the content
    */
-  prompt(agentId: number, prompt: string, chatId?: string): Promise<AgentItem|undefined>;
+  prompt(connection: Connection, agentId: number, prompt: string, refId: number, chatId?: string): Promise<AgentItem|undefined>;
 
   /**
    * Transforms the agent content into a model
@@ -26,15 +25,13 @@ export interface Agent<TModel, TOptions = undefined> {
   /**
    * Executes the provided model, mostly this means that we create or update the model
    */
-  execute(model: TModel, indicator: ExecutionIndicator, options?: TOptions): Promise<CommonMessage|undefined>;
+  execute(connection: Connection, model: TModel, indicator: ExecutionIndicator, options?: TOptions): Promise<CommonMessage|undefined>;
 
 }
 
 export abstract class AgentAbstract<TModel, TOptions = undefined> implements Agent<TModel, TOptions> {
 
-  protected agentConnection: AgentConnectionInterface = inject(AgentConnectionService);
-
-  async prompt(agentId: number, prompt: string, chatId?: string): Promise<AgentContent|undefined> {
+  async prompt(connection: Connection, agentId: number, prompt: string, refId: number, chatId?: string): Promise<AgentContent|undefined> {
     const input: AgentInput = {
       previousId: chatId,
       item: {
@@ -43,7 +40,7 @@ export abstract class AgentAbstract<TModel, TOptions = undefined> implements Age
       }
     };
 
-    const output = await this.agentConnection.submit('' + agentId, input);
+    const output = await connection.submit('' + agentId, refId, input);
     if (!output.item) {
       return;
     }
@@ -53,7 +50,7 @@ export abstract class AgentAbstract<TModel, TOptions = undefined> implements Age
 
   abstract transform(content: AgentContent): TModel|undefined;
 
-  abstract execute(model: TModel, indicator: ExecutionIndicator, options?: TOptions): Promise<CommonMessage|undefined>;
+  abstract execute(connection: Connection, model: TModel, indicator: ExecutionIndicator, options?: TOptions): Promise<CommonMessage|undefined>;
 
   protected getText(content: AgentContent): string|undefined {
     if (content.type === 'text' && content.content) {

@@ -1,16 +1,16 @@
 import {Component, computed, inject, input, resource, signal} from '@angular/core';
-import {AgentItem, BackendAgent, BackendAgentMessage, CommonMessage} from "fusio-sdk";
-import {Agent, AgentContent, ExecutionIndicator, Message} from "../../abstract/agent";
+import {AgentItem, CommonMessage, ConsumerAgent, ConsumerAgentMessage} from "fusio-sdk";
+import {Agent, AgentContent, ExecutionIndicator, Message} from "../agent";
 import {ErrorService} from "../../service/error.service";
-import {AgentConnectionInterface, AgentConnectionService} from "../../service/agent/agent-connection.service";
+import {Connection} from "./connection";
 
 @Component({
-  selector: 'fusio-agent-chat-abstract',
-  template: ''
+  template: '',
 })
-export abstract class ChatAbstract<TModel, TOptions = undefined> {
+export abstract class Chat<TModel, TOptions = undefined> {
 
-  agent = input.required<BackendAgent>();
+  connection = input.required<Connection>();
+  agent = input.required<ConsumerAgent>();
   chatId = input.required<string>();
   refId = input<number>(0);
 
@@ -22,7 +22,7 @@ export abstract class ChatAbstract<TModel, TOptions = undefined> {
   executeMessages = signal<Array<Message>>([]);
   response = signal<CommonMessage|undefined>(undefined);
 
-  messagesResource = resource<Array<BackendAgentMessage>, MessagesResourceParams>({
+  messagesResource = resource<Array<ConsumerAgentMessage>, MessagesResourceParams>({
     params: () => ({
       agent: this.agent(),
       chatId: this.chatId(),
@@ -30,11 +30,11 @@ export abstract class ChatAbstract<TModel, TOptions = undefined> {
       output: this.output(),
     }),
     loader: async (params) => {
-      const collection = await this.agentConnection.getMessages(params.params);
+      const collection = await this.connection().getMessages(params.params);
       const entries = collection.entry || [];
 
-      let lastMessage: BackendAgentMessage|undefined;
-      const messages: Array<BackendAgentMessage> = [];
+      let lastMessage: ConsumerAgentMessage|undefined;
+      const messages: Array<ConsumerAgentMessage> = [];
       entries.forEach((message) => {
         messages.push(message);
 
@@ -57,7 +57,7 @@ export abstract class ChatAbstract<TModel, TOptions = undefined> {
     }
   });
 
-  messages = computed<Array<BackendAgentMessage>|undefined>(() => {
+  messages = computed<Array<ConsumerAgentMessage>|undefined>(() => {
     if (this.messagesResource.hasValue()) {
       return this.messagesResource.value();
     }
@@ -65,7 +65,6 @@ export abstract class ChatAbstract<TModel, TOptions = undefined> {
     return undefined;
   });
 
-  protected agentConnection: AgentConnectionInterface = inject(AgentConnectionService);
   protected error = inject(ErrorService);
 
   abstract getAgent(): Agent<TModel, TOptions>;
@@ -83,7 +82,7 @@ export abstract class ChatAbstract<TModel, TOptions = undefined> {
     this.loading.set(true);
 
     try {
-      const content = await this.getAgent().prompt(agentId, message, this.chatId());
+      const content = await this.getAgent().prompt(this.connection(), agentId, message, this.refId(), this.chatId());
 
       this.output.set(content);
 
@@ -126,7 +125,7 @@ export abstract class ChatAbstract<TModel, TOptions = undefined> {
 
       const options = this.getOptions();
 
-      const response = await this.getAgent().execute(model, indicator, options);
+      const response = await this.getAgent().execute(this.connection(), model, indicator, options);
       this.response.set(response);
 
       if (response) {
@@ -167,7 +166,7 @@ export abstract class ChatAbstract<TModel, TOptions = undefined> {
 }
 
 export interface MessagesResourceParams {
-  agent: BackendAgent
+  agent: ConsumerAgent
   refId: number
   chatId: string
   output: AgentItem|undefined

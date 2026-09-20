@@ -4,7 +4,7 @@
 @if (agent(); as agent) {
   <div class="row">
     <div class="col-xl-2">
-      <button type="button" class="btn btn-success mb-3" [routerLink]="['/', 'account', 'agent', agent?.id, 'message']">New Chat</button>
+      <button type="button" class="btn btn-success mb-3" (click)="doNewChat()">New Chat</button>
       <div class="list-group">
         @for (chat of chats(); track chat.id) {
           @if (chat.item && chat.item.type === 'text' && chat.item && 'content' in chat.item) {
@@ -14,8 +14,12 @@
       </div>
     </div>
     <div class="col-xl-10">
-      @if (chatId(); as selected) {
-        <fusio-agent-message-general [agent]="agent" [chatId]="selected"></fusio-agent-message-general>
+      @if (chatId()) {
+        @if (selectedMessageComponent(); as targetComponent) {
+          <ng-container *ngComponentOutlet="targetComponent; inputs: componentInputs()"></ng-container>
+        } @else {
+          <ngb-alert type="info">This agent contains an unsupported agent type: {{ agent.type }}</ngb-alert>
+        }
       }
       @else {
         <div class="text-center p-4 fw-bold">

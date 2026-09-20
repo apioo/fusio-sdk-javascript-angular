@@ -18,8 +18,8 @@ import {LogDetailComponent} from "../component/log/detail/log-detail.component";
 import {AppDetailComponent} from "../component/app/detail/app-detail.component";
 import {AppFormComponent} from "../component/app/form/app-form.component";
 import {EntityRoute} from "./entity-route";
-import {MessageComponent} from "../component/agent/message/message.component";
-import {AgentComponent} from "../component/agent/agent.component";
+import {Detail as AgentDetail} from "../component/agent/detail/detail";
+import {List as AgentList} from "../component/agent/list/list";
 
 export class AccountRoute {
 
@@ -27,9 +27,9 @@ export class AccountRoute {
     return [
       {path: '', component: AccountComponent, canActivate: [isAuthenticated]},
       {path: 'security', component: SecurityComponent, canActivate: [isAuthenticated]},
-      {path: 'agent', component: AgentComponent, canActivate: [isAuthenticated]},
-      {path: 'agent/:id/message', component: MessageComponent, canActivate: [isAuthenticated]},
-      {path: 'agent/:id/message/:chat_id', component: MessageComponent, canActivate: [isAuthenticated]},
+      {path: 'agent', component: AgentList, canActivate: [isAuthenticated]},
+      {path: 'agent/:id/chat', component: AgentDetail, canActivate: [isAuthenticated]},
+      {path: 'agent/:id/chat/:chat_id', component: AgentDetail, canActivate: [isAuthenticated]},
       {path: 'app', canActivate: [isAuthenticated], children: EntityRoute.getAll(AppListComponent, AppDetailComponent, AppFormComponent)},
       {path: 'subscription', component: SubscriptionComponent, canActivate: [isAuthenticated]},
       {path: 'subscription/callback/:plan_id', component: CallbackComponent, canActivate: [isAuthenticated]},
