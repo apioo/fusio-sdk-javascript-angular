@@ -14,19 +14,10 @@
       </div>
     </div>
     <div class="col-xl-10">
-      @if (chatId()) {
-        @if (selectedMessageComponent(); as targetComponent) {
-          <ng-container *ngComponentOutlet="targetComponent; inputs: componentInputs()"></ng-container>
-        } @else {
-          <ngb-alert type="info">This agent contains an unsupported agent type: {{ agent.type }}</ngb-alert>
-        }
-      }
-      @else {
-        <div class="text-center p-4 fw-bold">
-          {{ agent.description }}<br>
-        </div>
-        <div id="messages-bottom"></div>
-        <fusio-agent-message-input [loading]="loading()" (send)="doSend($event)"></fusio-agent-message-input>
+      @if (selectedMessageComponent(); as targetComponent) {
+        <ng-container *ngComponentOutlet="targetComponent; inputs: componentInputs()"></ng-container>
+      } @else {
+        <ngb-alert type="info">This agent contains an unsupported agent type: {{ agent.type }}</ngb-alert>
       }
     </div>
   </div>

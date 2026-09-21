@@ -6,7 +6,6 @@ import {NgClass, NgComponentOutlet} from "@angular/common";
 import {Connection} from "../../../abstract/agent/connection";
 import {FUSIO_AGENT_CHAT_REGISTRY} from "../../../service/agent/agent-chat-registry";
 import {NgbAlert} from "@ng-bootstrap/ng-bootstrap";
-import {Input} from "../input/input";
 import {MessageComponent} from "../../message/message.component";
 
 @Component({
@@ -14,7 +13,6 @@ import {MessageComponent} from "../../message/message.component";
   imports: [
     NgClass,
     NgbAlert,
-    Input,
     MessageComponent,
     NgComponentOutlet,
   ],

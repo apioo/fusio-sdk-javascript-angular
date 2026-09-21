@@ -3,8 +3,15 @@
 
 <div class="row">
   <div class="col-12">
-    @for (message of messages(); track message.id) {
-      <fusio-agent-message-row [message]="message"></fusio-agent-message-row>
+    @if (chatId()) {
+      @for (message of messages(); track message.id) {
+        <fusio-agent-message-row [message]="message"></fusio-agent-message-row>
+      }
+    }
+    @else {
+      <div class="text-center p-4 fw-bold">
+        {{ agent().description }}<br>
+      </div>
     }
     <div id="messages-bottom"></div>
     <fusio-agent-message-input [loading]="messagesResource.isLoading() || loading()" (send)="doSend($event)"></fusio-agent-message-input>
