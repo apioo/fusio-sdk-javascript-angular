@@ -28,8 +28,6 @@ export class General extends Chat<AgentContent> {
   generalAgent = inject(AgentGeneralService);
 
   getAgent(): Agent<AgentContent> {
-    this.connection
-
     return this.generalAgent;
   }
 
