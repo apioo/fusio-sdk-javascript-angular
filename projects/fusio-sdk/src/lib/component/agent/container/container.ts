@@ -1,5 +1,5 @@
 import {Component, computed, inject, input, OnInit, output, signal} from '@angular/core';
-import {AgentInput, CommonMessage, ConsumerAgent, ConsumerAgentMessage} from "fusio-sdk";
+import {AgentInput, AgentItem, AgentOutput, CommonMessage, ConsumerAgent, ConsumerAgentMessage} from "fusio-sdk";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ErrorService} from "../../../service/error.service";
 import {NgClass, NgComponentOutlet} from "@angular/common";
@@ -69,6 +69,9 @@ export class Container implements OnInit {
       agent: this.agent(),
       refId: this.refId(),
       chatId: this.chatId(),
+      sendListener: (output: AgentOutput) => this.onSend(output),
+      loadListener: (model: any) => this.onLoad(model),
+      executeListener: (response: CommonMessage) => this.onExecute(response),
     };
   });
 
@@ -138,32 +141,24 @@ export class Container implements OnInit {
     await this.router.navigate([...this.basePath(), agent?.id, 'chat'], {queryParams: this.queryParams()});
   }
 
-  async doSend(message: string) {
+  async onSend(output: AgentOutput) {
     const agentId = this.agent()?.id;
     if (!agentId) {
       return;
     }
 
-    const payload: AgentInput = {
-      previousId: this.chatId(),
-      item: {
-        type: "text",
-        content: message
-      }
-    };
-
-    this.loading.set(true);
-
-    try {
-      const output = await this.connection().submit('' + agentId, this.refId(), payload);
-
-      this.loading.set(false);
-
-      await this.router.navigate([...this.basePath(), agentId, 'chat', output.id], {queryParams: this.queryParams()});
-    } catch (error) {
-      this.response.set(this.error.convert(error));
-      this.loading.set(false);
+    const chatId = this.chatId();
+    if (chatId) {
+      return;
     }
+
+    await this.router.navigate([...this.basePath(), agentId, 'chat', output.id], {queryParams: this.queryParams()});
+  }
+
+  onLoad(model: any) {
+  }
+
+  onExecute(response: CommonMessage) {
   }
 
 }

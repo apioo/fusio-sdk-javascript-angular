@@ -1,5 +1,5 @@
-import {Component, computed, inject, input, resource, signal} from '@angular/core';
-import {AgentItem, CommonMessage, ConsumerAgent, ConsumerAgentMessage} from "fusio-sdk";
+import {Component, computed, inject, input, output, resource, signal} from '@angular/core';
+import {AgentItem, AgentOutput, CommonMessage, ConsumerAgent, ConsumerAgentMessage} from "fusio-sdk";
 import {Agent, AgentContent, ExecutionIndicator, Message} from "../agent";
 import {ErrorService} from "../../service/error.service";
 import {Connection} from "./connection";
@@ -13,6 +13,10 @@ export abstract class Chat<TModel, TOptions = undefined> {
   agent = input.required<ConsumerAgent>();
   chatId = input.required<string>();
   refId = input<number>(0);
+
+  sendListener = input.required<(output: AgentOutput) => void>();
+  loadListener = input.required<(model: TModel) => void>();
+  executeListener = input.required<(response: CommonMessage) => void>();
 
   model = signal<TModel|undefined>(undefined);
 
@@ -82,13 +86,19 @@ export abstract class Chat<TModel, TOptions = undefined> {
     this.loading.set(true);
 
     try {
-      const content = await this.getAgent().prompt(this.connection(), agentId, message, this.refId(), this.chatId());
+      const output = await this.getAgent().prompt(this.connection(), agentId, message, this.refId(), this.chatId());
+      const content = output?.item;
 
       this.output.set(content);
 
       this.onSend();
 
       this.scrollToBottom();
+
+      const listener = this.sendListener();
+      if (listener && output) {
+        listener(output);
+      }
     } catch (error) {
       this.response.set(this.error.convert(error));
     }
@@ -102,9 +112,16 @@ export abstract class Chat<TModel, TOptions = undefined> {
     }
 
     this.executeMessages.set([]);
-    this.model.set(this.getAgent().transform(content));
+
+    const model = this.getAgent().transform(content);
+    this.model.set(model);
 
     this.onLoad();
+
+    const listener = this.loadListener();
+    if (listener && model) {
+      listener(model);
+    }
   }
 
   async execute(): Promise<void> {
@@ -130,6 +147,11 @@ export abstract class Chat<TModel, TOptions = undefined> {
 
       if (response) {
         this.onExecute(response);
+
+        const listener = this.executeListener();
+        if (listener) {
+          listener(response);
+        }
       }
     } catch (error) {
       this.response.set(this.error.convert(error));

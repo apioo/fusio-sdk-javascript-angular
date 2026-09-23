@@ -1,11 +1,11 @@
 import {
   AgentInput,
-  AgentItem,
   AgentItemBinary,
   AgentItemChoice,
   AgentItemObject,
   AgentItemText,
   AgentItemToolCall,
+  AgentOutput,
   CommonMessage
 } from "fusio-sdk";
 import {Connection} from "./agent/connection";
@@ -15,7 +15,7 @@ export interface Agent<TModel, TOptions = undefined> {
   /**
    * Sends a prompt to a specific agent and returns the content
    */
-  prompt(connection: Connection, agentId: number, prompt: string, refId: number, chatId?: string): Promise<AgentItem|undefined>;
+  prompt(connection: Connection, agentId: number, prompt: string, refId: number, chatId?: string): Promise<AgentOutput|undefined>;
 
   /**
    * Transforms the agent content into a model
@@ -31,7 +31,7 @@ export interface Agent<TModel, TOptions = undefined> {
 
 export abstract class AgentAbstract<TModel, TOptions = undefined> implements Agent<TModel, TOptions> {
 
-  async prompt(connection: Connection, agentId: number, prompt: string, refId: number, chatId?: string): Promise<AgentContent|undefined> {
+  async prompt(connection: Connection, agentId: number, prompt: string, refId: number, chatId?: string): Promise<AgentOutput> {
     const input: AgentInput = {
       previousId: chatId,
       item: {
@@ -40,12 +40,7 @@ export abstract class AgentAbstract<TModel, TOptions = undefined> implements Age
       }
     };
 
-    const output = await connection.submit('' + agentId, refId, input);
-    if (!output.item) {
-      return;
-    }
-
-    return output.item;
+    return await connection.submit('' + agentId, refId, input);
   }
 
   abstract transform(content: AgentContent): TModel|undefined;
