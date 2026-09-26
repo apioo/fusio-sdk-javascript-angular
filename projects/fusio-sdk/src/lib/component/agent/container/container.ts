@@ -1,7 +1,6 @@
-import {Component, computed, inject, input, OnInit, output, signal} from '@angular/core';
-import {AgentInput, AgentItem, AgentOutput, CommonMessage, ConsumerAgent, ConsumerAgentMessage} from "fusio-sdk";
+import {Component, computed, inject, input, OnInit, output, resource, signal} from '@angular/core';
+import {AgentOutput, CommonMessage, ConsumerAgent, ConsumerAgentMessage} from "fusio-sdk";
 import {ActivatedRoute, Router} from "@angular/router";
-import {ErrorService} from "../../../service/error.service";
 import {NgClass, NgComponentOutlet} from "@angular/common";
 import {Connection} from "../../../abstract/agent/connection";
 import {FUSIO_AGENT_CHAT_REGISTRY} from "../../../service/agent/agent-chat-registry";
@@ -23,30 +22,86 @@ export class Container implements OnInit {
 
   connection = input.required<Connection>();
   basePath = input.required<Array<string>>();
+  agentId = input<string|undefined>(undefined);
+  refId = input<number|undefined>(undefined);
+  chatId = input<string|undefined>(undefined);
 
-  agent = signal<ConsumerAgent|undefined>(undefined);
-  chats = signal<Array<ConsumerAgentMessage>>([]);
   loading = signal<boolean>(false);
   response = signal<CommonMessage|undefined>(undefined);
 
-  refId = signal<number>(0);
-  chatId = signal<string|undefined>(undefined);
+  agentResource = resource<ConsumerAgent|undefined, { agentId: string|undefined }>({
+    params: () => ({
+      agentId: this.selectedAgentId(),
+    }),
+    loader: async (params) => {
+      const agentId = params.params.agentId;
+      if (!agentId) {
+        return;
+      }
+
+      const agent = await this.connection().get(agentId);
+      if (!agent) {
+        return;
+      }
+
+      this.agentLoad.emit(agent);
+
+      return agent;
+    }
+  });
+
+  chatResource = resource<Array<ConsumerAgentMessage>, { agentId: number|undefined, refId: number }>({
+    params: () => ({
+      agentId: this.agentResource.hasValue() ? this.agentResource.value()?.id : undefined,
+      refId: this.selectedRefId(),
+    }),
+    loader: async (params) => {
+      const agentId = params.params.agentId;
+      if (!agentId) {
+        return [];
+      }
+
+      const collection = await this.connection().getChats('' + agentId, params.params.refId);
+      return collection.entry || [];
+    }
+  });
+
+  queryAgentId = signal<string|undefined>(undefined);
+  queryRefId = signal<number>(0);
+  queryChatId = signal<string|undefined>(undefined);
 
   agentLoad = output<ConsumerAgent>();
 
-  selected = computed<ConsumerAgentMessage|undefined>((): ConsumerAgentMessage|undefined => {
-    let result = undefined;
-    this.chats().forEach((chat) => {
-      if (chat.id === this.chatId()) {
-        result = chat;
-      }
-    });
-    return result;
+  selectedAgentId = computed<string|undefined>(() => {
+    const agentId = this.agentId();
+    if (agentId !== undefined) {
+      return agentId;
+    }
+
+    return this.queryAgentId();
+  });
+
+  selectedRefId = computed<number>(() => {
+    const refId = this.refId();
+    if (refId !== undefined) {
+      return refId;
+    }
+
+    return this.queryRefId();
+  });
+
+  selectedChatId = computed<string|undefined>(() => {
+    const chatId = this.chatId();
+    if (chatId !== undefined) {
+      return chatId;
+    }
+
+    return this.queryChatId();
   });
 
   queryParams = computed<Record<string, any>>(() => {
     const queryParams: Record<string, any> = {};
-    const refId = this.refId();
+    const refId = this.queryRefId();
     if (refId > 0) {
       queryParams['ref_id'] = refId;
     }
@@ -55,7 +110,11 @@ export class Container implements OnInit {
   });
 
   selectedMessageComponent = computed(() => {
-    const type = this.agent()?.type;
+    if (!this.agentResource.hasValue()) {
+      return null;
+    }
+
+    const type = this.agentResource.value().type;
     if (type === undefined || !this.registry) {
       return null;
     }
@@ -66,93 +125,83 @@ export class Container implements OnInit {
   componentInputs = computed(() => {
     return {
       connection: this.connection(),
-      agent: this.agent(),
-      refId: this.refId(),
-      chatId: this.chatId(),
+      agent: this.agentResource.hasValue() ? this.agentResource.value() : undefined,
+      refId: this.selectedRefId(),
+      chatId: this.selectedChatId(),
       sendListener: (output: AgentOutput) => this.onSend(output),
       loadListener: (model: any) => this.onLoad(model),
       executeListener: (response: CommonMessage) => this.onExecute(response),
     };
   });
 
+  resolvedBasePath = computed<Array<string>>(() => {
+    const basePath = this.basePath();
+    const agentId = this.agentResource.hasValue() ? this.agentResource.value().id : undefined;
+
+    const result: Array<string> = [];
+    basePath.forEach((path) => {
+      if (path === '{agent_id}') {
+        result.push('' + agentId);
+      } else {
+        result.push(path);
+      }
+    });
+
+    return result;
+  });
+
   private registry = inject(FUSIO_AGENT_CHAT_REGISTRY);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private error = inject(ErrorService);
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(async (params) => {
       if (params['ref_id']) {
-        this.refId.set(parseInt(params['ref_id']));
+        this.queryRefId.set(parseInt(params['ref_id']));
       } else {
-        this.refId.set(0);
+        this.queryRefId.set(0);
       }
     });
 
     this.route.params.subscribe(async (params) => {
       if (params['id']) {
-        const agent = await this.connection().get(params['id']);
-        if (agent) {
-          this.agent.set(agent);
-          this.agentLoad.emit(agent);
-          this.loadChats();
-        }
+        this.queryAgentId.set(params['id']);
       }
       if (params['chat_id']) {
-        this.chatId.set(params['chat_id']);
+        this.queryChatId.set(params['chat_id']);
       } else {
-        this.chatId.set(undefined);
+        this.queryChatId.set(undefined);
       }
     });
   }
 
-  async loadChats() {
-    const agentId = this.agent()?.id;
-    if (!agentId) {
-      return;
-    }
-
-    try {
-      const collection = await this.connection().getChats('' + agentId, this.refId());
-
-      this.loading.set(false);
-      this.chats.set(collection.entry || []);
-    } catch (error) {
-      this.loading.set(false);
-      this.response.set(this.error.convert(error));
-    }
-  }
-
   async loadChat(chat: ConsumerAgentMessage) {
-    const agent = this.agent();
-    if (!agent) {
+    if (!this.agentResource.hasValue()) {
       return;
     }
 
-    await this.router.navigate([...this.basePath(), agent.id, 'chat', chat.chatId], {queryParams: this.queryParams()});
+    await this.router.navigate([...this.resolvedBasePath(), chat.chatId], {queryParams: this.queryParams()});
   }
 
   async doNewChat() {
-    const agent = this.agent();
-    if (!agent) {
+    if (!this.agentResource.hasValue()) {
       return;
     }
 
-    await this.router.navigate([...this.basePath(), agent?.id, 'chat'], {queryParams: this.queryParams()});
+    await this.router.navigate([...this.resolvedBasePath()], {queryParams: this.queryParams()});
   }
 
   async onSend(output: AgentOutput) {
-    const agentId = this.agent()?.id;
-    if (!agentId) {
+    if (!this.agentResource.hasValue()) {
       return;
     }
 
-    const chatId = this.chatId();
+    const chatId = this.selectedChatId();
     if (chatId) {
       return;
     }
 
-    await this.router.navigate([...this.basePath(), agentId, 'chat', output.id], {queryParams: this.queryParams()});
+    await this.router.navigate([...this.resolvedBasePath(), output.id], {queryParams: this.queryParams()});
   }
 
   onLoad(model: any) {

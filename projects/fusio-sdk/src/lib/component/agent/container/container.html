@@ -1,23 +1,25 @@
 
 <fusio-message [response]="response()"></fusio-message>
 
-@if (agent(); as agent) {
+@if (agentResource.hasValue()) {
   <div class="row">
     <div class="col-xl-2">
       <button type="button" class="btn btn-success mb-3" (click)="doNewChat()">New Chat</button>
-      <div class="list-group">
-        @for (chat of chats(); track chat.id) {
-          @if (chat.item && chat.item.type === 'text' && chat.item && 'content' in chat.item) {
-            <button type="button" class="list-group-item list-group-item-action overflow-hidden text-nowrap text-truncate" [ngClass]="{'active': chat.chatId === chatId()}" [title]="chat.item.content" (click)="loadChat(chat)">{{ chat.item.content }}</button>
+      @if (chatResource.hasValue()) {
+        <div class="list-group">
+          @for (chat of chatResource.value(); track chat.id) {
+            @if (chat.item && chat.item.type === 'text' && chat.item && 'content' in chat.item) {
+              <button type="button" class="list-group-item list-group-item-action overflow-hidden text-nowrap text-truncate" [ngClass]="{'active': chat.chatId === selectedChatId()}" [title]="chat.item.content" (click)="loadChat(chat)">{{ chat.item.content }}</button>
+            }
           }
-        }
-      </div>
+        </div>
+      }
     </div>
     <div class="col-xl-10">
       @if (selectedMessageComponent(); as targetComponent) {
         <ng-container *ngComponentOutlet="targetComponent; inputs: componentInputs()"></ng-container>
       } @else {
-        <ngb-alert type="info">This agent contains an unsupported agent type: {{ agent.type }}</ngb-alert>
+        <ngb-alert type="info">This agent contains an unsupported agent type: {{ agentResource.value().type }}</ngb-alert>
       }
     </div>
   </div>
