@@ -25,6 +25,7 @@ export class Container implements OnInit {
   agentId = input<string|undefined>(undefined);
   refId = input<number|undefined>(undefined);
   chatId = input<string|undefined>(undefined);
+  context = input<Record<string, any>|undefined>(undefined);
 
   loading = signal<boolean>(false);
   response = signal<CommonMessage|undefined>(undefined);
@@ -123,7 +124,10 @@ export class Container implements OnInit {
   });
 
   componentInputs = computed(() => {
+    const context = this.context() ?? {};
+
     return {
+      ...context,
       connection: this.connection(),
       agent: this.agentResource.hasValue() ? this.agentResource.value() : undefined,
       refId: this.selectedRefId(),
