@@ -1,8 +1,4 @@
 
-@import "~bootstrap-icons/font/bootstrap-icons.css";
-@import "~bootstrap/dist/css/bootstrap.min.css";
-@import "~@vscode/codicons/dist/codicon.css";
-
 body
 {
   background-color:#fff;
@@ -21,6 +17,12 @@ pre
 {
   float:right;
   margin-top:2px;
+}
+
+#anonymousMenu,
+#anonymousMenu:hover
+{
+  color:#fff;
 }
 
 #userMenu,
@@ -164,11 +166,8 @@ pre
 .fusio-content > * > h1 > a
 {
   color:#eee;
-}
-
-.fusio-content > * > form
-{
-  margin-bottom:64px;
+  text-decoration:underline!important;
+  cursor:pointer;
 }
 
 .fusio-search
@@ -479,4 +478,13 @@ pre
 
 .psx-property-required {
   border-bottom:1px dotted #999;
+}
+
+/* diff view */
+.line-selector > .inline-diff-old {
+  width: 3rem!important;
+}
+
+.line-selector > .inline-diff-new {
+  width: 3rem!important;
 }
