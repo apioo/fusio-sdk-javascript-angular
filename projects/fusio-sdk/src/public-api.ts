@@ -20,7 +20,7 @@ export * from './lib/component/bootstrap/bootstrap.component';
 export * from './lib/component/captcha/captcha';
 export * from './lib/component/empty/empty.component';
 export * from './lib/component/form/autocomplete/form-autocomplete.component';
-export * from './lib/component/form/breadcrump/form-breadcrumb.component';
+export * from './lib/component/form/breadcrumb/form-breadcrumb.component';
 export * from './lib/component/form/button/form-button.component';
 export * from './lib/component/form/buttons/form-buttons.component';
 export * from './lib/component/form/checkbox-list/form-checkbox-list.component';
