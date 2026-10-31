@@ -1,0 +1,53 @@
+
+<h1>Action</h1>
+
+<fusio-message [response]="response()"></fusio-message>
+
+<fusio-search
+  [searchTerm]="search()"
+  (search)="doSearch(1, $event)"
+  (newClick)="doNew()"
+  placeholder="action"
+  helpPath="api/action/">
+</fusio-search>
+
+<div class="row">
+  <div class="col-12">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th style="width:20px"><input type="checkbox" class="form-check-input" [ngModel]="selectAll()" (ngModelChange)="toggleSelectAll()"></th>
+        <th style="width:100%">Name</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (entry of entries(); track entry.id) {
+          <tr>
+            <td>
+              @if (entry.id) {
+                <input type="checkbox" class="form-check-input" [ngModel]="selected()[entry.id]" (ngModelChange)="doSelect(entry);">
+              }
+            </td>
+            <td>{{entry.name}}</td>
+            <td>
+              <div class="btn-group float-end" role="group">
+                <a (click)="doDetail(entry.id)" title="Details" class="btn btn-primary"><i class="bi bi-search"></i></a>
+                <a (click)="doEdit(entry.id)" title="Edit" class="btn btn-secondary"><i class="bi bi-pen"></i></a>
+                <a (click)="doDelete(entry.id)" title="Delete" class="btn btn-danger"><i class="bi bi-x"></i></a>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+    <ngb-pagination
+      [page]="page()"
+      [pageSize]="pageSize()"
+      [collectionSize]="totalResults()"
+      [maxSize]="4"
+      [ellipses]="false"
+      (pageChange)="doSearch($event, search())"></ngb-pagination>
+  </div>
+</div>
+

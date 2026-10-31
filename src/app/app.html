@@ -1,18 +1,42 @@
 
-<div class="container mt-4">
-  @if (user) {
+<div class="fusio-navigation">
+  <nav>
+    <h1>Fusio <span>({{ currentVersion }})</span></h1>
+    <div>
+      <a class="fusio-navigation-heading fusio-navigation-heading-active">API</a>
+      <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+          <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link"><i class="bi bi-person" aria-hidden="true"></i> Account</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/dashboard" routerLinkActive="active" class="nav-link"><i class="bi bi-tablet" aria-hidden="true"></i> Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/action" routerLinkActive="active" class="nav-link"><i class="bi bi-code" aria-hidden="true"></i> Action</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<div class="fusio-container" [ngClass]="{'fusio-container-instance': !hasUrl()}">
+  <div class="container-fluid">
     <div class="row">
       <div class="col">
-        <div class="btn-group float-end">
-          <a class="btn btn-secondary disabled">Loggend in as: {{user.name}}</a>
-          <a routerLink="/logout" class="btn btn-primary">Logout</a>
+        @if (user) {
+          <div ngbDropdown class="fusio-header-profile">
+            <button type="button" class="btn" id="userMenu" ngbDropdownToggle>{{ user.name }} <i class="bi bi-person"></i></button>
+            <div ngbDropdownMenu aria-labelledby="userMenu">
+              @for (item of menu; track $index) {
+                <button ngbDropdownItem routerLink="{{ item.path }}">{{ item.title }}</button>
+              }
+            </div>
+          </div>
+        }
+        <div class="fusio-content">
+          <router-outlet></router-outlet>
         </div>
       </div>
-    </div>
-  }
-  <div class="row">
-    <div class="col">
-      <router-outlet />
     </div>
   </div>
 </div>
