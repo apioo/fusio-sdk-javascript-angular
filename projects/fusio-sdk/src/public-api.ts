@@ -28,6 +28,7 @@ export * from './lib/component/form/list/form-list.component';
 export * from './lib/component/form/map/form-map.component';
 export * from './lib/component/form/select/form-select.component';
 export * from './lib/component/help/help.component';
+export * from './lib/component/list/buttons/list-buttons.component';
 export * from './lib/component/login/login.component';
 export * from './lib/component/login/provider/provider.component';
 export * from './lib/component/logout/logout.component';
